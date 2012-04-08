@@ -1,0 +1,5 @@
+C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\bin\Debug\SPVisioNet.NotificationConsole.exe
+C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\bin\Debug\SPVisioNet.NotificationConsole.pdb
+C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\SPVisioNet.NotificationConsole.exe
+C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\SPVisioNet.NotificationConsole.pdb
