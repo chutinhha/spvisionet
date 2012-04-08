@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <StartArguments>-from agustox21@gmail.com -to agustox21@gmail.com -l "http://localhost:1700/" -q "<Where xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><Gt><FieldRef Name="Period_x0020_End_x0020_Date" /><Value Type="DateTime"><Today OffsetDays="-30" /></Value></Gt></Where>" -smtp local -smtpuser agustox21@gmail.com -smtppass agustox21</StartArguments>
+  </PropertyGroup>
+</Project>
