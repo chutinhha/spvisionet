@@ -1,0 +1,5 @@
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts2\bin\Debug\SPVisioNet.WebParts2.dll
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts2\bin\Debug\SPVisioNet.WebParts2.pdb
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts2\obj\Debug\ResolveAssemblyReference.cache
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts2\obj\Debug\SPVisioNet.WebParts2.dll
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts2\obj\Debug\SPVisioNet.WebParts2.pdb
