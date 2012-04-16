@@ -5,11 +5,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{D29B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{363B754D-BA83-4EED-B087-B32BA1A1CEAE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebParts", "WebParts", "{8648C692-07AA-47A9-983B-B1180FCF0A2E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Agusto", "Agusto", "{8648C692-07AA-47A9-983B-B1180FCF0A2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPVisioNet.WebParts", "SPVisioNet.WebParts\SPVisioNet.WebParts.csproj", "{4A8708D0-39CA-43BB-AEB9-4B4218B0151E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPVisioNet.NotificationConsole", "SPVisioNet.NotificationConsole\SPVisioNet.NotificationConsole.csproj", "{0ADD4CD8-AB5B-4D59-A832-32E701836D3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dadang", "Dadang", "{AF79A0A2-436C-48D5-81BA-46A32687970F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Robin", "Robin", "{0D46D746-B391-4878-B402-9D3033482037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPVisioNet.WebParts1", "SPVisioNet.WebParts1\SPVisioNet.WebParts1.csproj", "{F5DE523E-7BEF-4F2F-A544-642A410181DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPVisioNet.WebParts2", "SPVisioNet.WebParts2\SPVisioNet.WebParts2.csproj", "{13B6C464-DC14-4E55-949E-577783046279}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wsp", "wsp", "{47D307B6-13F0-41D4-8C31-99B633D78675}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +55,34 @@ Global
 		{0ADD4CD8-AB5B-4D59-A832-32E701836D3B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{0ADD4CD8-AB5B-4D59-A832-32E701836D3B}.Release|x86.ActiveCfg = Release|x86
 		{0ADD4CD8-AB5B-4D59-A832-32E701836D3B}.Release|x86.Build.0 = Release|x86
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{13B6C464-DC14-4E55-949E-577783046279}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +90,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0ADD4CD8-AB5B-4D59-A832-32E701836D3B} = {D29BC595-B9F5-4A5C-8F86-C5A9B915468B}
 		{4A8708D0-39CA-43BB-AEB9-4B4218B0151E} = {8648C692-07AA-47A9-983B-B1180FCF0A2E}
+		{13B6C464-DC14-4E55-949E-577783046279} = {AF79A0A2-436C-48D5-81BA-46A32687970F}
+		{F5DE523E-7BEF-4F2F-A544-642A410181DE} = {0D46D746-B391-4878-B402-9D3033482037}
 	EndGlobalSection
 EndGlobal
