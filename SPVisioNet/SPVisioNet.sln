@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPVisioNet.WebParts2", "SPV
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wsp", "wsp", "{47D307B6-13F0-41D4-8C31-99B633D78675}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangePasswordADSIFeature", "ChangePasswordADSIFeature\ChangePasswordADSIFeature\ChangePasswordADSIFeature.csproj", "{7C139CA1-A277-42D8-97A1-086DE8736C69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,20 @@ Global
 		{13B6C464-DC14-4E55-949E-577783046279}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{13B6C464-DC14-4E55-949E-577783046279}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{13B6C464-DC14-4E55-949E-577783046279}.Release|x86.ActiveCfg = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{7C139CA1-A277-42D8-97A1-086DE8736C69}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +106,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0ADD4CD8-AB5B-4D59-A832-32E701836D3B} = {D29BC595-B9F5-4A5C-8F86-C5A9B915468B}
 		{4A8708D0-39CA-43BB-AEB9-4B4218B0151E} = {8648C692-07AA-47A9-983B-B1180FCF0A2E}
+		{7C139CA1-A277-42D8-97A1-086DE8736C69} = {8648C692-07AA-47A9-983B-B1180FCF0A2E}
 		{13B6C464-DC14-4E55-949E-577783046279} = {AF79A0A2-436C-48D5-81BA-46A32687970F}
 		{F5DE523E-7BEF-4F2F-A544-642A410181DE} = {0D46D746-B391-4878-B402-9D3033482037}
 	EndGlobalSection
