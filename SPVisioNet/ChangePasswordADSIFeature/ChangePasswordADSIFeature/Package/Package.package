@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="d0add971-9c9f-4950-a191-9985047bbc20" solutionId="d0add971-9c9f-4950-a191-9985047bbc20" resetWebServer="false" name="ChangePasswordADSIFeature" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="4364c7c9-e01c-47cb-bc2d-6ccbfa0087c9" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="bff7b5e1-477d-4b3b-8f2e-77c2a31c8a47" />
+    <projectItemReference itemId="a498146b-6ad8-4794-950b-cb445ea74436" />
+  </projectItems>
+</package>

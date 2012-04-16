@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="d0add971-9c9f-4950-a191-9985047bbc20" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="ChangePasswordADSIFeature.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <TemplateFiles>
+    <TemplateFile Location="Layouts\ChangePasswordADSIFeature\ChangePassword.aspx" />
+    <TemplateFile Location="Images\ChangePasswordADSIFeature\chgpwd.jpg" />
+  </TemplateFiles>
+  <FeatureManifests>
+    <FeatureManifest Location="ChangePasswordADSIFeature_Feature1\Feature.xml" />
+  </FeatureManifests>
+</Solution>

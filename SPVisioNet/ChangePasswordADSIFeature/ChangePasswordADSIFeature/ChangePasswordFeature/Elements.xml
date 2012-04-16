@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <CustomAction Id="SiteActionsToolbar" GroupId="PersonalActions" Location ="Microsoft.SharePoint.StandardMenu" Sequence="1000" Title ="Change Password" ImageUrl="/_layouts/images/ChangePasswordADSIFeature/chgpwd.jpg" Description="Change Your Password">
+    <UrlAction Url ="/_layouts/ChangePasswordADSIFeature/ChangePassword.aspx"/>
+  </CustomAction>
+</Elements>
+
+
