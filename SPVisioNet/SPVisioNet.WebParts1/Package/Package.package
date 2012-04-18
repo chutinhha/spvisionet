@@ -1,3 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package dslVersion="1.0.0.0" Id="403dacf5-3e62-4c94-8128-71bc31e7931f" solutionId="403dacf5-3e62-4c94-8128-71bc31e7931f" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" name="SPVisioNet.WebParts1">
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="403dacf5-3e62-4c94-8128-71bc31e7931f" solutionId="403dacf5-3e62-4c94-8128-71bc31e7931f" resetWebServer="false" name="SPVisioNet.WebParts1" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="583544d0-295e-4bdc-bd8c-93af498d635b" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="66d3f7c2-ae88-4017-9cbc-d80d9634f888" />
+    <projectItemReference itemId="98897125-d105-4124-abab-3476deef1949" />
+  </projectItems>
 </package>
