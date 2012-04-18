@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="42c284f6-b79c-449e-98ec-182709693763" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="SPVisioNet.WebParts.dll" DeploymentTarget="GlobalAssemblyCache">
+      <SafeControls>
+        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpNotification" TypeName="*" />
+        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpRedirectURL" TypeName="*" />
+      </SafeControls>
+    </Assembly>
+  </Assemblies>
+  <TemplateFiles>
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\wpNotification\wpNotificationUserControl.ascx" />
+    <TemplateFile Location="Layouts\SPVisioNet.WebParts\style.css" />
+  </TemplateFiles>
+  <FeatureManifests>
+    <FeatureManifest Location="SPVisioNet.WebParts_Feature1\Feature.xml" />
+  </FeatureManifests>
+</Solution>
