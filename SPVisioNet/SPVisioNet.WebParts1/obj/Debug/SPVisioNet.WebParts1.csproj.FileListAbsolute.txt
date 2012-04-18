@@ -3,3 +3,5 @@ C:\Agusto\SPVisioNet\SPVisioNet.WebParts1\bin\Debug\SPVisioNet.WebParts1.pdb
 C:\Agusto\SPVisioNet\SPVisioNet.WebParts1\obj\Debug\ResolveAssemblyReference.cache
 C:\Agusto\SPVisioNet\SPVisioNet.WebParts1\obj\Debug\SPVisioNet.WebParts1.dll
 C:\Agusto\SPVisioNet\SPVisioNet.WebParts1\obj\Debug\SPVisioNet.WebParts1.pdb
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts1\bin\Debug\SPVisionet.CorporateSecretary.Common.dll
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts1\bin\Debug\SPVisionet.CorporateSecretary.Common.pdb
