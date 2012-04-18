@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="SPVisioNet.WebParts.wpRedirectURL.wpRedirectURL, SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">wpRedirectURL</property>
+        <property name="Description" type="string">WebPart Redirect URL</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>
