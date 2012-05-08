@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesia.PendirianPerusahaanBaruIndonesia, SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">Pendirian Perusahaan Baru (Indonesia)</property>
+        <property name="Description" type="string">Form pengisian Pendirian Perusahaan Baru (Indonesia)</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

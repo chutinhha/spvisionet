@@ -21,7 +21,7 @@ namespace SPVisioNet.WebParts.wpNotification
     public class wpNotification : Microsoft.SharePoint.WebPartPages.WebPart
     {
         // Visual Studio might automatically update this path when you change the Visual Web Part project item.
-        private const string _ascxPath = @"~/_CONTROLTEMPLATES/Baznas/wpNotification/wpNotificationUserControl.ascx";
+        private const string _ascxPath = @"~/_CONTROLTEMPLATES/SPVisioNet.WebParts/wpNotification/wpNotificationUserControl.ascx";
         private string _errMessage = "";
         protected SPVisioNet.WebParts.wpNotification.wpNotificationUserControl ucControl;
 
