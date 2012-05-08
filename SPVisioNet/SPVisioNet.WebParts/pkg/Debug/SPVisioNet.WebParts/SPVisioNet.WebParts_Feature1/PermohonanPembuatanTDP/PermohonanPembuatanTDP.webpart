@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="SPVisioNet.WebParts.PermohonanPembuatanTDP.PermohonanPembuatanTDP, SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">PermohonanPembuatanTDP</property>
+        <property name="Description" type="string">Permohonan Pembuatan TDP</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>
