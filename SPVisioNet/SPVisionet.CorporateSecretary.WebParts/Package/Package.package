@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="8913f73e-343e-453c-ab45-5788eb3a11af" solutionId="8913f73e-343e-453c-ab45-5788eb3a11af" resetWebServer="false" name="SPVisionet.CorporateSecretary.WebParts" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="f4999973-a0d6-4a85-8615-2831ea0dd902" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="55f4f4da-9a40-4f01-8adf-0206d86bc00b" />
+  </projectItems>
+</package>

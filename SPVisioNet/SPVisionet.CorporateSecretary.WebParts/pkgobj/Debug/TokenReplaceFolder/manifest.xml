@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="8913f73e-343e-453c-ab45-5788eb3a11af" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="SPVisionet.CorporateSecretary.WebParts.dll" DeploymentTarget="GlobalAssemblyCache">
+      <SafeControls>
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesia" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha" TypeName="*" />
+      </SafeControls>
+    </Assembly>
+  </Assemblies>
+  <TemplateFiles>
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PendirianPerusahaanBaruForeign\PendirianPerusahaanBaruForeignUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PendirianPerusahaanBaruIndonesia\PendirianPerusahaanBaruIndonesiaUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanIzinUsaha\PermohonanPembuatanIzinUsahaUserControl.ascx" />
+    <TemplateFile Location="Images\SPVisionet.CorporateSecretary.WebParts\popup.gif" />
+  </TemplateFiles>
+  <FeatureManifests>
+    <FeatureManifest Location="SPVisionet.CorporateSecretary.WebParts_Corporate Secretary\Feature.xml" />
+  </FeatureManifests>
+</Solution>

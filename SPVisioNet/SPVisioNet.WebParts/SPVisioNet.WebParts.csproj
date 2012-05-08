@@ -53,8 +53,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GridViewExportUtil.cs" />
+    <Compile Include="PermohonanPembuatanSIUP\PermohonanPembuatanSIUP.cs" />
+    <Compile Include="PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx.cs">
+      <DependentUpon>PermohonanPembuatanSIUPUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx.designer.cs">
+      <DependentUpon>PermohonanPembuatanSIUPUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PermohonanPembuatanTDP\PermohonanPembuatanTDP.cs" />
+    <Compile Include="PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx.cs">
+      <DependentUpon>PermohonanPembuatanTDPUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx.designer.cs">
+      <DependentUpon>PermohonanPembuatanTDPUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroan.cs" />
+    <Compile Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx.cs">
+      <DependentUpon>PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx.designer.cs">
+      <DependentUpon>PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SR.cs" />
     <Compile Include="ToolPartCustom.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="wpNotification\wpNotification.cs" />
     <Compile Include="wpNotification\wpNotificationUserControl.ascx.cs">
       <DependentUpon>wpNotificationUserControl.ascx</DependentUpon>
@@ -69,6 +95,9 @@
     <None Include="Features\Feature1\Feature1.feature">
       <FeatureId>{ffc82d5d-2f63-40ed-9175-03fc34171061}</FeatureId>
     </None>
+    <None Include="Images\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{4825d390-f578-4a1f-a8e9-2788a4c04f15}</SharePointProjectItemId>
+    </None>
     <None Include="key.snk" />
     <None Include="Layouts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{26a872da-8f60-482e-b848-b18fabfdda6d}</SharePointProjectItemId>
@@ -79,6 +108,18 @@
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
+    <None Include="PermohonanPembuatanSIUP\PermohonanPembuatanSIUP.webpart" />
+    <None Include="PermohonanPembuatanSIUP\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{977bfff5-09a9-4282-9a4d-8ea8d8248044}</SharePointProjectItemId>
+    </None>
+    <None Include="PermohonanPembuatanTDP\PermohonanPembuatanTDP.webpart" />
+    <None Include="PermohonanPembuatanTDP\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{79af8da9-f52e-4cd4-a794-a9c82e54ac50}</SharePointProjectItemId>
+    </None>
+    <None Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroan.webpart" />
+    <None Include="PerubahanAnggaranDasarDanDataPerseroan\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{02f4e632-c2fa-4e69-9022-ec1b76f0c04c}</SharePointProjectItemId>
+    </None>
     <None Include="wpNotification\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{228274b2-83b8-468f-928d-57cf8314a1fa}</SharePointProjectItemId>
     </None>
@@ -88,12 +129,29 @@
     </None>
     <None Include="wpRedirectURL\wpRedirectURL.webpart" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="SR.resx">
+      <DependentUpon>SR.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Features\Feature1\Feature1.Template.xml">
       <DependentUpon>Feature1.feature</DependentUpon>
     </Content>
+    <Content Include="Images\SPVisioNet.WebParts\popup.gif" />
     <Content Include="Layouts\SPVisioNet.WebParts\style.css" />
+    <Content Include="PermohonanPembuatanSIUP\Elements.xml" />
+    <Content Include="PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="PermohonanPembuatanTDP\Elements.xml" />
+    <Content Include="PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="PerubahanAnggaranDasarDanDataPerseroan\Elements.xml" />
+    <Content Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="wpNotification\Elements.xml" />
     <Content Include="wpNotification\wpNotificationUserControl.ascx">
       <SubType>ASPXCodeBehind</SubType>

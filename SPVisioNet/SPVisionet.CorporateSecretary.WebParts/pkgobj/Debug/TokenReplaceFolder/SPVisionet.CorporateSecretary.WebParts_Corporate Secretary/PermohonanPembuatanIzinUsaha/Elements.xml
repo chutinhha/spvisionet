@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
+  <Module Name="PermohonanPembuatanIzinUsaha" List="113" Url="_catalogs/wp">
+    <File Path="PermohonanPembuatanIzinUsaha\PermohonanPembuatanIzinUsaha.webpart" Url="PermohonanPembuatanIzinUsaha.webpart" Type="GhostableInLibrary" >
+      <Property Name="Group" Value="Corporate Secretary" />
+    </File>
+  </Module>
+</Elements>

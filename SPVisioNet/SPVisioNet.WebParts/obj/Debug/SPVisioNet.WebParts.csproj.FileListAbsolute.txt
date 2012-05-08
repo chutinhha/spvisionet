@@ -3,3 +3,6 @@ C:\Agusto\SPVisioNet\SPVisioNet.WebParts\bin\Debug\SPVisioNet.WebParts.pdb
 C:\Agusto\SPVisioNet\SPVisioNet.WebParts\obj\Debug\ResolveAssemblyReference.cache
 C:\Agusto\SPVisioNet\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.dll
 C:\Agusto\SPVisioNet\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.pdb
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.SR.resources
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts\obj\Debug\ResGen.read.1.tlog
+C:\Agusto\SPVisioNet\SPVisioNet.WebParts\obj\Debug\ResGen.write.1.tlog
