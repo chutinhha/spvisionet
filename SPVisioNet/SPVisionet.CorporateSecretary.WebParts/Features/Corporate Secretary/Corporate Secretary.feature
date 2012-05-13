@@ -5,5 +5,10 @@
     <projectItemReference itemId="4545face-8d9f-41ed-adc5-37258a0b2859" />
     <projectItemReference itemId="6ed9ff0d-b859-4899-9bb7-0049e4549c87" />
     <projectItemReference itemId="faa197c2-4aae-4327-8df6-0c013ef75e42" />
+    <projectItemReference itemId="5f36409b-ff7b-478f-bf77-428e410fca99" />
+    <projectItemReference itemId="7e28312b-2042-4b4d-9b53-0dbed0c89750" />
+    <projectItemReference itemId="b75bd2b6-f45a-44c7-8a42-16fdfcab60f8" />
+    <projectItemReference itemId="ed0ddc65-20d4-4154-afea-d51f6461ffe8" />
+    <projectItemReference itemId="3ab878a6-049d-4050-a4c8-d9a0492ecece" />
   </projectItems>
 </feature>

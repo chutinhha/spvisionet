@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="PermohonanPembuatanTDPUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="PermohonanPembuatanTDP\" Type="ElementManifest" />
+    <ProjectItemFile Source="PermohonanPembuatanTDP.webpart" Target="PermohonanPembuatanTDP\" Type="ElementFile" />
+    <ProjectItemFile Source="PermohonanPembuatanTDPUserControl.ascx" Target="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanTDP\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

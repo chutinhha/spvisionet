@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="SPVisioNet.WebParts1.PendirianPerusahaanBaruIndonesia.PendirianPerusahaanBaruIndonesia, SPVisioNet.WebParts1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9cd0a1a2a4e17477" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">PendirianPerusahaanBaruIndonesia</property>
+        <property name="Description" type="string">My Visual WebPart</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

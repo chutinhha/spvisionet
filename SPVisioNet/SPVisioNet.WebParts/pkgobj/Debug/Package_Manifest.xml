@@ -6,16 +6,12 @@
         <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpNotification" TypeName="*" />
         <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpRedirectURL" TypeName="*" />
         <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan" TypeName="*" />
-        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.PermohonanPembuatanSIUP" TypeName="*" />
-        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.PermohonanPembuatanTDP" TypeName="*" />
       </SafeControls>
     </Assembly>
   </Assemblies>
   <TemplateFiles>
     <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\wpNotification\wpNotificationUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx" />
-    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx" />
-    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx" />
     <TemplateFile Location="Layouts\SPVisioNet.WebParts\style.css" />
     <TemplateFile Location="Images\SPVisioNet.WebParts\popup.gif" />
   </TemplateFiles>
