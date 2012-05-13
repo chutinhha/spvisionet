@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="403dacf5-3e62-4c94-8128-71bc31e7931f" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="SPVisioNet.WebParts1.dll" DeploymentTarget="GlobalAssemblyCache">
+      <SafeControls>
+        <SafeControl Assembly="SPVisioNet.WebParts1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9cd0a1a2a4e17477" Namespace="SPVisioNet.WebParts1.PendirianPerusahaanBaruForeign" TypeName="*" />
+        <SafeControl Assembly="SPVisioNet.WebParts1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9cd0a1a2a4e17477" Namespace="SPVisioNet.WebParts1.PendirianPerusahaanBaruIndonesia" TypeName="*" />
+      </SafeControls>
+    </Assembly>
+  </Assemblies>
+  <TemplateFiles>
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts1\PendirianPerusahaanBaruForeign\PendirianPerusahaanBaruForeignUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts1\PendirianPerusahaanBaruIndonesia\PendirianPerusahaanBaruIndonesiaUserControl.ascx" />
+    <TemplateFile Location="Images\SPVisioNet.WebParts1\popup.gif" />
+    <TemplateFile Location="Layouts\SPVisioNet.WebParts1\JQuery\jquery-1.5.1.min.js" />
+    <TemplateFile Location="Layouts\SPVisioNet.WebParts1\JQuery\jquery-ui-1.8.13.custom.min.js" />
+    <TemplateFile Location="Layouts\SPVisioNet.WebParts1\js.js" />
+    <TemplateFile Location="Layouts\SPVisioNet.WebParts1\Styles.css" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-icons_222222_256x240.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-icons_228ef1_256x240.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\images\ui-icons_ffffff_256x240.png" />
+    <TemplateFile Location="Layouts\themes\ui-lightness\jquery-ui-1.8.13.custom.css" />
+  </TemplateFiles>
+  <FeatureManifests>
+    <FeatureManifest Location="SPVisioNet.WebParts1_Feature1\Feature.xml" />
+  </FeatureManifests>
+</Solution>

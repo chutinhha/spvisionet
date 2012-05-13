@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="PermintaanDokumenUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="PermintaanDokumen\" Type="ElementManifest" />
+    <ProjectItemFile Source="PermintaanDokumen.webpart" Target="PermintaanDokumen\" Type="ElementFile" />
+    <ProjectItemFile Source="PermintaanDokumenUserControl.ascx" Target="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermintaanDokumen\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

@@ -7,9 +7,5 @@
     <ElementFile Location="wpRedirectURL\wpRedirectURL.webpart" />
     <ElementManifest Location="PerubahanAnggaranDasarDanDataPerseroan\Elements.xml" />
     <ElementFile Location="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroan.webpart" />
-    <ElementManifest Location="PermohonanPembuatanSIUP\Elements.xml" />
-    <ElementFile Location="PermohonanPembuatanSIUP\PermohonanPembuatanSIUP.webpart" />
-    <ElementManifest Location="PermohonanPembuatanTDP\Elements.xml" />
-    <ElementFile Location="PermohonanPembuatanTDP\PermohonanPembuatanTDP.webpart" />
   </ElementManifests>
 </Feature>

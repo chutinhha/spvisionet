@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Id="13f890e2-b39a-44ea-8b11-e6ab8a34a6ee" Scope="Site" Title="SPVisioNet.WebParts1 Feature1">
+  <ElementManifests>
+    <ElementManifest Location="PendirianPerusahaanBaruForeign\Elements.xml" />
+    <ElementFile Location="PendirianPerusahaanBaruForeign\PendirianPerusahaanBaruForeign.webpart" />
+    <ElementManifest Location="PendirianPerusahaanBaruIndonesia\Elements.xml" />
+    <ElementFile Location="PendirianPerusahaanBaruIndonesia\PendirianPerusahaanBaruIndonesia.webpart" />
+  </ElementManifests>
+</Feature>

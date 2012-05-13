@@ -6,6 +6,11 @@
         <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign" TypeName="*" />
         <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesia" TypeName="*" />
         <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PerubahanPTBiasaMenjadiPMAPMDN" TypeName="*" />
       </SafeControls>
     </Assembly>
   </Assemblies>
@@ -13,6 +18,11 @@
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PendirianPerusahaanBaruForeign\PendirianPerusahaanBaruForeignUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PendirianPerusahaanBaruIndonesia\PendirianPerusahaanBaruIndonesiaUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanIzinUsaha\PermohonanPembuatanIzinUsahaUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermintaanDokumen\PermintaanDokumenUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPerdaftaranPMAPMDN\PermohonanPerdaftaranPMAPMDNUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PerubahanPTBiasaMenjadiPMAPMDN\PerubahanPTBiasaMenjadiPMAPMDNUserControl.ascx" />
     <TemplateFile Location="Images\SPVisionet.CorporateSecretary.WebParts\popup.gif" />
   </TemplateFiles>
   <FeatureManifests>

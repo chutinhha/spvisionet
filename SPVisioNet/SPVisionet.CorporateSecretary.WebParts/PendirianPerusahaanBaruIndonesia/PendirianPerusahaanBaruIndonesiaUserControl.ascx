@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtNamaPemohon" runat="server" />
-                        <asp:ImageButton ID="imgbtnNamaPemohon" ValidationGroup="popup" runat="server" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                        <asp:ImageButton ID="imgbtnNamaPemohon" ValidationGroup="popup" runat="server" ImageUrl="/_layouts//_layouts/images/SPVisionet.CorporateSecretary.WebParts/SPVisionet.CorporateSecretary.WebParts/popup.gif"
                             ToolTip="Search" OnClientClick="openDialog('Cari Nama Pemohon', 'divMainSearch')"
                             CausesValidation="false" />
                     </td>
@@ -73,7 +73,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtEmailPemohon" runat="server" />
-                        <img src="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
+                        <img src="/_layouts//_layouts/images/SPVisionet.CorporateSecretary.WebParts/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
                     </td>
                 </tr>
             </table>
@@ -817,7 +817,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtNotaris" runat="server" />
-                        <img src="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
+                        <img src="/_layouts//_layouts/images/SPVisionet.CorporateSecretary.WebParts/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
                     </td>
                 </tr>
                 <tr>
