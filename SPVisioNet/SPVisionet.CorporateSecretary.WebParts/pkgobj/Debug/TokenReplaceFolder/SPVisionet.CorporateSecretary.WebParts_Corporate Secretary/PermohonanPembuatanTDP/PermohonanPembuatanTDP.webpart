@@ -7,8 +7,8 @@
     </metaData>
     <data>
       <properties>
-        <property name="Title" type="string">PermohonanPembuatanTDP</property>
-        <property name="Description" type="string">My Visual WebPart</property>
+        <property name="Title" type="string">Permohonan Pembuatan TDP</property>
+        <property name="Description" type="string">Form Permohonan Pembuatan TDP</property>
       </properties>
     </data>
   </webPart>

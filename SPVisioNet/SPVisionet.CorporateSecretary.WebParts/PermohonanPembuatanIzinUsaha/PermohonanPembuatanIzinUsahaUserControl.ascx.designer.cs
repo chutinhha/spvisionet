@@ -112,22 +112,22 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.Literal ltrTempatKedudukan;
         
         /// <summary>
-        /// txtKlasifikasi control.
+        /// ddlKlasifikasiLapanganUsaha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKlasifikasi;
+        protected global::System.Web.UI.WebControls.DropDownList ddlKlasifikasiLapanganUsaha;
         
         /// <summary>
-        /// reqtxtKlasifikasi control.
+        /// reqddlKlasifikasiLapanganUsaha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtKlasifikasi;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlKlasifikasiLapanganUsaha;
         
         /// <summary>
         /// ltrKlasifikasi control.
@@ -193,15 +193,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.Literal ltrNamaPerusahaanIzinUsaha;
         
         /// <summary>
-        /// pnlfuFile control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlfuFile;
-        
-        /// <summary>
         /// ltrfu control.
         /// </summary>
         /// <remarks>
@@ -209,24 +200,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltrfu;
-        
-        /// <summary>
-        /// lbDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbDelete;
-        
-        /// <summary>
-        /// pnlfu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlfu;
         
         /// <summary>
         /// fu control.
@@ -290,6 +263,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltrTanggalMulaiBerlaku;
+        
+        /// <summary>
+        /// reqdtTanggalMulaiBerlaku control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalMulaiBerlaku;
         
         /// <summary>
         /// txtKeteranganIzinUsaha control.

@@ -54,7 +54,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtKodePerusahaan" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtKodePerusahaan" Display="Dynamic" runat="server"
+                    <asp:RequiredFieldValidator ID="reqtxtKodePerusahaan" ValidationGroup="Save" Display="Dynamic" runat="server"
                         ControlToValidate="txtKodePerusahaan" ErrorMessage="Required Field" />
                     <asp:Literal ID="ltrKodePerusahaan" runat="server" />
                 </td>
@@ -68,7 +68,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtNamaPerusahaan" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtNamaPerusahaan" Display="Dynamic" runat="server"
+                    <asp:RequiredFieldValidator ID="reqtxtNamaPerusahaan" ValidationGroup="Save" Display="Dynamic" runat="server"
                         ControlToValidate="txtNamaPerusahaan" ErrorMessage="Required Field" />
                     <asp:Literal ID="ltrNamaPerusahaan" runat="server" />
                 </td>
@@ -82,7 +82,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtTempatKedudukan" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtTempatKedudukan" Display="Dynamic" runat="server"
+                    <asp:RequiredFieldValidator ID="reqtxtTempatKedudukan" ValidationGroup="Save" Display="Dynamic" runat="server"
                         ControlToValidate="txtTempatKedudukan" ErrorMessage="Required Field" />
                     <asp:Literal ID="ltrTempatKedudukan" runat="server" />
                 </td>
@@ -95,9 +95,10 @@
                     :
                 </td>
                 <td>
-                    <asp:TextBox ID="txtKlasifikasi" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtKlasifikasi" Display="Dynamic" runat="server"
-                        ControlToValidate="txtKlasifikasi" ErrorMessage="Required Field" />
+                    <asp:DropDownList ID="ddlKlasifikasiLapanganUsaha" runat="server" DataTextField="Title"
+                        DataValueField="ID" />
+                    <asp:RequiredFieldValidator ID="reqddlKlasifikasiLapanganUsaha" ValidationGroup="Save" Display="Dynamic"
+                        runat="server" ControlToValidate="ddlKlasifikasiLapanganUsaha" ErrorMessage="Required Field" />
                     <asp:Literal ID="ltrKlasifikasi" runat="server" />
                 </td>
             </tr>
@@ -110,11 +111,8 @@
                 </td>
                 <td>
                     <asp:DropDownList ID="ddlStatusPerseroan" runat="server">
-                        <asp:ListItem Text="--Select--" Value="" />
-                        <asp:ListItem Text="PMA" Value="PMA" />
-                        <asp:ListItem Text="PMDN" Value="PMDN" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="reqddlStatusPerseroan" Display="Dynamic" runat="server"
+                    <asp:RequiredFieldValidator ID="reqddlStatusPerseroan" ValidationGroup="Save" Display="Dynamic" runat="server"
                         ControlToValidate="ddlStatusPerseroan" ErrorMessage="Required Field" />
                     <asp:Literal ID="ltrStatusPerseroan" runat="server" />
                 </td>
@@ -134,6 +132,32 @@
         </table>
     </fieldset>
     <fieldset>
+        <table border="0">
+            <tr>
+                <td>
+                    Diajukan Oleh
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    Corporate Secretary
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Disetujui Oleh
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    Chief Corporate Secretary
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
         <legend><b>Laporan Pembuatan Izin Usaha [
             <asp:Literal ID="ltrNamaPerusahaanIzinUsaha" runat="server" />
             ]</b></legend>
@@ -143,15 +167,12 @@
                     Izin Usaha<span style="color: Red">*</span>
                     <br />
                     <br />
-                    <asp:Panel ID="pnlfuFile" runat="server" Visible="false">
-                        <asp:Literal ID="ltrfu" runat="server" />
-                        <asp:LinkButton ID="lbDelete" runat="server" Text="Delete" ValidationGroup="none"
-                            OnClick="lbDelete_Click"></asp:LinkButton></asp:Panel>
-                    <asp:Panel ID="pnlfu" runat="server">
-                        <asp:FileUpload ID="fu" runat="server" />
-                        <asp:RequiredFieldValidator ID="reqfu" Display="Dynamic" runat="server" ControlToValidate="fu"
-                            ErrorMessage="Required Field" />
-                    </asp:Panel>
+                    <asp:Literal ID="ltrfu" runat="server" />
+                    <br />
+                    <br />
+                    <asp:FileUpload ID="fu" runat="server" />
+                    <asp:RequiredFieldValidator ID="reqfu" Display="Dynamic" ValidationGroup="Save" runat="server" ControlToValidate="fu"
+                        ErrorMessage="Required Field" />
                 </td>
                 <td>
                     <table border="0">
@@ -164,7 +185,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtNo" runat="server" />
-                                <asp:RequiredFieldValidator ID="reqtxtNo" Display="Dynamic" runat="server" ControlToValidate="txtNo"
+                                <asp:RequiredFieldValidator ID="reqtxtNo" Display="Dynamic" ValidationGroup="Save" runat="server" ControlToValidate="txtNo"
                                     ErrorMessage="Required Field" />
                                 <asp:Literal ID="ltrNo" runat="server" />
                             </td>
@@ -177,9 +198,19 @@
                                 :
                             </td>
                             <td>
-                                <SharePoint:DateTimeControl ID="dtTanggalMulaiBerlaku" DateOnly="true" runat="server"
-                                    IsRequiredField="true" ErrorMessage="Required Field"></SharePoint:DateTimeControl>
-                                <asp:Literal ID="ltrTanggalMulaiBerlaku" runat="server" />
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+                                            <SharePoint:DateTimeControl ID="dtTanggalMulaiBerlaku" DateOnly="true" runat="server">
+                                            </SharePoint:DateTimeControl>
+                                            <asp:Literal ID="ltrTanggalMulaiBerlaku" runat="server" />
+                                        </td>
+                                        <td>
+                                            <asp:RequiredFieldValidator ID="reqdtTanggalMulaiBerlaku" ValidationGroup="Save" runat="server" ControlToValidate="dtTanggalMulaiBerlaku$dtTanggalMulaiBerlakuDate"
+                                                ErrorMessage="Required Field" Display="Dynamic" />
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr>
@@ -208,8 +239,8 @@
     </fieldset>
     <fieldset>
         <div style="text-align: right">
-            <asp:Button ID="btnSaveUpdate" runat="server" Text="Save" OnClick="btnSaveUpdate_Click" />&nbsp;
-            <asp:Button ID="btnCancel" runat="server" ValidationGroup="Cancel" Text="Cancel"
+            <asp:Button ID="btnSaveUpdate" runat="server" Text="Save" ValidationGroup="Save" OnClick="btnSaveUpdate_Click" />&nbsp;
+            <asp:Button ID="btnCancel" runat="server" Text="Cancel"
                 OnClick="btnCancel_Click" />
         </div>
     </fieldset>

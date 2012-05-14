@@ -2,7 +2,7 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
   <Module Name="PermohonanPembuatanSIUP" List="113" Url="_catalogs/wp">
     <File Path="PermohonanPembuatanSIUP\PermohonanPembuatanSIUP.webpart" Url="PermohonanPembuatanSIUP.webpart" Type="GhostableInLibrary" >
-      <Property Name="Group" Value="Custom" />
+      <Property Name="Group" Value="Corporate Secretary" />
     </File>
   </Module>
 </Elements>

@@ -49,6 +49,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.TextBox txtTujuanPenggunaan;
         
         /// <summary>
+        /// reqtxtTujuanPenggunaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtTujuanPenggunaan;
+        
+        /// <summary>
         /// txtNamaPemohon control.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.TextBox txtNamaPerusahaan;
         
         /// <summary>
+        /// reqtxtNamaPerusahaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNamaPerusahaan;
+        
+        /// <summary>
         /// ddlTempatKedudukan control.
         /// </summary>
         /// <remarks>
@@ -92,6 +110,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTempatKedudukan;
+        
+        /// <summary>
+        /// reqddlTempatKedudukan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlTempatKedudukan;
         
         /// <summary>
         /// ddlMaksudTujuan control.
@@ -103,6 +130,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.DropDownList ddlMaksudTujuan;
         
         /// <summary>
+        /// reqddlMaksudTujuan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlMaksudTujuan;
+        
+        /// <summary>
         /// ddlStatusOwnership control.
         /// </summary>
         /// <remarks>
@@ -110,6 +146,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatusOwnership;
+        
+        /// <summary>
+        /// reqddlStatusOwnership control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlStatusOwnership;
         
         /// <summary>
         /// ddlMataUang control.
@@ -121,6 +166,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.DropDownList ddlMataUang;
         
         /// <summary>
+        /// reqddlMataUang control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlMataUang;
+        
+        /// <summary>
         /// txtModalDasar control.
         /// </summary>
         /// <remarks>
@@ -128,6 +182,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtModalDasar;
+        
+        /// <summary>
+        /// reqtxtModalDasar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtModalDasar;
+        
+        /// <summary>
+        /// txtNominalModalDasar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalModalDasar;
         
         /// <summary>
         /// txtModalSetor control.
@@ -139,6 +211,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.TextBox txtModalSetor;
         
         /// <summary>
+        /// reqtxtModalSetor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtModalSetor;
+        
+        /// <summary>
+        /// txtNominalModalSetor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalModalSetor;
+        
+        /// <summary>
         /// txtNominalSaham control.
         /// </summary>
         /// <remarks>
@@ -146,6 +236,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNominalSaham;
+        
+        /// <summary>
+        /// reqtxtNominalSaham control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNominalSaham;
         
         /// <summary>
         /// dgPemegangSaham control.
@@ -166,13 +265,22 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.DataGrid dgKomisaris;
         
         /// <summary>
-        /// ddlWewenangDireksi control.
+        /// upWewenangDireksi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlWewenangDireksi;
+        protected global::System.Web.UI.UpdatePanel upWewenangDireksi;
+        
+        /// <summary>
+        /// dgWewenangDireksi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataGrid dgWewenangDireksi;
         
         /// <summary>
         /// txtKeterangan control.
@@ -490,6 +598,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.TextBox txtKeteranganBNRI;
         
         /// <summary>
+        /// dgDokumenLainnya control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataGrid dgDokumenLainnya;
+        
+        /// <summary>
         /// ltrTanggalDP control.
         /// </summary>
         /// <remarks>
@@ -695,6 +812,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeteranganDP;
+        
+        /// <summary>
+        /// btnSaveUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveUpdate;
+        
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// upMainSearch control.

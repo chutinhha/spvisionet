@@ -16,6 +16,9 @@
                 <h3>
                     <b>Permohonan Pendirian Perusahaan (Indonesia)</b></h3>
             </legend>
+            <br />
+            <div style="text-align: right">
+                <span style="color: Red">*</span> indicates a required field</div>
             <table border="0">
                 <tr>
                     <td>
@@ -36,44 +39,46 @@
                         :
                     </td>
                     <td>
-                        <asp:Literal ID="ltrRequestCode" runat="server" />
+                        <asp:Literal ID="ltrRequestCode" runat="server" Text="Auto Generate" />
                     </td>
                 </tr>
                 <tr>
                     <td valign="top">
-                        Tujuan Penggunaan PT
+                        Tujuan Penggunaan PT <span style="color: Red">*</span>
                     </td>
                     <td valign="top">
                         :
                     </td>
                     <td>
                         <asp:TextBox ID="txtTujuanPenggunaan" runat="server" Width="400px" Rows="5" TextMode="MultiLine" />
+                        <asp:RequiredFieldValidator ID="reqtxtTujuanPenggunaan" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="txtTujuanPenggunaan" ErrorMessage="Required Field" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Nama Pemohon
+                        Nama Pemohon <span style="color: Red">*</span>
                     </td>
                     <td>
                         :
                     </td>
                     <td>
                         <asp:TextBox ID="txtNamaPemohon" runat="server" />
-                        <asp:ImageButton ID="imgbtnNamaPemohon" ValidationGroup="popup" runat="server" ImageUrl="/_layouts//_layouts/images/SPVisionet.CorporateSecretary.WebParts/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                        <asp:ImageButton ID="imgbtnNamaPemohon" ValidationGroup="popup" runat="server" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
                             ToolTip="Search" OnClientClick="openDialog('Cari Nama Pemohon', 'divMainSearch')"
                             CausesValidation="false" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Email Pemohon
+                        Email Pemohon <span style="color: Red">*</span>
                     </td>
                     <td>
                         :
                     </td>
                     <td>
                         <asp:TextBox ID="txtEmailPemohon" runat="server" />
-                        <img src="/_layouts//_layouts/images/SPVisionet.CorporateSecretary.WebParts/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
+                        <img src="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
                     </td>
                 </tr>
             </table>
@@ -82,95 +87,133 @@
                 <table border="0">
                     <tr>
                         <td>
-                            Nama Perusahaan
+                            Nama Perusahaan <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:TextBox ID="txtNamaPerusahaan" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtNamaPerusahaan" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtNamaPerusahaan" ErrorMessage="Required Field" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Tempat Kedudukan
+                            Tempat Kedudukan <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:DropDownList ID="ddlTempatKedudukan" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqddlTempatKedudukan" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="ddlTempatKedudukan" ErrorMessage="Required Field" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Maksud dan Tujuan
+                            Maksud dan Tujuan <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:DropDownList ID="ddlMaksudTujuan" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqddlMaksudTujuan" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="ddlMaksudTujuan" ErrorMessage="Required Field" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Status Ownership
+                            Status Ownership <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:DropDownList ID="ddlStatusOwnership" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqddlStatusOwnership" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="ddlStatusOwnership" ErrorMessage="Required Field" />
                         </td>
                     </tr>
                 </table>
             </fieldset>
             <fieldset>
                 <legend><b>Struktur Permodalan</b></legend>
-                <table>
+                <table border="0">
                     <tr>
-                        <td>
-                            Mata Uang
+                        <td width="100px">
+                            Mata Uang <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:DropDownList ID="ddlMataUang" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqddlMataUang" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="ddlMataUang" ErrorMessage="Required Field" />
+                        </td>
+                    </tr>
+                </table>
+                <table border="0">
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td align="center">
+                            Saham
+                        </td>
+                        <td align="center">
+                            Nominal
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Modal Dasar
+                            Modal Dasar <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:TextBox ID="txtModalDasar" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtModalDasar" ErrorMessage="Required Field" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNominalModalDasar" Enabled="false" runat="server" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Modal Setor
+                            Modal Setor <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:TextBox ID="txtModalSetor" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtModalSetor" ErrorMessage="Required Field" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNominalModalSetor" Enabled="false" runat="server" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Nominal Saham
+                            Nominal Saham <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
                             <asp:TextBox ID="txtNominalSaham" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtNominalSaham" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtNominalSaham" ErrorMessage="Required Field" />
+                        </td>
+                        <td>
                         </td>
                     </tr>
                 </table>
@@ -235,7 +278,7 @@
                                 <asp:TextBox ID="txtPartnerEdit" runat="server" />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn>
+                        <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
                                 <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="delete">Delete</asp:LinkButton>
@@ -289,7 +332,7 @@
                                 <asp:TextBox ID="txtJabatanEdit" runat="server" />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn>
+                        <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
                                 <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="delete">Delete</asp:LinkButton>
@@ -305,60 +348,101 @@
                     </Columns>
                 </asp:DataGrid>
             </fieldset>
-            <table border="0">
-                <tr>
-                    <td>
-                        Wewenang Direksi
-                    </td>
-                    <td>
-                        :
-                    </td>
-                    <td>
-                        <asp:DropDownList ID="ddlWewenangDireksi" runat="server" />
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top">
-                        Keterangan
-                    </td>
-                    <td valign="top">
-                        :
-                    </td>
-                    <td>
-                        <asp:TextBox ID="txtKeterangan" runat="server" Width="400px" Rows="5" TextMode="MultiLine" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Diajukan Oleh
-                    </td>
-                    <td>
-                        :
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Disetujui Oleh
-                    </td>
-                    <td>
-                        :
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Mengetahui
-                    </td>
-                    <td>
-                        :
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </table>
+            <asp:UpdatePanel ID="upWewenangDireksi" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <fieldset>
+                        <legend><b>Wewenang Direksi</b></legend>
+                        <asp:DataGrid ID="dgWewenangDireksi" runat="server" AutoGenerateColumns="false" CssClass="table"
+                            ShowFooter="true" OnItemCommand="dgWewenangDireksi_ItemCommand">
+                            <HeaderStyle CssClass="header" />
+                            <ItemStyle CssClass="odd" />
+                            <AlternatingItemStyle CssClass="white" />
+                            <Columns>
+                                <%--<asp:TemplateColumn HeaderText="CityID" Visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblCityID" runat="server" Text='<%# Eval("City") %>' />
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:Label ID="lblCityEdit" runat="server" Text='<%# Eval("City") %>' />
+                    </EditItemTemplate>
+                </asp:TemplateColumn>--%>
+                                <asp:TemplateColumn HeaderText="Nama">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblNama" runat="server" Text='<%# Eval("Nama") %>' />
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="txtNamaAdd" runat="server" Width="200px" />
+                                    </FooterTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtNamaEdit" runat="server" Width="200px" Text='<%# Eval("Nama") %>' />
+                                    </EditItemTemplate>
+                                </asp:TemplateColumn>
+                                <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
+                                        <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="delete">Delete</asp:LinkButton>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="dgWewenangDireksi" CommandName="add">Add</asp:LinkButton>
+                                    </FooterTemplate>
+                                    <EditItemTemplate>
+                                        <asp:LinkButton ID="btnSave" runat="server" ValidationGroup="dgWewenangDireksi" CommandName="save">Save</asp:LinkButton>
+                                        <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
+                                    </EditItemTemplate>
+                                </asp:TemplateColumn>
+                            </Columns>
+                        </asp:DataGrid>
+                    </fieldset>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <fieldset>
+                <table border="0">
+                    <tr>
+                        <td valign="top">
+                            Keterangan
+                        </td>
+                        <td valign="top">
+                            :
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtKeterangan" runat="server" Width="400px" Rows="5" TextMode="MultiLine" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Diajukan Oleh
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            PIC Corporate Secretary
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Disetujui Oleh
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            Div Head Corporate Secretary & Chief Corporate Secreatry
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mengetahui
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            CEO
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
             <fieldset>
                 <legend><b>Laporan Perkembangan Pendirian</b></legend>
                 <fieldset>
@@ -765,8 +849,65 @@
                     </table>
                 </fieldset>
             </fieldset>
+            <fieldset>
+                <legend>Dokumen Lainnya</legend>
+                <asp:DataGrid ID="dgDokumenLainnya" runat="server" AutoGenerateColumns="false" CssClass="table"
+                    ShowFooter="true" Width="100%">
+                    <HeaderStyle CssClass="header" />
+                    <ItemStyle CssClass="odd" />
+                    <AlternatingItemStyle CssClass="white" />
+                    <Columns>
+                        <asp:TemplateColumn HeaderText="Nama Dokumen">
+                            <ItemTemplate>
+                                <asp:Label ID="lblNamaDokumen" runat="server" />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="txtNamaDokumenAdd" runat="server" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtNamaDokumenEdit" runat="server" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Penjelasan">
+                            <ItemTemplate>
+                                <asp:Label ID="lblPenjelasan" runat="server" />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="txtPenjelasanAdd" runat="server" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtPenjelasanEdit" runat="server" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Attachment">
+                            <ItemTemplate>
+                                <asp:Label ID="lblAtttachment" runat="server" />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:FileUpload ID="fuAdd" runat="server" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="fuEdit" runat="server" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
+                                <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="delete">Delete</asp:LinkButton>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="dgDokumenLainnya" CommandName="add">Add</asp:LinkButton>
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:LinkButton ID="btnSave" runat="server" ValidationGroup="dgDokumenLainnya" CommandName="save">Save</asp:LinkButton>
+                                <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                    </Columns>
+                </asp:DataGrid>
+            </fieldset>
         </fieldset>
-        <fieldset>
+        <fieldset runat="server" visible="false">
             <legend>
                 <h3>
                     <b>Data Perusahaan</b></h3>
@@ -817,7 +958,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtNotaris" runat="server" />
-                        <img src="/_layouts//_layouts/images/SPVisionet.CorporateSecretary.WebParts/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
+                        <img src="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif" alt="Search" />
                     </td>
                 </tr>
                 <tr>
@@ -1075,6 +1216,12 @@
                     </td>
                 </tr>
             </table>
+        </fieldset>
+        <fieldset>
+            <div style="text-align: right">
+                <asp:Button ID="btnSaveUpdate" runat="server" ValidationGroup="Save" Text="Save" />&nbsp;
+                <asp:Button ID="Button1" runat="server" Text="Cancel" />
+            </div>
         </fieldset>
     </ContentTemplate>
 </asp:UpdatePanel>

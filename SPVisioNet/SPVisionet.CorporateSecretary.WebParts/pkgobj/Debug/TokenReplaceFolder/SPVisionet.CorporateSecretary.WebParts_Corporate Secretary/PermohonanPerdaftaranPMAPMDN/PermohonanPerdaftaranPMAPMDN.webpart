@@ -7,8 +7,8 @@
     </metaData>
     <data>
       <properties>
-        <property name="Title" type="string">PermohonanPerdaftaranPMAPMDN</property>
-        <property name="Description" type="string">My Visual WebPart</property>
+        <property name="Title" type="string">Permohonan Perdaftaran PMA PMDN</property>
+        <property name="Description" type="string">Form Permohonan Perdaftaran PMA PMDN</property>
       </properties>
     </data>
   </webPart>
