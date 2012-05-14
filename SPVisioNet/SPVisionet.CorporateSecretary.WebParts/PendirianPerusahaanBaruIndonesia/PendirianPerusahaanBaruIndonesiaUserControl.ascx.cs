@@ -113,9 +113,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
 
             dgDokumenLainnya.DataSource = coll;
             dgDokumenLainnya.DataBind();
-
-            dgWewenangDireksi.DataSource = coll;
-            dgWewenangDireksi.DataBind();
         }
 
         #endregion
@@ -156,7 +153,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
                         txtNominalSaham.Attributes.Add("onblur", " FormatNumber('" + txtNominalSaham.ClientID + "')");
 
                         ltrTanggal.Text = DateTime.Now.ToString("dd-MMM-yyyy HH:mm");
-                        //Bind();
+                        Bind();
 
                         BindMaksudTujuan();
                         BindMataUang();
