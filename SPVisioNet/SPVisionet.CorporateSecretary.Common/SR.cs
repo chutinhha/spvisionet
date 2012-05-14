@@ -80,6 +80,12 @@ namespace SPVisionet.CorporateSecretary.Common
                         dataName});
         }
 
+        public static string AttachmentFailed(string dataName)
+        {
+            return Keys.GetString(Keys.AttachmentFailed, new object[] {
+                        dataName});
+        }
+
         public class Keys
         {
 
@@ -104,6 +110,8 @@ namespace SPVisionet.CorporateSecretary.Common
             public const string DeleteSuccess = "DeleteSuccess";
 
             public const string InvalidData = "InvalidData";
+
+            public const string AttachmentFailed = "AttachmentFailed";
 
             public static string GetString(string key)
             {
