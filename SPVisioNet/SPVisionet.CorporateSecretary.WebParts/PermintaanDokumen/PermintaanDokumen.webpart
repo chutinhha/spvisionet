@@ -7,8 +7,8 @@
     </metaData>
     <data>
       <properties>
-        <property name="Title" type="string">PermintaanDokumen</property>
-        <property name="Description" type="string">My Visual WebPart</property>
+        <property name="Title" type="string">Permintaan Dokumen</property>
+        <property name="Description" type="string">Form Permintaan Dokumen</property>
       </properties>
     </data>
   </webPart>

@@ -7,8 +7,8 @@
     </metaData>
     <data>
       <properties>
-        <property name="Title" type="string">PerubahanPTBiasaMenjadiPMAPMDN</property>
-        <property name="Description" type="string">My Visual WebPart</property>
+        <property name="Title" type="string">Perubahan PT Biasa Menjadi PMA PMDN</property>
+        <property name="Description" type="string">Form Perubahan PT Biasa Menjadi PMA PMDN</property>
       </properties>
     </data>
   </webPart>

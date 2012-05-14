@@ -4,6 +4,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Text;
 using System.Web;
+using System.Data;
+using System.IO;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
@@ -23,6 +25,28 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
 
         #region Methods
 
+        private void BindKlasifikasiLapanganUsaha()
+        {
+            DataTable dt = Util.GetKlasifikasiLapanganUsaha(web);
+            ddlKlasifikasiLapanganUsaha.DataSource = dt;
+            ddlKlasifikasiLapanganUsaha.DataBind();
+
+            ListItem item = new ListItem("--Select--", string.Empty);
+            ddlKlasifikasiLapanganUsaha.Items.Insert(0, item);
+        }
+
+        private void BindStatusPerseroan()
+        {
+            DataTable dt = Util.GetStatusPerseroan(web);
+            ddlStatusPerseroan.DataSource = dt;
+            ddlStatusPerseroan.DataTextField = "Title";
+            ddlStatusPerseroan.DataValueField = "ID";
+            ddlStatusPerseroan.DataBind();
+
+            ListItem item = new ListItem("--Select--", string.Empty);
+            ddlStatusPerseroan.Items.Insert(0, item);
+        }
+
         private string Validation()
         {
             StringBuilder sb = new StringBuilder();
@@ -32,12 +56,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 sb.Append(SR.FieldCanNotEmpty("Nama Perusahaan") + " \\n");
             if (txtTempatKedudukan.Text.Trim() == string.Empty)
                 sb.Append(SR.FieldCanNotEmpty("Tempat Kedudukan") + " \\n");
-            if (txtKlasifikasi.Text.Trim() == string.Empty)
+            if (ddlKlasifikasiLapanganUsaha.SelectedValue == string.Empty)
                 sb.Append(SR.FieldCanNotEmpty("Klasifikasi Lapangan Usaha") + " \\n");
             if (ddlStatusPerseroan.SelectedValue == string.Empty)
                 sb.Append(SR.FieldCanNotEmpty("Status Perseroan") + " \\n");
-            if (!fu.HasFile)
-                sb.Append(SR.FieldCanNotEmpty("File Upload Izin Usaha") + " \\n");
+            if (ID == 0)
+            {
+                if (!fu.HasFile)
+                    sb.Append(SR.FieldCanNotEmpty("File Upload Izin Usaha") + " \\n");
+            }
             if (txtNo.Text.Trim() == string.Empty)
                 sb.Append(SR.FieldCanNotEmpty("No") + " \\n");
             else
@@ -57,7 +84,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             return sb.ToString();
         }
 
-        private bool SaveUpdate()
+        private string SaveUpdate()
         {
             SPList list = web.Lists[ListId]; //web.GetList(Util.CreateSharePointListStrUrl(web.Url, "IzinUsaha"));
             web.AllowUnsafeUpdates = true;
@@ -81,34 +108,62 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 item["KodePerusahaan"] = txtKodePerusahaan.Text.Trim();
                 item["NamaPerusahaan"] = txtNamaPerusahaan.Text.Trim();
                 item["TempatKedudukan"] = txtTempatKedudukan.Text.Trim();
-                item["KlasifikasiLapanganUsaha"] = txtKlasifikasi.Text.Trim();
+                item["KlasifikasiLapanganUsaha"] = ddlKlasifikasiLapanganUsaha.SelectedValue;
                 item["StatusPerseroan"] = ddlStatusPerseroan.SelectedValue;
                 item["Keterangan"] = txtKeterangan.Text.Trim();
                 item["No"] = txtNo.Text.Trim();
                 item["TanggalBerlaku"] = dtTanggalMulaiBerlaku.SelectedDate;
                 item["KeteranganIzinUsaha"] = txtKeteranganIzinUsaha.Text.Trim();
-                if (fu.HasFile)
-                {
-                    string fileName = fu.FileName.Replace("&", string.Empty);
-                    item.Attachments.Add(fileName, fu.FileBytes);
-                }
                 item.Update();
+
+                ViewState["ID"] = item.ID;
+
+                if (fu.PostedFile != null)
+                {
+                    if (fu.PostedFile.ContentLength > 0)
+                    {
+                        string fileName = fu.FileName.Replace("&", string.Empty);
+
+                        try
+                        {
+                            Stream strm = fu.PostedFile.InputStream;
+                            byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
+                            strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
+                            strm.Close();
+
+                            SPFolder document = web.Folders["IzinUsahaDokumen"];
+                            SPFile file = document.Files.Add(fileName, bytes);
+                            SPItem itemDocument = file.Item;
+                            itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
+                            itemDocument["IzinUsaha"] = Convert.ToInt32(ViewState["ID"]);
+                            itemDocument.Update();
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message.Contains("already exist"))
+                                return SR.DataIsExist(fileName);
+                            else
+                                return SR.AttachmentFailed(fileName);
+                        }
+                    }
+                }
 
                 web.AllowUnsafeUpdates = false;
             }
             catch
             {
-                return false;
+                if (ID == 0)
+                    return SR.SaveFail;
+                else
+                    return SR.UpdateFail;
             }
-            return true;
+            return string.Empty;
         }
 
         private void Display(string mode)
         {
             SPList list = web.Lists[ListId]; //web.GetList(Util.CreateSharePointListStrUrl(web.Url, "IzinUsaha"));
             SPListItem item = list.GetItemById(ID);
-
-            HiddenControls(mode);
 
             if (mode == "edit")
             {
@@ -119,8 +174,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 txtKodePerusahaan.Text = item["KodePerusahaan"].ToString();
                 txtNamaPerusahaan.Text = item["NamaPerusahaan"].ToString();
                 txtTempatKedudukan.Text = item["TempatKedudukan"].ToString();
-                txtKlasifikasi.Text = item["KlasifikasiLapanganUsaha"].ToString();
-                ddlStatusPerseroan.SelectedValue = item["StatusPerseroan"].ToString();
+                ddlKlasifikasiLapanganUsaha.SelectedValue = item["KlasifikasiLapanganUsaha"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                ddlStatusPerseroan.SelectedValue = item["StatusPerseroan"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0];
                 txtKeterangan.Text = item["Keterangan"] == null ? string.Empty : item["Keterangan"].ToString();
                 txtNo.Text = item["No"].ToString();
                 dtTanggalMulaiBerlaku.SelectedDate = Convert.ToDateTime(item["TanggalBerlaku"]);
@@ -135,30 +190,33 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 ltrKodePerusahaan.Text = item["KodePerusahaan"].ToString();
                 ltrNamaPerusahaan.Text = item["NamaPerusahaan"].ToString();
                 ltrTempatKedudukan.Text = item["TempatKedudukan"].ToString();
-                ltrKlasifikasi.Text = item["KlasifikasiLapanganUsaha"].ToString();
-                ltrStatusPerseroan.Text = item["StatusPerseroan"].ToString();
+                ltrKlasifikasi.Text = item["KlasifikasiLapanganUsaha"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                ltrStatusPerseroan.Text = item["StatusPerseroan"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
                 ltrKeterangan.Text = item["Keterangan"] == null ? string.Empty : item["Keterangan"].ToString();
                 ltrNo.Text = item["No"].ToString();
                 ltrTanggalMulaiBerlaku.Text = Convert.ToDateTime(item["TanggalBerlaku"]).ToString("dd-MMM-yyyy");
                 ltrKeteranganIzinUsaha.Text = item["KeteranganIzinUsaha"] == null ? string.Empty : item["KeteranganIzinUsaha"].ToString();
             }
 
-            if (item.Attachments.Count > 0)
+            SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "IzinUsahaDokumen"));
+            SPQuery query = new SPQuery();
+            query.Query = "<Where>" +
+                              "<Eq>" +
+                                 "<FieldRef Name='IzinUsaha' LookupId='True' />" +
+                                 "<Value Type='Lookup'>" + ID + "</Value>" +
+                              "</Eq>" +
+                          "</Where>" +
+                          "<OrderBy>" +
+                            "<FieldRef Name='Created' Ascending='False' />" +
+                          "</OrderBy>";
+            SPListItemCollection coll = document.GetItems(query);
+            if (coll.Count > 0)
             {
-                pnlfuFile.Visible = true;
-                pnlfu.Visible = false;
-                reqfu.Visible = false;
-                foreach (string filename in item.Attachments)
-                {
-                    ltrfu.Text = string.Format("<a href='/Lists/IzinUsaha/Attachments/{0}/{1}'>{1}</a>", ID.ToString(), filename, filename);
-                }
+                SPListItem documentItem = coll[0];
+                ltrfu.Text = string.Format("<a href='/IzinUsahaDokumen/{0}'>{0}</a>", documentItem["Name"].ToString());
             }
-            else
-            {
-                pnlfuFile.Visible = false;
-                pnlfu.Visible = true;
-                reqfu.Visible = true;
-            }
+
+            HiddenControls(mode);
         }
 
         private void HiddenControls(string mode)
@@ -167,7 +225,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             {
                 txtKeterangan.Visible = false;
                 txtKeteranganIzinUsaha.Visible = false;
-                txtKlasifikasi.Visible = false;
+                ddlKlasifikasiLapanganUsaha.Visible = false;
                 txtKodePerusahaan.Visible = false;
                 txtNamaPerusahaan.Visible = false;
                 txtNo.Visible = false;
@@ -175,17 +233,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 dtTanggalMulaiBerlaku.Visible = false;
                 ddlStatusPerseroan.Visible = false;
                 fu.Visible = false;
-                lbDelete.Visible = false;
 
                 reqddlStatusPerseroan.Visible = false;
                 reqfu.Visible = false;
-                reqtxtKlasifikasi.Visible = false;
+                reqddlKlasifikasiLapanganUsaha.Visible = false;
                 reqtxtKodePerusahaan.Visible = false;
                 reqtxtNamaPerusahaan.Visible = false;
                 reqtxtNo.Visible = false;
                 reqtxtTempatKedudukan.Visible = false;
-
-                pnlfu.Visible = false;
+                reqdtTanggalMulaiBerlaku.Visible = false;
             }
             else if (mode == "edit")
             {
@@ -197,6 +253,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 ltrStatusPerseroan.Visible = false;
                 ltrTanggalMulaiBerlaku.Visible = false;
                 ltrTempatKedudukan.Visible = false;
+
+                if (ltrfu.Text.Trim() == string.Empty)
+                    reqfu.Visible = true;
+                else
+                    reqfu.Visible = false;
             }
         }
 
@@ -210,7 +271,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             {
                 using (web = site.OpenWeb())
                 {
-                    bool isID = int.TryParse(Request.QueryString["ID"], out ID);
+                    bool isID = false;
+                    if (ViewState["ID"] == null)
+                    {
+                        if (Request.QueryString["ID"] != null)
+                            isID = int.TryParse(Request.QueryString["ID"], out ID);
+                    }
+                    else
+                        ID = Convert.ToInt32(ViewState["ID"]);
+
                     string mode = Request.QueryString["mode"] == null ? string.Empty : Request.QueryString["mode"].ToString();
 
                     if (Request.QueryString["List"] != null)
@@ -218,7 +287,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
 
                     if (!IsPostBack)
                     {
+                        txtNo.Attributes.Add("onkeyup", "NumericOnly('" + txtNo.ClientID + "');");
+
                         ltrDate.Text = DateTime.Now.ToString("dd-MMM-yyyy HH:mm");
+                        BindKlasifikasiLapanganUsaha();
+                        BindStatusPerseroan();
 
                         if (isID)
                             Display(mode);
@@ -235,36 +308,16 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 Util.ShowMessage(Page, msg);
                 return;
             }
-            bool result = SaveUpdate();
-            if (result)
+            string result = SaveUpdate();
+            if (result == string.Empty)
                 SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
             else
-            {
-                if (ID == 0)
-                    Util.ShowMessage(Page, SR.SaveFail);
-                else
-                    Util.ShowMessage(Page, SR.UpdateFail);
-            }
+                Util.ShowMessage(Page, result);
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
-        }
-
-        protected void lbDelete_Click(object sender, EventArgs e)
-        {
-            SPListItem item = web.Lists[ListId].GetItemById(ID); //web.GetList(Util.CreateSharePointListStrUrl(web.Url, "IzinUsaha")).GetItemById(ID);
-            web.AllowUnsafeUpdates = true;
-            int count = item.Attachments.Count;
-            for (int i = count - 1; i >= 0; i--)
-            {
-                item.Attachments.Delete(item.Attachments[i]);
-            }
-            item.Update();
-            pnlfuFile.Visible = false;
-            pnlfu.Visible = true;
-            reqfu.Visible = true;
         }
 
         #endregion
