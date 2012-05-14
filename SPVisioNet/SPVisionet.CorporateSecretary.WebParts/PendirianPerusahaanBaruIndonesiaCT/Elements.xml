@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Item (0x01) -->
+  <ContentType ID="0x01004125a98b6c854adc826bd44ff25b5c41"
+               Name="Pendirian Perusahaan Baru (Indonesia)"
+               Group="Corporate Secretary Content Types"
+               Description="Form Permohonan Pendirian Perusahaan Baru (Indonesia)"
+               Inherits="false"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>/Lists/PendirianPerusahaanBaruIndonesia/PermohonanPendirianPerusahaanBaru.aspx?mode=display</Display>
+          <Edit>/Lists/PendirianPerusahaanBaruIndonesia/PermohonanPendirianPerusahaanBaru.aspx?mode=edit</Edit>
+          <New>/Lists/PendirianPerusahaanBaruIndonesia/PermohonanPendirianPerusahaanBaru.aspx?mode=new</New>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+</Elements>
