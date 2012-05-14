@@ -1,11 +1,14 @@
 ﻿<%@ Assembly Name="$SharePoint.Project.AssemblyFullName$" %>
-<%@ Assembly Name="Microsoft.Web.CommandUI, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> 
-<%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> 
-<%@ Register Tagprefix="Utilities" Namespace="Microsoft.SharePoint.Utilities" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
-<%@ Register Tagprefix="asp" Namespace="System.Web.UI" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
-<%@ Import Namespace="Microsoft.SharePoint" %> 
-<%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PerubahanPTBiasaMenjadiPMAPMDNUserControl.ascx.cs" Inherits="SPVisionet.CorporateSecretary.WebParts.PerubahanPTBiasaMenjadiPMAPMDN.PerubahanPTBiasaMenjadiPMAPMDNUserControl" %>
+<%@ Assembly Name="Microsoft.Web.CommandUI, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register TagPrefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls"
+    Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register TagPrefix="Utilities" Namespace="Microsoft.SharePoint.Utilities" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register TagPrefix="asp" Namespace="System.Web.UI" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
+<%@ Import Namespace="Microsoft.SharePoint" %>
+<%@ Register TagPrefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages"
+    Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PerubahanPTBiasaMenjadiPMAPMDNUserControl.ascx.cs"
+    Inherits="SPVisionet.CorporateSecretary.WebParts.PerubahanPTBiasaMenjadiPMAPMDN.PerubahanPTBiasaMenjadiPMAPMDNUserControl" %>
 <fieldset>
     <legend>
         <h3>
@@ -134,80 +137,84 @@
         </table>
     </fieldset>
     <fieldset>
-        <legend>Struktur Permodalan</legend>
+        <legend><b>Struktur Permodalan</b></legend>
         <table border="0">
             <tr>
-                <td>
-                    Mata Uang (SGD/IDR/USD)
+                <td width="100px">
+                    Mata Uang <span style="color: Red">*</span>
                 </td>
                 <td>
                     :
                 </td>
                 <td>
-                    <asp:DropDownList ID="ddlMataUang" runat="server">
-                        <asp:ListItem Text="--Select--" Value="" />
-                        <asp:ListItem Text="SGD" Value="SGD" />
-                        <asp:ListItem Text="IDR" Value="IDR" />
-                        <asp:ListItem Text="USD" Value="USD" />
-                    </asp:DropDownList>
-                </td>
-                <td>
+                    <asp:DropDownList ID="ddlMataUang" runat="server" />
+                    <asp:RequiredFieldValidator ID="reqddlMataUang" Display="Dynamic" ValidationGroup="Save"
+                        runat="server" ControlToValidate="ddlMataUang" ErrorMessage="Required Field" />
                 </td>
             </tr>
+        </table>
+        <table border="0">
             <tr>
                 <td>
                 </td>
                 <td>
                 </td>
                 <td align="center">
-                    <b>Saham</b>
+                    Saham
                 </td>
                 <td align="center">
-                    <b>Nominal</b>
+                    Nominal
                 </td>
             </tr>
             <tr>
                 <td>
-                    Modal Dasar
+                    Modal Dasar <span style="color: Red">*</span>
                 </td>
                 <td>
                     :
                 </td>
                 <td>
                     <asp:TextBox ID="txtModalDasar" runat="server" />
+                    <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic" ValidationGroup="Save"
+                        runat="server" ControlToValidate="txtModalDasar" ErrorMessage="Required Field" />
                 </td>
                 <td>
+                    <asp:TextBox ID="txtNominalModalDasar" Enabled="false" runat="server" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    Modal Setor
+                    Modal Setor <span style="color: Red">*</span>
                 </td>
                 <td>
                     :
                 </td>
                 <td>
                     <asp:TextBox ID="txtModalSetor" runat="server" />
+                    <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic" ValidationGroup="Save"
+                        runat="server" ControlToValidate="txtModalSetor" ErrorMessage="Required Field" />
                 </td>
                 <td>
+                    <asp:TextBox ID="txtNominalModalSetor" Enabled="false" runat="server" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    Nominal (Mata Uang / 1 Saham)
+                    Nominal Saham <span style="color: Red">*</span>
                 </td>
                 <td>
                     :
                 </td>
                 <td>
-                    <asp:TextBox ID="txtNominal" runat="server" />
+                    <asp:TextBox ID="txtNominalSaham" runat="server" />
+                    <asp:RequiredFieldValidator ID="reqtxtNominalSaham" Display="Dynamic" ValidationGroup="Save"
+                        runat="server" ControlToValidate="txtNominalSaham" ErrorMessage="Required Field" />
                 </td>
                 <td>
                 </td>
             </tr>
         </table>
     </fieldset>
-    <br />
     <fieldset>
         <legend><b>Pemegang Saham</b></legend>
         <asp:DataGrid ID="dgPemegangSaham" runat="server" AutoGenerateColumns="false" CssClass="table"
@@ -287,47 +294,81 @@
             </Columns>
         </asp:DataGrid>
     </fieldset>
-    <table border="0">
-        <tr>
-            <td>
-                Nilai Investasi
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtNilaiInvestasi" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Cara Pembiayaan
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:DropDownList ID="ddlCaraPembiayaan" runat="server">
-                    <asp:ListItem Text="--Select--" Value="" />
-                    <asp:ListItem Text="Modal Sendiri" Value="Modal Sendiri" />
-                    <asp:ListItem Text="Modal Pinjaman" Value="Modal Pinjaman" />
-                    <asp:ListItem Text="Laba ditanam kembali" Value="Laba ditanam kembali" />
-                </asp:DropDownList>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                Keterangan
-            </td>
-            <td valign="top">
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtKeterangan" runat="server" TextMode="MultiLine" Width="450" Rows="6" />
-            </td>
-        </tr>
-    </table>
-    <br />
+    <fieldset>
+        <table border="0">
+            <tr>
+                <td>
+                    Nilai Investasi
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    <asp:TextBox ID="txtNilaiInvestasi" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cara Pembiayaan
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    <asp:DropDownList ID="ddlCaraPembiayaan" runat="server">
+                        <asp:ListItem Text="--Select--" Value="" />
+                        <asp:ListItem Text="Modal Sendiri" Value="Modal Sendiri" />
+                        <asp:ListItem Text="Modal Pinjaman" Value="Modal Pinjaman" />
+                        <asp:ListItem Text="Laba ditanam kembali" Value="Laba ditanam kembali" />
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    Keterangan
+                </td>
+                <td valign="top">
+                    :
+                </td>
+                <td>
+                    <asp:TextBox ID="txtKeterangan" runat="server" TextMode="MultiLine" Width="450" Rows="6" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Diajukan oleh
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    PIC Corsec
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Disetujui oleh
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    DIV Head
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mengetahui
+                </td>
+                <td>
+                    :
+                </td>
+                <td>
+                    Chief Corporate Secretary
+                </td>
+            </tr>
+        </table>
+    </fieldset>
     <fieldset>
         <legend><b>Laporan Perubahan PMA / PMDN</b></legend>
         <table border="0">

@@ -112,6 +112,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PerubahanPTBiasaMenjadiPMAPMDN 
         protected global::System.Web.UI.WebControls.DropDownList ddlMataUang;
         
         /// <summary>
+        /// reqddlMataUang control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlMataUang;
+        
+        /// <summary>
         /// txtModalDasar control.
         /// </summary>
         /// <remarks>
@@ -119,6 +128,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PerubahanPTBiasaMenjadiPMAPMDN 
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtModalDasar;
+        
+        /// <summary>
+        /// reqtxtModalDasar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtModalDasar;
+        
+        /// <summary>
+        /// txtNominalModalDasar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalModalDasar;
         
         /// <summary>
         /// txtModalSetor control.
@@ -130,13 +157,40 @@ namespace SPVisionet.CorporateSecretary.WebParts.PerubahanPTBiasaMenjadiPMAPMDN 
         protected global::System.Web.UI.WebControls.TextBox txtModalSetor;
         
         /// <summary>
-        /// txtNominal control.
+        /// reqtxtModalSetor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNominal;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtModalSetor;
+        
+        /// <summary>
+        /// txtNominalModalSetor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalModalSetor;
+        
+        /// <summary>
+        /// txtNominalSaham control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalSaham;
+        
+        /// <summary>
+        /// reqtxtNominalSaham control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNominalSaham;
         
         /// <summary>
         /// dgPemegangSaham control.
