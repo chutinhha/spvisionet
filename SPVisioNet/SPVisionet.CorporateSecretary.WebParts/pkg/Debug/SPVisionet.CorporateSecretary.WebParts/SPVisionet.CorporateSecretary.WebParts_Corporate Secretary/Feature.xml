@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Description="This feature contains list of Visionet Corporate Secretary Webparts" Id="f4999973-a0d6-4a85-8615-2831ea0dd902" Scope="Site" Title="Visionet Corporate Secretary">
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Description="This feature contains list of Visionet Corporate Secretary Webparts, Content Type and etc." Id="f4999973-a0d6-4a85-8615-2831ea0dd902" Scope="Site" Title="Visionet Corporate Secretary">
   <ElementManifests>
     <ElementManifest Location="PendirianPerusahaanBaruForeign\Elements.xml" />
     <ElementFile Location="PendirianPerusahaanBaruForeign\PendirianPerusahaanBaruForeign.webpart" />

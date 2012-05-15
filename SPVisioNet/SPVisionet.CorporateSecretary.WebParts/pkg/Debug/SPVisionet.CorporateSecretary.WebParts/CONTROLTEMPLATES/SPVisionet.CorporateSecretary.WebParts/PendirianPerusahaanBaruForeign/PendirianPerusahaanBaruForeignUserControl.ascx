@@ -82,7 +82,7 @@
                 <table border="0">
                     <tr>
                         <td>
-                            Company Name
+                            Company's Name
                         </td>
                         <td>
                             :
@@ -131,7 +131,7 @@
                 <table>
                     <tr>
                         <td>
-                            Rate
+                            Currency
                         </td>
                         <td>
                             :
@@ -202,7 +202,7 @@
                                 <asp:TextBox ID="txtNameEdit" runat="server" />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="ID">
+                        <%--<asp:TemplateColumn HeaderText="ID">
                             <ItemTemplate>
                                 <asp:Label ID="lblID" runat="server" />
                             </ItemTemplate>
@@ -212,7 +212,7 @@
                             <EditItemTemplate>
                                 <asp:TextBox ID="txtIDEdit" runat="server" />
                             </EditItemTemplate>
-                        </asp:TemplateColumn>
+                        </asp:TemplateColumn>--%>
                         <asp:TemplateColumn HeaderText="Address">
                             <ItemTemplate>
                                 <asp:Label ID="lblAddress" runat="server" />
@@ -235,7 +235,7 @@
                                 <asp:TextBox ID="txtCountryEstablishmentEdit" runat="server" />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="Nominal">
+                        <%--<asp:TemplateColumn HeaderText="Nominal">
                             <ItemTemplate>
                                 <asp:Label ID="lblNominal" runat="server" />
                             </ItemTemplate>
@@ -256,7 +256,7 @@
                             <EditItemTemplate>
                                 <asp:TextBox ID="txtPercentagesEdit" runat="server" />
                             </EditItemTemplate>
-                        </asp:TemplateColumn>
+                        </asp:TemplateColumn>--%>
                         <asp:TemplateColumn HeaderText="Partner">
                             <ItemTemplate>
                                 <asp:Label ID="lblPartner" runat="server" />
@@ -358,6 +358,7 @@
                         :
                     </td>
                     <td>
+                        PIC Corporate Secretary
                     </td>
                 </tr>
                 <tr>
@@ -368,6 +369,7 @@
                         :
                     </td>
                     <td>
+                        Div Head Corporate Secretary & Chief
                     </td>
                 </tr>
                 <tr>
@@ -378,6 +380,7 @@
                         :
                     </td>
                     <td>
+                        CEO
                     </td>
                 </tr>
             </table>
@@ -415,7 +418,18 @@
             <table border="0">
                 <tr>
                     <td>
-                        Company Name
+                        Company Code
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtCompanyCode" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Company's Name
                     </td>
                     <td>
                         :
@@ -517,59 +531,65 @@
                             <asp:DropDownList ID="ddlRateDP" runat="server" />
                         </td>
                     </tr>
+                </table>
+                <table border="0">
                     <tr>
                         <td>
-                            Issued Share (nominal)
                         </td>
                         <td>
-                            :
                         </td>
-                        <td>
-                            <asp:Literal ID="ltrIssuedShareDP" runat="server" />
+                        <td align="center">
+                            Saham
+                        </td>
+                        <td align="center">
+                            Nominal
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Issued Share (jumlah saham)
+                            Modal Dasar <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
-                            <asp:Literal ID="ltrIssuedShareJumlahSahamDP" runat="server" />
+                            <asp:TextBox ID="txtModalDasar" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtModalDasar" ErrorMessage="Required Field" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNominalModalDasar" Enabled="false" runat="server" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Paid up Share (nominal)
+                            Modal Setor <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
-                            <asp:Literal ID="ltrPaidUpShareDP" runat="server" />
+                            <asp:TextBox ID="txtModalSetor" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtModalSetor" ErrorMessage="Required Field" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNominalModalSetor" Enabled="false" runat="server" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Paid up Share (jumlah saham)
+                            Nominal Saham <span style="color: Red">*</span>
                         </td>
                         <td>
                             :
                         </td>
                         <td>
-                            <asp:Literal ID="ltrPaidUpShareJumlahSahamDP" runat="server" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Share (Rp/Saham)
+                            <asp:TextBox ID="txtNominalSaham" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqtxtNominalSaham" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="txtNominalSaham" ErrorMessage="Required Field" />
                         </td>
                         <td>
-                            :
-                        </td>
-                        <td>
-                            <asp:Literal ID="ltrShareDP" runat="server" />
                         </td>
                     </tr>
                 </table>
@@ -602,19 +622,19 @@
                                 <asp:Label ID="lblCountryEstablishment" runat="server" />
                             </ItemTemplate>
                         </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Share">
+                            <ItemTemplate>
+                                <asp:Label ID="lblShare" runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateColumn>
                         <asp:TemplateColumn HeaderText="Nominal">
                             <ItemTemplate>
                                 <asp:Label ID="lblNominal" runat="server" />
                             </ItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="Percentages">
+                        <asp:TemplateColumn HeaderText="%">
                             <ItemTemplate>
-                                <asp:Label ID="lblPercentages" runat="server" />
-                            </ItemTemplate>
-                        </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="Partner">
-                            <ItemTemplate>
-                                <asp:Label ID="lblPartner" runat="server" />
+                                <asp:Label ID="lblPersen" runat="server" />
                             </ItemTemplate>
                         </asp:TemplateColumn>
                     </Columns>
@@ -638,11 +658,11 @@
                                 <asp:Label ID="lblRole" runat="server" />
                             </ItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="Start Date">
+                        <asp:TemplateColumn HeaderText="Date of Appointment">
                             <ItemTemplate>
                             </ItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="End Date">
+                        <asp:TemplateColumn HeaderText="Tanggal Akhir Menjabat">
                             <ItemTemplate>
                             </ItemTemplate>
                         </asp:TemplateColumn>
@@ -659,6 +679,28 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtRemarksDP" runat="server" Width="400px" Rows="5" TextMode="MultiLine" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Diupdate Oleh
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        Corporate Secretary
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Dibuat Oleh
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        Accounting
                     </td>
                 </tr>
             </table>
