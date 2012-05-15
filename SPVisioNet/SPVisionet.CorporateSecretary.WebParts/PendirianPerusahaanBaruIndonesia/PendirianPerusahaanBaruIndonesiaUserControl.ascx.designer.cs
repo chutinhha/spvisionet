@@ -796,13 +796,13 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.DataGrid dgKomisarisDP;
         
         /// <summary>
-        /// ddlWewenangDireksiDP control.
+        /// dgWewenangDireksiDP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlWewenangDireksiDP;
+        protected global::System.Web.UI.WebControls.DataGrid dgWewenangDireksiDP;
         
         /// <summary>
         /// txtKeteranganDP control.
@@ -823,13 +823,13 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.Button btnSaveUpdate;
         
         /// <summary>
-        /// Button1 control.
+        /// btnCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
         /// upMainSearch control.
@@ -859,12 +859,12 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// btnCancel control.
+        /// btnCancelSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
+        protected global::System.Web.UI.WebControls.Button btnCancelSearch;
     }
 }

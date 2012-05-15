@@ -193,6 +193,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign 
         protected global::System.Web.UI.WebControls.Literal ltrRequestCodeDP;
         
         /// <summary>
+        /// txtCompanyCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCompanyCode;
+        
+        /// <summary>
         /// txtCompanyNameDP control.
         /// </summary>
         /// <remarks>
@@ -274,49 +283,76 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign 
         protected global::System.Web.UI.WebControls.DropDownList ddlRateDP;
         
         /// <summary>
-        /// ltrIssuedShareDP control.
+        /// txtModalDasar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrIssuedShareDP;
+        protected global::System.Web.UI.WebControls.TextBox txtModalDasar;
         
         /// <summary>
-        /// ltrIssuedShareJumlahSahamDP control.
+        /// reqtxtModalDasar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrIssuedShareJumlahSahamDP;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtModalDasar;
         
         /// <summary>
-        /// ltrPaidUpShareDP control.
+        /// txtNominalModalDasar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrPaidUpShareDP;
+        protected global::System.Web.UI.WebControls.TextBox txtNominalModalDasar;
         
         /// <summary>
-        /// ltrPaidUpShareJumlahSahamDP control.
+        /// txtModalSetor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrPaidUpShareJumlahSahamDP;
+        protected global::System.Web.UI.WebControls.TextBox txtModalSetor;
         
         /// <summary>
-        /// ltrShareDP control.
+        /// reqtxtModalSetor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrShareDP;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtModalSetor;
+        
+        /// <summary>
+        /// txtNominalModalSetor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalModalSetor;
+        
+        /// <summary>
+        /// txtNominalSaham control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNominalSaham;
+        
+        /// <summary>
+        /// reqtxtNominalSaham control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNominalSaham;
         
         /// <summary>
         /// dgShareholderDP control.
