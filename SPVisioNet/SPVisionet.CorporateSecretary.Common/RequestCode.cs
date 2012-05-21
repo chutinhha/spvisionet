@@ -8,5 +8,6 @@ namespace SPVisionet.CorporateSecretary.Common
     public class RequestCode
     {
         public const string IZIN_USAHA = "IUT";
+        public const string PERMINTAAN_DOKUMEN = "PD";
     }
 }

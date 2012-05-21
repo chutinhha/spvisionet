@@ -198,6 +198,19 @@ namespace SPVisionet.CorporateSecretary.Common
             return coll.GetDataTable();
         }
 
+        public static DataTable GetTipeDokumen(SPWeb web)
+        {
+            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "TipeDokumen"));
+
+            SPQuery query = new SPQuery();
+            query.Query = "<OrderBy>" +
+                             "<FieldRef Name='Title' />" +
+                          "</OrderBy>";
+
+            SPListItemCollection coll = list.GetItems(query);
+            return coll.GetDataTable();
+        }
+
         public static string GenerateRequestCode(SPWeb web, string Code, int Month, int Year)
         {
             SPQuery query;
@@ -255,6 +268,16 @@ namespace SPVisionet.CorporateSecretary.Common
             web.AllowUnsafeUpdates = false;
 
             return result;
+        }
+
+        public static string GetDepartment(SPWeb web, int userID)
+        {
+            SPList userInformationList = web.SiteUserInfoList;
+            SPListItem userItem = userInformationList.Items.GetItemById(userID);
+            if (userItem != null)
+                return userItem["Department"] == null ? string.Empty : userItem["Department"].ToString();
+
+            return string.Empty;
         }
     }
 }
