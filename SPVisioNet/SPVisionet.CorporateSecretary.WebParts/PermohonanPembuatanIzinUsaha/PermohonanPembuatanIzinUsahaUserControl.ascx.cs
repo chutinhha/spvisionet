@@ -78,7 +78,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                     sb.Append(SR.IntegerData("No") + " \\n");
                 }
             }
-            if (!dtTanggalMulaiBerlaku.IsValid)
+            if (dtTanggalMulaiBerlaku.ErrorMessage != null)
                 sb.Append(SR.FieldCanNotEmpty("Tanggal Mulai Berlaku") + " \\n");
 
             return sb.ToString();
@@ -136,6 +136,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                             SPItem itemDocument = file.Item;
                             itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
                             itemDocument["IzinUsaha"] = Convert.ToInt32(ViewState["ID"]);
+                            itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                             itemDocument.Update();
                         }
                         catch (Exception ex)
