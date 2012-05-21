@@ -31,13 +31,22 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen {
         protected global::System.Web.UI.WebControls.Literal ltrRequestCode;
         
         /// <summary>
-        /// ddlNamaPeminjam control.
+        /// peNamaPeminjam control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlNamaPeminjam;
+        protected global::Microsoft.SharePoint.WebControls.PeopleEditor peNamaPeminjam;
+        
+        /// <summary>
+        /// ltrNamaPeminjam control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrNamaPeminjam;
         
         /// <summary>
         /// ltrDivisiPeminjam control.
@@ -47,6 +56,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltrDivisiPeminjam;
+        
+        /// <summary>
+        /// upDokumen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upDokumen;
         
         /// <summary>
         /// dgDokumen control.
@@ -65,6 +83,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeterangan;
+        
+        /// <summary>
+        /// ltrKeterangan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrKeterangan;
+        
+        /// <summary>
+        /// ltrRequestor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrRequestor;
         
         /// <summary>
         /// btnSaveUpdate control.
