@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="df9c7f96-af28-4095-9b0b-e3ec1ace72b8" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="InfinysWorkflowPrj.WFBasicApproval.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <TemplateFiles>
+    <TemplateFile Location="Layouts\WFBasicApproval\ApproveRejectEdit.aspx" />
+    <TemplateFile Location="Layouts\WFBasicApproval\ApproveRejectView.aspx" />
+  </TemplateFiles>
+  <FeatureManifests>
+    <FeatureManifest Location="WFBasicApproval_Feature1\Feature.xml" />
+  </FeatureManifests>
+</Solution>
