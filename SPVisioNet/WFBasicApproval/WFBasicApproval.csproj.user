@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SharePointSiteUrl>http://devsharepoint:1300/</SharePointSiteUrl>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BB1F664B-9266-4fd6-B973-E1E44974B511}">
+        <ProjectItemStore Id="{4dab67cf-83fc-4a4f-8d7f-d94ab075d071}">
+          <DisplayName>WFOneApproval</DisplayName>
+          <HistoryList>Workflow History</HistoryList>
+          <HistoryListGuid>{932f0f9b-fc94-4123-96aa-3dc959c700b9}</HistoryListGuid>
+          <TaskList>Tasks</TaskList>
+          <TaskListGuid>{da1096f4-b980-4d06-ab6f-9cc3eb857042}</TaskListGuid>
+          <AutoAssociate>true</AutoAssociate>
+          <ManualStart>true</ManualStart>
+          <ListURL>http://devsharepoint:1300/TestingAgusto/Forms/AllItems.aspx</ListURL>
+          <TargetList>TestingAgusto</TargetList>
+          <TargetListGuid>{2aa82b1a-1f3d-4f4a-94b8-83cd8ef8747b}</TargetListGuid>
+          <StartOnCreate>true</StartOnCreate>
+          <StartOnChange>false</StartOnChange>
+        </ProjectItemStore>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

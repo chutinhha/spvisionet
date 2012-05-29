@@ -1,0 +1,5 @@
+C:\Software\code\WorkflowProject1\WorkflowProject1\bin\Debug\InfinysWorkflowPrj.WFBasicApproval.dll
+C:\Software\code\WorkflowProject1\WorkflowProject1\bin\Debug\InfinysWorkflowPrj.WFBasicApproval.pdb
+C:\Software\code\WorkflowProject1\WorkflowProject1\obj\Debug\ResolveAssemblyReference.cache
+C:\Software\code\WorkflowProject1\WorkflowProject1\obj\Debug\InfinysWorkflowPrj.WFBasicApproval.dll
+C:\Software\code\WorkflowProject1\WorkflowProject1\obj\Debug\InfinysWorkflowPrj.WFBasicApproval.pdb

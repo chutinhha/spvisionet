@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="df9c7f96-af28-4095-9b0b-e3ec1ace72b8" solutionId="df9c7f96-af28-4095-9b0b-e3ec1ace72b8" resetWebServer="false" name="InfinysWFBasicApproval" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="cb25df18-769b-4255-b01c-f49c0f4f8363" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="78483b30-2ac3-42ea-8df1-8397880460bc" />
+  </projectItems>
+</package>

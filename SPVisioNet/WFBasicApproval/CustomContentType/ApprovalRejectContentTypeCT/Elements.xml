@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Workflow Task (0x010801) -->
+  <ContentType ID="0x010801005d1cf96db13147d5935b1a7c7c0e31df"
+               Name="ApprovalRejectContentTypeCT"
+               Group="Custom Content Types"
+               Description="Custom Workflow Approval Approve Reject"
+               Version="0"
+               Hidden="FALSE">
+    <FieldRefs>
+      <FieldRef ID="{57D14280-C277-4374-B563-E634C2C1099E}" Name="ApproveOrReject" />
+      <FieldRef ID="{96703538-D4EA-4060-A8E6-C72D0E907099}" Name="RemarksTxt" />
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>_layouts/WFBasicApproval/ApproveRejectEdit.aspx</Display>
+          <Edit>_layouts/WFBasicApproval/ApproveRejectEdit.aspx</Edit>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+  <Field ID="{57D14280-C277-4374-B563-E634C2C1099E}"
+		   Name="ApproveOrReject"
+		   DisplayName="Action"
+		   Group="Custom Columns"
+		   Type="Choice"
+		   ShowField="Choice"
+		   Format="Dropdown"
+		   Required="TRUE">
+    <Default>No Action</Default>
+    <CHOICES>
+      <CHOICE>No Action</CHOICE>
+      <CHOICE>Approved</CHOICE>
+      <CHOICE>Rejected</CHOICE>
+    </CHOICES>
+  </Field>
+  <Field ID="{96703538-D4EA-4060-A8E6-C72D0E907099}"
+		   Name="RemarksTxt"
+		   DisplayName="Remarks"
+		   Group="Custom Columns"
+		   Type="Note"
+		   NumLines="10"
+		   Required="TRUE">
+  </Field>
+</Elements>
