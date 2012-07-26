@@ -31,6 +31,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.Literal ltrRequestCode;
         
         /// <summary>
+        /// upDataPerusahaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upDataPerusahaan;
+        
+        /// <summary>
         /// txtKodePerusahaan control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.TextBox txtNamaPerusahaan;
         
         /// <summary>
+        /// imgbtnNamaPerusahaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnNamaPerusahaan;
+        
+        /// <summary>
         /// reqtxtNamaPerusahaan control.
         /// </summary>
         /// <remarks>
@@ -85,22 +103,22 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.Literal ltrNamaPerusahaan;
         
         /// <summary>
-        /// txtTempatKedudukan control.
+        /// ddlTempatKedudukan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTempatKedudukan;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTempatKedudukan;
         
         /// <summary>
-        /// reqtxtTempatKedudukan control.
+        /// reqddlTempatKedudukan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtTempatKedudukan;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlTempatKedudukan;
         
         /// <summary>
         /// ltrTempatKedudukan control.
@@ -112,22 +130,22 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.Literal ltrTempatKedudukan;
         
         /// <summary>
-        /// ddlKlasifikasiLapanganUsaha control.
+        /// txtKlasifikasiLapanganUsaha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlKlasifikasiLapanganUsaha;
+        protected global::System.Web.UI.WebControls.TextBox txtKlasifikasiLapanganUsaha;
         
         /// <summary>
-        /// reqddlKlasifikasiLapanganUsaha control.
+        /// reqtxtKlasifikasiLapanganUsaha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlKlasifikasiLapanganUsaha;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtKlasifikasiLapanganUsaha;
         
         /// <summary>
         /// ltrKlasifikasi control.
@@ -184,13 +202,40 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         protected global::System.Web.UI.WebControls.Literal ltrKeterangan;
         
         /// <summary>
-        /// ltrNamaPerusahaanIzinUsaha control.
+        /// pnlAssign control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrNamaPerusahaanIzinUsaha;
+        protected global::System.Web.UI.WebControls.Panel pnlAssign;
+        
+        /// <summary>
+        /// ltrCS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrCS;
+        
+        /// <summary>
+        /// ltrChiefCorsec control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrChiefCorsec;
+        
+        /// <summary>
+        /// pnlOriginator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlOriginator;
         
         /// <summary>
         /// ltrfu control.
@@ -308,5 +353,77 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
+        
+        /// <summary>
+        /// upPerusahaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upPerusahaan;
+        
+        /// <summary>
+        /// txtSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        
+        /// <summary>
+        /// btnSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+        
+        /// <summary>
+        /// upProg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress upProg;
+        
+        /// <summary>
+        /// grv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grv;
+        
+        /// <summary>
+        /// ods control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource ods;
+        
+        /// <summary>
+        /// btnSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSelect;
+        
+        /// <summary>
+        /// btnCloseSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCloseSearch;
     }
 }

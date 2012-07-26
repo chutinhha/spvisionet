@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="58f9965a-d0dd-44c7-9955-063f133e930e" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="SPVisionet.CorporateSecretary.Workflow.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <TemplateFiles>
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\ApproveRejectCT\ApproveRejectCT.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\ApproveRejectCT\ApproveRejectCT_Display.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\ApproveRejectRemarkCT\ApproveRejectRemarkCT.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\ApproveRejectRemarkCT\ApproveRejectRemarkCT_Display.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\BuktiSetorCT\BuktiSetorCT.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\BuktiSetorCT\BuktiSetorCT_Display.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\ToDoTaskCT\ToDoTaskCT.aspx" />
+    <TemplateFile Location="Layouts\SPVisionet.CorporateSecretary.Workflow\ToDoTaskCT\ToDoTaskCT_Display.aspx" />
+  </TemplateFiles>
+  <FeatureManifests>
+    <FeatureManifest Location="SPVisionet.CorporateSecretary.Workflow_Corporate Secretary Workflow\Feature.xml" />
+  </FeatureManifests>
+</Solution>

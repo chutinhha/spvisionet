@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SharePointSiteUrl>http://my2008:2300/cs/</SharePointSiteUrl>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BB1F664B-9266-4fd6-B973-E1E44974B511}">
+        <ProjectItemStore Id="{9f9db283-2fe0-49df-a315-a3e6775a1e3e}">
+          <DisplayName>WFPerubahanAnggaranDasarPerusahaan</DisplayName>
+          <HistoryList>Workflow History</HistoryList>
+          <HistoryListGuid>{e7358023-ff4c-4bcf-a06d-bc281463b842}</HistoryListGuid>
+          <TaskList>Tasks</TaskList>
+          <TaskListGuid>{d68952e2-a073-4338-b66e-dc0134ae60f2}</TaskListGuid>
+          <AutoAssociate>true</AutoAssociate>
+          <ManualStart>true</ManualStart>
+          <ListURL>http://my2008:2300/Lists/PerubahanAnggaranDasarDanDataPerseroan/AllItems.aspx</ListURL>
+          <TargetList>PerubahanAnggaranDasarDanDataPerseroan</TargetList>
+          <TargetListGuid>{4393742a-34af-43a4-ac0d-bf70bc6edf00}</TargetListGuid>
+          <StartOnCreate>false</StartOnCreate>
+          <StartOnChange>false</StartOnChange>
+        </ProjectItemStore>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

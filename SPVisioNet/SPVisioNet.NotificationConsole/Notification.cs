@@ -98,6 +98,41 @@ namespace SPVisioNet.NotificationConsole
 
         }
 
+        public static string CreateSharePointListStrUrl(string webUrl, string listNameWhenCreated)
+        {
+            return string.Format("{0}/Lists/{1}", webUrl, listNameWhenCreated);
+        }
+
+        public static string GetSettingValue(SPWeb web, string Category, string Title)
+        {
+            string ReturnValue = string.Empty;
+            SPQuery query = new SPQuery();
+            query.Query = "<Where>" +
+                            "<And>" +
+                                "<Eq>" +
+                                    "<FieldRef Name=\"Category\" /><Value Type=\"Text\">" + Category + "</Value>" +
+                                "</Eq>" +
+                                "<Eq>" +
+                                    "<FieldRef Name=\"Title\" /><Value Type=\"Text\">" + Title + "</Value>" +
+                                "</Eq>" +
+                            "</And>" +
+                          "</Where>";
+            SPListItemCollection itemConfig = web.GetList(CreateSharePointListStrUrl(web.Url, "Settings")).GetItems(query);
+            try
+            {
+                if (itemConfig.Count > 0)
+                    ReturnValue = itemConfig[0]["Value"].ToString();
+                else
+                    ReturnValue = string.Empty;
+            }
+            catch (Exception)
+            {
+                ReturnValue = string.Empty;
+            }
+
+            return ReturnValue;
+        }
+
         private string ReplaceTime(string value)
         {
             if (!value.Contains("[TODAY]"))

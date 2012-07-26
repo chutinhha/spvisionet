@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Workflow Task (0x010801) -->
+  <ContentType ID="0x010801007790459ed2b14535b7373a6e84879b97"
+               Name="Approve Reject Remark"
+               Group="Corporate Secretary Content Types"
+               Description="Action Approve or Reject Task with remark"
+               Version="0"
+               Hidden="FALSE">
+    <FieldRefs>
+      <FieldRef ID="{A2F2B9F6-190B-4ccc-9067-0054F8ED5636}" Name="ApproveOrReject" />
+      <FieldRef ID="{E10C7DEA-530F-4aa9-ADDD-0D016D600CFF}" Name="Remarks" />
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>_layouts/SPVisionet.CorporateSecretary.Workflow/ApproveRejectRemarkCT/ApproveRejectRemarkCT_Display.aspx</Display>
+          <Edit>_layouts/SPVisionet.CorporateSecretary.Workflow/ApproveRejectRemarkCT/ApproveRejectRemarkCT.aspx</Edit>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+  <Field ID="{E10C7DEA-530F-4aa9-ADDD-0D016D600CFF}"
+		   Name="Remarks"
+		   DisplayName="Remarks"
+		   Group="Corporate Secretary Columns"
+		   Type="Note"
+		   NumLines="10"
+		   Required="FALSE">
+  </Field>
+</Elements>

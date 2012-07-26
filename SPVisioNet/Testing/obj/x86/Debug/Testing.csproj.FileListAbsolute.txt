@@ -1,0 +1,8 @@
+C:\Apps\Visionet\Testing\bin\Debug\Testing.exe.config
+C:\Apps\Visionet\Testing\bin\Debug\Testing.exe
+C:\Apps\Visionet\Testing\bin\Debug\Testing.pdb
+C:\Apps\Visionet\Testing\bin\Debug\SPVisionet.CorporateSecretary.Common.dll
+C:\Apps\Visionet\Testing\bin\Debug\SPVisionet.CorporateSecretary.Common.pdb
+C:\Apps\Visionet\Testing\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Apps\Visionet\Testing\obj\x86\Debug\Testing.exe
+C:\Apps\Visionet\Testing\obj\x86\Debug\Testing.pdb

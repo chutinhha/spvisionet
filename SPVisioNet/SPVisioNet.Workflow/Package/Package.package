@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="b96056b1-4422-466e-bb31-da9c3af7866e" solutionId="b96056b1-4422-466e-bb31-da9c3af7866e" resetWebServer="false" name="SPVisioNet.Workflow" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="db329646-be0f-46f9-a326-d4cba2d7f53a" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="03c14a3d-c645-461a-bbf0-6f4c928047b7" />
+  </projectItems>
+</package>

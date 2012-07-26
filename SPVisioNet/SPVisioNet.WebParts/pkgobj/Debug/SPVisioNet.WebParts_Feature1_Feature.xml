@@ -7,5 +7,6 @@
     <ElementFile Location="wpRedirectURL\wpRedirectURL.webpart" />
     <ElementManifest Location="PerubahanAnggaranDasarDanDataPerseroan\Elements.xml" />
     <ElementFile Location="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroan.webpart" />
+    <ElementManifest Location="PerubahanAnggaranDasarDanDataPerseroanCT\Elements.xml" />
   </ElementManifests>
 </Feature>

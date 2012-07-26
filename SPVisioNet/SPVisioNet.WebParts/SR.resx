@@ -147,4 +147,7 @@
   <data name="InvalidData" xml:space="preserve">
     <value>Invalid Data</value>
   </data>
+  <data name="AttachmentFailed" xml:space="preserve">
+    <value>Attachment for file {0} failed.</value>
+  </data>
 </root>

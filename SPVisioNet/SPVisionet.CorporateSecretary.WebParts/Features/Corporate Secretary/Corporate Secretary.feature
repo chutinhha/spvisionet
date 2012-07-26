@@ -12,5 +12,11 @@
     <projectItemReference itemId="00fbeb80-2cf2-46c6-96ce-4f3ae24d786a" />
     <projectItemReference itemId="d6c5a848-e4da-4d40-a0c0-e798a3bcb469" />
     <projectItemReference itemId="99bb0464-052e-4766-a082-0ecf948324be" />
+    <projectItemReference itemId="4d93424f-ad57-48b8-bf0d-384ed391136d" />
+    <projectItemReference itemId="115c9617-da30-47b7-b648-f1ae6d365d64" />
+    <projectItemReference itemId="6a3d2dbe-e01b-47d8-8c3b-91e003725f20" />
+    <projectItemReference itemId="ad18d1e4-3d17-4521-8d14-df79b514e620" />
+    <projectItemReference itemId="95b6d76c-91cb-4b3c-a9a0-47a3989bf8ff" />
+    <projectItemReference itemId="ab77c1b6-e251-4a53-a48d-66ecb6af6e77" />
   </projectItems>
 </feature>
