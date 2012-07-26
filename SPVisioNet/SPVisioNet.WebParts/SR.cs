@@ -80,10 +80,16 @@ namespace SPVisioNet.WebParts
                         dataName});
         }
 
+        public static string AttachmentFailed(string dataName)
+        {
+            return Keys.GetString(Keys.AttachmentFailed, new object[] {
+                        dataName});
+        }
+
         public class Keys
         {
 
-            static System.Resources.ResourceManager resourceManager = new System.Resources.ResourceManager("SPVisionet.CorporateSecretary.Common.SR", typeof(SR).Assembly);
+            static System.Resources.ResourceManager resourceManager = new System.Resources.ResourceManager("SPVisioNet.WebParts.SR", typeof(SR).Assembly);
 
             public const string DataIsExist = "DataIsExist";
 
@@ -104,6 +110,8 @@ namespace SPVisioNet.WebParts
             public const string DeleteSuccess = "DeleteSuccess";
 
             public const string InvalidData = "InvalidData";
+
+            public const string AttachmentFailed = "AttachmentFailed";
 
             public static string GetString(string key)
             {

@@ -1,0 +1,1 @@
+SPVisioNet.NotifWorkflowConsole -from agustox21@gmail.com -url "http://localhost:2300" -l "lists/tasks" -wf "Permintaan Dokumen" -day "0" -smtp local -smtpuser agustox21@gmail.com -smtppass agustox21

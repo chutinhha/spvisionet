@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Task (0x0108) -->
+  <ContentType ID="0x0108002389d6b03f04497b9f6408623c0da925"
+               Name="Redirect and Delegate Task"
+               Group="Corporate Secretary Content Types"
+               Description="This action to Redirect and Delegate Task"
+               Inherits="false"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+  </ContentType>
+  <CustomAction
+     Id="175B270F-239E-4955-97CB-94227E5DAA17"
+     RegistrationType="List"
+     RegistrationId="107"
+     Location="EditControlBlock"
+     Sequence="8000"
+     Title="Redirect"
+ Description="This action to Redirect Task.">
+    <UrlAction Url="javascript:window.showModalDialog('{SiteUrl}/WorkflowControls/Redirect.aspx?IDP={ItemId}&amp;ListID={ListId}','','dialogWidth:400px;dialogHeight:143px;resizable:yes'); window.location=window.location;"/>
+  </CustomAction>
+  <CustomAction
+      Id="77EEFA85-9521-4af1-A28F-83E9258E1910"
+      RegistrationType="List"
+      RegistrationId="107"
+      Location="EditControlBlock"
+      Sequence="8000"
+      Title="Delegate"
+      Description="This action to Delegate Task.">
+    <UrlAction Url="javascript:window.showModalDialog('{SiteUrl}/WorkflowControls/Delegate.aspx?IDP={ItemId}&amp;ListID={ListId}','','dialogWidth:400px;dialogHeight:143px;resizable:yes'); window.location=window.location;"/>
+  </CustomAction>
+</Elements>

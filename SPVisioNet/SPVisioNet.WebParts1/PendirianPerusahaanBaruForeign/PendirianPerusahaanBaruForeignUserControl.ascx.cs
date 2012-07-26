@@ -37,7 +37,6 @@ namespace SPVisioNet.WebParts1.PendirianPerusahaanBaruForeign
             if (!IsPostBack)
             {
                 Bind();
-
             }
         }
     }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Item (0x01) -->
+  <ContentType ID="0x0100f076cc546a2b4f2eb213bb0ccda01c5a"
+               Name="SPVisionet.Workflow - PerubahanApproveRejectCT"
+               Group="Custom Content Types"
+               Description="My Content Type"
+               Inherits="TRUE"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+  </ContentType>
+</Elements>

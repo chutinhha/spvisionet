@@ -1,0 +1,5 @@
+C:\SPVisioNet\SPVisioNet.NotifExpiredPermintaanDocument\bin\Debug\SPVisioNet.NotifExpiredPermintaanDocument.exe
+C:\SPVisioNet\SPVisioNet.NotifExpiredPermintaanDocument\bin\Debug\SPVisioNet.NotifExpiredPermintaanDocument.pdb
+C:\SPVisioNet\SPVisioNet.NotifExpiredPermintaanDocument\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\SPVisioNet\SPVisioNet.NotifExpiredPermintaanDocument\obj\x86\Debug\SPVisioNet.NotifExpiredPermintaanDocument.exe
+C:\SPVisioNet\SPVisioNet.NotifExpiredPermintaanDocument\obj\x86\Debug\SPVisioNet.NotifExpiredPermintaanDocument.pdb

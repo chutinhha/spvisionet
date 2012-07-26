@@ -3,3 +3,5 @@ C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\bin\Debug\SPVisioNet.Notific
 C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\bin\Debug\SPVisioNet.NotificationConsole.pdb
 C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\SPVisioNet.NotificationConsole.exe
 C:\Agusto\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\SPVisioNet.NotificationConsole.pdb
+C:\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\SPVisioNet.NotificationConsole.exe
+C:\SPVisioNet\SPVisioNet.NotificationConsole\obj\x86\Debug\SPVisioNet.NotificationConsole.pdb

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <!-- Parent ContentType: Workflow Task (0x010801) -->
+    <ContentType ID="0x010801003ab6d9f26d8d4040b3a019712a05d42e"
+                 Name="Approve Reject"
+                 Group="Corporate Secretary Content Types"
+                 Description="Action Approve or Reject Task"
+                 Version="0"
+                 Hidden="FALSE">
+    <FieldRefs>
+      <FieldRef ID="{A2F2B9F6-190B-4ccc-9067-0054F8ED5636}" Name="ApproveOrReject" />
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>_layouts/SPVisionet.CorporateSecretary.Workflow/ApproveRejectCT/ApproveRejectCT_Display.aspx</Display>
+          <Edit>_layouts/SPVisionet.CorporateSecretary.Workflow/ApproveRejectCT/ApproveRejectCT.aspx</Edit>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+  <Field ID="{A2F2B9F6-190B-4ccc-9067-0054F8ED5636}"
+        Name="ApproveOrReject"
+        DisplayName="ApproveOrReject"
+        Group="Corporate Secretary Columns"
+        Type="Choice"
+        ShowField="Choice"
+        Format="Dropdown"
+        Required="TRUE">
+    <Default>No Action</Default>
+    <CHOICES>
+      <CHOICE>Approve</CHOICE>
+      <CHOICE>Reject</CHOICE>
+      <CHOICE>No Action</CHOICE>
+    </CHOICES>
+  </Field>
+</Elements>

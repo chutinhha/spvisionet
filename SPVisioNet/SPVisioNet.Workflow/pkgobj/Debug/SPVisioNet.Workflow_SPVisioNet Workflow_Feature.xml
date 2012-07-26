@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Description="This feature contains list of Visionet  Workflows." Id="843263ff-a71f-49c9-9555-4c3328a9d12b" Scope="Site" Title="SPVisioNet Workflow Feature">
+  <ElementManifests>
+    <ElementManifest Location="PerubahanApproveRejectCT\Elements.xml" />
+    <ElementManifest Location="PerubahanAnggaranDasarPerusahaan\Elements.xml" />
+  </ElementManifests>
+</Feature>

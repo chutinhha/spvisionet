@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Workflow Task (0x010801) -->
+  <ContentType ID="0x010801004E5119EC441C490CA3FBB106FD1F4A82"
+               Name="To Do Task"
+               Group="Corporate Secretary Content Types"
+               Description="Action task only"
+               Version="0"
+               Hidden="FALSE">
+    <FieldRefs>
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>_layouts/SPVisionet.CorporateSecretary.Workflow/ToDoTaskCT/ToDoTaskCT_Display.aspx</Display>
+          <Edit>_layouts/SPVisionet.CorporateSecretary.Workflow/ToDoTaskCT/ToDoTaskCT.aspx</Edit>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+</Elements>

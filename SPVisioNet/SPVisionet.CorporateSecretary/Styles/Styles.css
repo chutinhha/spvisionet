@@ -1,15 +1,12 @@
 ﻿body
 {
-    font-size: 12px;
     margin: 0;
 }
-
- h3
- {
-     margin:0;
-     padding:0;
- }
- 
+h3
+{
+    margin: 0;
+    padding: 0;
+}
 /* Table */
 .table
 {
@@ -17,16 +14,16 @@
 }
 .table td
 {
-    border-right: solid 1px #999;
-    padding: .5em;
+    border: solid 1px #999;
+    padding: .3em;
 }
 .table tr.header
 {
     background: #e10000;
-    border-right: solid 1px #999;
+    border: solid 1px #999;
     color: white;
     padding: .5em;
-    text-align:center;
+    text-align: center;
 }
 .table th a
 {
@@ -36,9 +33,25 @@
 {
     background: #ddd;
 }
-
+.table td input.textRight
+{
+    text-align: right;
+}
 fieldset
 {
     padding: 5px;
     margin-bottom: 8px;
+}
+.textRight
+{
+    text-align: right;
+}
+#spdtinput table td
+{
+    border: 0;
+    padding: 0;
+}
+#spdtinput .ms-input
+{
+    width: 85px;
 }

@@ -1,0 +1,7 @@
+C:\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisioNet.Workflow.dll
+C:\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisioNet.Workflow.pdb
+C:\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisionet.CorporateSecretary.Common.dll
+C:\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisionet.CorporateSecretary.Common.pdb
+C:\SPVisioNet\SPVisioNet.Workflow\obj\Debug\ResolveAssemblyReference.cache
+C:\SPVisioNet\SPVisioNet.Workflow\obj\Debug\SPVisioNet.Workflow.dll
+C:\SPVisioNet\SPVisioNet.Workflow\obj\Debug\SPVisioNet.Workflow.pdb

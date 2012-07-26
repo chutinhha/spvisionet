@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Workflow Task (0x010801) -->
+  <ContentType ID="0x01080100f6a8465fe0f348d8b75138afa19a392e"
+               Name="Bukti Setor"
+               Group="Corporate Secretary Content Types"
+               Description="Action Bukti Setor Task"
+               Version="0"
+               Hidden="FALSE">
+    <FieldRefs>
+      <FieldRef ID="{FB7C0E5F-B8E0-40a2-8659-F669DAC6CE64}" Name="BuktiSetor" />
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>_layouts/SPVisionet.CorporateSecretary.Workflow/BuktiSetorCT/BuktiSetorCT_Display.aspx</Display>
+          <Edit>_layouts/SPVisionet.CorporateSecretary.Workflow/BuktiSetorCT/BuktiSetorCT.aspx</Edit>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+  <Field ID ="{FB7C0E5F-B8E0-40a2-8659-F669DAC6CE64}"
+			   Name ="BuktiSetor"
+			   DisplayName="BuktiSetor"
+			   Group="Corporate Secretary Columns"
+			   Type="Boolean"
+			   EnableLookup = "TRUE"
+			   SourceID="http://schemas.microsoft.com/sharepoint/v3/fields"
+			   Required="TRUE">
+    <Default>FALSE</Default>
+  </Field>
+</Elements>

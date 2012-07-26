@@ -1,0 +1,5 @@
+C:\SPVisioNet\SPVisioNet.NotifExpiredDocument\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\SPVisioNet\SPVisioNet.NotifExpiredDocument\bin\Debug\SPVisioNet.NotifExpiredDocument.exe
+C:\SPVisioNet\SPVisioNet.NotifExpiredDocument\bin\Debug\SPVisioNet.NotifExpiredDocument.pdb
+C:\SPVisioNet\SPVisioNet.NotifExpiredDocument\obj\x86\Debug\SPVisioNet.NotifExpiredDocument.exe
+C:\SPVisioNet\SPVisioNet.NotifExpiredDocument\obj\x86\Debug\SPVisioNet.NotifExpiredDocument.pdb

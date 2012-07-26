@@ -15,10 +15,11 @@
 </asp:Content>
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
     <link rel="stylesheet" type="text/css" href="/_layouts/1033/styles/Themable/forms.css" />
-    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label><br />
+    <br />
     <center>
         <table class="ms-formtable" cellspacing="0" cellpadding="2" width="99%">
             <tbody>
+            <tr><td><asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label></td></tr>
                 <tr>
                     <td width="20%" class="ms-formlabel">
                         <h3 class="ms-standardheader">
@@ -36,7 +37,7 @@
                         </h3>
                     </td>
                     <td align="left" class="ms-formbody" valign="top">
-                        <asp:TextBox ID="txtOldPassword" runat="server"></asp:TextBox>&nbsp;
+                        <asp:TextBox ID="txtOldPassword" runat="server" TextMode="Password"></asp:TextBox>&nbsp;
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtOldPassword"
                             ErrorMessage="This is a required field."></asp:RequiredFieldValidator>
                     </td>
@@ -48,7 +49,7 @@
                         </h3>
                     </td>
                     <td align="left" class="ms-formbody" valign="top">
-                        <asp:TextBox ID="txtNewPassword" runat="server"></asp:TextBox>&nbsp;
+                        <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password"></asp:TextBox>&nbsp;
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtNewPassword"
                             ErrorMessage="This is a required field."></asp:RequiredFieldValidator>
                     </td>
@@ -60,7 +61,7 @@
                         </h3>
                     </td>
                     <td align="left" class="ms-formbody" valign="top">
-                        <asp:TextBox ID="txtConfirmPassword" runat="server"></asp:TextBox>&nbsp;
+                        <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password"></asp:TextBox>&nbsp;
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtConfirmPassword"
                             ErrorMessage="This is a required field."></asp:RequiredFieldValidator><asp:CompareValidator
                                 ID="CompareValidator1" runat="server" ErrorMessage="Confirm Password not match with New Password"

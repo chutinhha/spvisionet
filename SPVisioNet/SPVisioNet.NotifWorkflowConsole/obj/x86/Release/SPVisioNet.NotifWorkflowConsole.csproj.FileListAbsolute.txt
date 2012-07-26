@@ -1,0 +1,5 @@
+C:\SPVisioNet\SPVisioNet.NotifWorkflowConsole\bin\Release\SPVisioNet.NotifWorkflowConsole.exe
+C:\SPVisioNet\SPVisioNet.NotifWorkflowConsole\bin\Release\SPVisioNet.NotifWorkflowConsole.pdb
+C:\SPVisioNet\SPVisioNet.NotifWorkflowConsole\obj\x86\Release\ResolveAssemblyReference.cache
+C:\SPVisioNet\SPVisioNet.NotifWorkflowConsole\obj\x86\Release\SPVisioNet.NotifWorkflowConsole.exe
+C:\SPVisioNet\SPVisioNet.NotifWorkflowConsole\obj\x86\Release\SPVisioNet.NotifWorkflowConsole.pdb

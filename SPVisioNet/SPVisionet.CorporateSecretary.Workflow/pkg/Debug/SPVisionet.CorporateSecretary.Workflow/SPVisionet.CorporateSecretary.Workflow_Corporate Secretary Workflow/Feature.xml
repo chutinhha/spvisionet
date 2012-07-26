@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Description="This feature contains list of Visionet Corporate Secretary Workflows." Id="d111da90-3b50-439f-8d53-c592b1ae126d" Scope="Site" Title="Visionet Corporate Secretary Workflow">
+  <ElementManifests>
+    <ElementManifest Location="PendirianPerusahaanBaruIndonesia\Elements.xml" />
+    <ElementManifest Location="ApproveRejectCT\Elements.xml" />
+    <ElementManifest Location="RedirectDelegateCT\Elements.xml" />
+    <ElementManifest Location="ToDoTaskCT\Elements.xml" />
+    <ElementManifest Location="IzinUsaha\Elements.xml" />
+    <ElementManifest Location="TDP\Elements.xml" />
+    <ElementManifest Location="SIUP\Elements.xml" />
+    <ElementManifest Location="ApproveRejectRemarkCT\Elements.xml" />
+    <ElementManifest Location="PendaftaranPMAPMDN\Elements.xml" />
+    <ElementManifest Location="PerubahanPTBiasaMenjadiPMAPMDN\Elements.xml" />
+    <ElementManifest Location="BuktiSetorCT\Elements.xml" />
+    <ElementManifest Location="PermintaanDokumen\Elements.xml" />
+    <ElementManifest Location="PendirianPerusahaanBaruForeign\Elements.xml" />
+  </ElementManifests>
+</Feature>
