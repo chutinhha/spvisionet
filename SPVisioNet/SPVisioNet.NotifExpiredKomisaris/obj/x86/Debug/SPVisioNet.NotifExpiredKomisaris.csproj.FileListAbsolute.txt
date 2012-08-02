@@ -3,3 +3,8 @@ C:\SPVisioNet\SPVisioNet.NotifExpiredKomisaris\bin\Debug\SPVisioNet.NotifExpired
 C:\SPVisioNet\SPVisioNet.NotifExpiredKomisaris\bin\Debug\SPVisioNet.NotifExpiredKomisaris.pdb
 C:\SPVisioNet\SPVisioNet.NotifExpiredKomisaris\obj\x86\Debug\SPVisioNet.NotifExpiredKomisaris.exe
 C:\SPVisioNet\SPVisioNet.NotifExpiredKomisaris\obj\x86\Debug\SPVisioNet.NotifExpiredKomisaris.pdb
+D:\Webparts\Visionet\Code\SPVisioNet.NotifExpiredKomisaris\obj\x86\Debug\SPVisioNet.NotifExpiredKomisaris.exe
+D:\Webparts\Visionet\Code\SPVisioNet.NotifExpiredKomisaris\obj\x86\Debug\SPVisioNet.NotifExpiredKomisaris.pdb
+D:\Webparts\Visionet\Code\SPVisioNet.NotifExpiredKomisaris\bin\Debug\SPVisioNet.NotifExpiredKomisaris.exe
+D:\Webparts\Visionet\Code\SPVisioNet.NotifExpiredKomisaris\bin\Debug\SPVisioNet.NotifExpiredKomisaris.pdb
+D:\Webparts\Visionet\Code\SPVisioNet.NotifExpiredKomisaris\obj\x86\Debug\ResolveAssemblyReference.cache

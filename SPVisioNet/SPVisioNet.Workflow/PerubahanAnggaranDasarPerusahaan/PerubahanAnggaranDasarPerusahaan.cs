@@ -373,7 +373,10 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
         {
             UpdateItem(string.Empty,"Approved");
             Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, PicCorsec, "Contribute");
             Util.UpdateGroupPermission(workflowProperties.Web, false, workflowProperties.Item, VisitorGroup, "Read");
+
         }
 
         public String logToHistoryListActivity2_HistoryDescription1 = default(System.String);

@@ -9,16 +9,6 @@
     Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx.cs"
     Inherits="SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan.PerubahanAnggaranDasarDanDataPerseroanUserControl" %>
-<style type="text/css">
-    .style2
-    {
-        width: 73px;
-    }
-    .style3
-    {
-        width: 13px;
-    }
-</style>
 <fieldset>
     <legend>
         <h3>
@@ -28,7 +18,7 @@
         <span style="color: Red">*</span> indicates a required field</div>
     <asp:UpdatePanel ID="upMain" runat="server" UpdateMode="Always">
         <ContentTemplate>
-            <asp:Label ID="ltrWorkflow" runat="server" Visible="true"></asp:Label>
+            <asp:Label ID="ltrWorkflow" runat="server" Visible="false"></asp:Label>
             <table border="0">
                 <tr>
                     <td width="200px">
@@ -49,7 +39,7 @@
                         :
                     </td>
                     <td>
-                        <asp:Literal ID="ltrRequestCode" runat="server" />
+                        <asp:Literal ID="ltrRequestCode" runat="server"  />
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +94,7 @@
                     </td>
                     <td>
                         <asp:HiddenField ID="hfIDPemohon" runat="server" />
-                        <asp:TextBox ID="txtNamaPemohon" runat="server" Enabled="false" Width="476px" />
+                        <asp:TextBox ID="txtNamaPemohon" runat="server" Enabled="false" Width="300px" />
                         <asp:Literal ID="ltrNamaPemohon" runat="server" />
                         <asp:ImageButton ID="imgbtnNamaPemohon" ValidationGroup="popup" runat="server" ImageUrl="/_layouts/images/SPVisioNet.WebParts/popup.gif"
                             ToolTip="Search" OnClientClick="openDialog(event,'Cari Nama Pemohon', 'divPemohonSearch')"
@@ -121,7 +111,7 @@
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtEmailPemohon" runat="server" Enabled="false" Width="476px" />
+                        <asp:TextBox ID="txtEmailPemohon" runat="server" Enabled="false" Width="300px" />
                         <asp:Literal ID="ltrEmailPemohon" runat="server" />
                         <asp:RequiredFieldValidator ID="reqtxtEmailPemohon" Display="Dynamic" ValidationGroup="Save"
                             runat="server" ControlToValidate="txtEmailPemohon" ErrorMessage="Required Field" />
@@ -180,7 +170,7 @@
                     </td>
                     <td>
                         <asp:HiddenField ID="hfIDCompany" runat="server" />
-                        <asp:TextBox ID="txtCompanyCode" runat="server" Width="476px" ReadOnly="true" />
+                        <asp:TextBox ID="txtCompanyCode" runat="server" Width="300px" ReadOnly="true" />
                         <asp:Literal ID="ltrCompanyCode" runat="server" />
                         <asp:RequiredFieldValidator ID="reqtxtCompanyCode" Display="Dynamic" ValidationGroup="Save"
                             runat="server" ControlToValidate="txtCompanyCode" ErrorMessage="Required Field" />
@@ -194,7 +184,7 @@
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtCompanyName" runat="server" Width="476px" />
+                        <asp:TextBox ID="txtCompanyName" runat="server" Width="300px" />
                         <asp:ImageButton ID="imgbtnNamaCompany" ValidationGroup="popup" runat="server" ImageUrl="/_layouts/images/SPVisioNet.WebParts/popup.gif"
                             ToolTip="Search" OnClientClick="openDialog(event,'Cari Nama Company', 'divCompanySearch')"
                             CausesValidation="false" OnClick="imgbtnNamaCompany_Click" />
@@ -929,74 +919,7 @@
                 </table>
             </fieldset>
         </div>
-        <div id="divBNRI" runat="server" visible="false">
-            <fieldset>
-                <legend><b>BNRI [ dilaporkan oleh Corporate Secretary (<asp:Label ID="lblBNRIUserName"
-                    runat="server"></asp:Label>) ]</b></legend>
-                <table border="0">
-                    <tr>
-                        <td valign="top" width="315px">
-                            &nbsp;
-                        </td>
-                        <td>
-                            <table border="0">
-                                <tr>
-                                    <td width="150px">
-                                        No BNRI <span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        <asp:TextBox runat="server" ID="txtBNRINo"></asp:TextBox>
-                                        <asp:Label runat="server" ID="ltrBNRINo"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="reqtxtBNRINo" ValidationGroup="Save" runat="server"
-                                            ControlToValidate="txtBNRINo" ErrorMessage="Required Field" Display="Dynamic" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Tanggal Mulai Berlaku <span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td>
-                                                    <SharePoint:DateTimeControl ID="dtBNRIMulaiBerlaku" DateOnly="true" runat="server">
-                                                    </SharePoint:DateTimeControl>
-                                                    <asp:Literal ID="ltrBNRIMulaiBerlaku" runat="server" />
-                                                </td>
-                                                <td>
-                                                    <asp:RequiredFieldValidator ID="reqdtBNRIMulaiBerlaku" ValidationGroup="Save" runat="server"
-                                                        ControlToValidate="dtBNRIMulaiBerlaku$dtBNRIMulaiBerlakuDate" ErrorMessage="Required Field"
-                                                        Display="Dynamic" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td valign="top">
-                                        Keterangan
-                                    </td>
-                                    <td valign="top">
-                                        :
-                                    </td>
-                                    <td>
-                                        <asp:TextBox ID="txtBNRIKeterangan" runat="server" TextMode="MultiLine" Height="70px"
-                                            Width="230px"></asp:TextBox>
-                                        <asp:Label runat="server" ID="ltrBNRIKeterangan"></asp:Label>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </div>
+        
         <div id="divSKDP" runat="server" visible="false">
             <fieldset>
                 <legend><b>SKDP [ dilaporkan oleh Corporate Secretary (<asp:Label ID="lblSKDPUserName"
@@ -1575,10 +1498,80 @@
             </table>
         </fieldset>
     </div>
+    <div id="divBNRI" runat="server" visible="false">
+            <fieldset>
+                <legend><b>BNRI [ dilaporkan oleh Corporate Secretary (<asp:Label ID="lblBNRIUserName"
+                    runat="server"></asp:Label>) ]</b></legend>
+                <table border="0">
+                    <tr>
+                        <td valign="top" width="315px">
+                            &nbsp;
+                        </td>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td width="150px">
+                                        No BNRI <span style="color: Red">*</span>
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        <asp:TextBox runat="server" ID="txtBNRINo"></asp:TextBox>
+                                        <asp:Label runat="server" ID="ltrBNRINo"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="reqtxtBNRINo" ValidationGroup="Save" runat="server"
+                                            ControlToValidate="txtBNRINo" ErrorMessage="Required Field" Display="Dynamic" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tanggal Mulai Berlaku <span style="color: Red">*</span>
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td>
+                                                    <SharePoint:DateTimeControl ID="dtBNRIMulaiBerlaku" DateOnly="true" runat="server">
+                                                    </SharePoint:DateTimeControl>
+                                                    <asp:Literal ID="ltrBNRIMulaiBerlaku" runat="server" />
+                                                </td>
+                                                <td>
+                                                    <asp:RequiredFieldValidator ID="reqdtBNRIMulaiBerlaku" ValidationGroup="Save" runat="server"
+                                                        ControlToValidate="dtBNRIMulaiBerlaku$dtBNRIMulaiBerlakuDate" ErrorMessage="Required Field"
+                                                        Display="Dynamic" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">
+                                        Keterangan
+                                    </td>
+                                    <td valign="top">
+                                        :
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtBNRIKeterangan" runat="server" TextMode="MultiLine" Height="70px"
+                                            Width="230px"></asp:TextBox>
+                                        <asp:Label runat="server" ID="ltrBNRIKeterangan"></asp:Label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
 </div>
 <div style="text-align: right">
     <asp:Button ID="btnSaveUpdate" runat="server" ValidationGroup="Save" Text="Save"
         OnClick="btnSaveUpdate_Click" Width="70px" />&nbsp;
+    <asp:Button ID="btnSaveUpdateRunWf" runat="server" Text="Save & Run Workflow" ValidationGroup="Save"
+            OnClick="btnSaveUpdateRunWf_Click" Width="160px" />&nbsp;
     <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"
         Width="70px" ValidationGroup="Cancel" />
 </div>

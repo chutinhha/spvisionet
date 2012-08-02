@@ -242,7 +242,7 @@ namespace SPVisioNet.NotifExpiredDocument
                     else
                         msg.FieldValue = (item[field] != null ? item[field].ToString() : string.Empty);
 
-                    msg.Url = items[0].Web.Url + items[0].ListItems.List.DefaultEditFormUrl + "?ID=" + items[0].ID.ToString();
+                    msg.Url = items[0].Web.ParentWeb.Url  + items[0].ListItems.List.DefaultEditFormUrl + "?ID=" + items[0].ID.ToString();
                     if (toEmail.Substring(toEmail.Length - 1, 1).Equals(";"))
                         toEmail = toEmail.Substring(0, toEmail.Length - 1);
                     msg.UserEmail = toEmail;

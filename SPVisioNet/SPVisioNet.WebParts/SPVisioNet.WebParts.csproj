@@ -42,6 +42,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.Build.Conversion.v3.5" />
     <Reference Include="Microsoft.Office.DocumentManagement, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="SPVisionet.CorporateSecretary.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2b5fd128b909229a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\inetpub\wwwroot\wss\VirtualDirectories\81\bin\SPVisionet.CorporateSecretary.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -67,13 +71,29 @@
     <Compile Include="SR.cs" />
     <Compile Include="ToolPartCustom.cs" />
     <Compile Include="MyUtil.cs" />
-    <Compile Include="wpNotification\wpNotification.cs" />
-    <Compile Include="wpNotification\wpNotificationUserControl.ascx.cs">
-      <DependentUpon>wpNotificationUserControl.ascx</DependentUpon>
+    <Compile Include="wpExpiredKomisaris\wpExpiredKomisaris.cs" />
+    <Compile Include="wpExpiredKomisaris\wpExpiredKomisarisUserControl.ascx.cs">
+      <DependentUpon>wpExpiredKomisarisUserControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="wpNotification\wpNotificationUserControl.ascx.designer.cs">
-      <DependentUpon>wpNotificationUserControl.ascx.cs</DependentUpon>
+    <Compile Include="wpExpiredKomisaris\wpExpiredKomisarisUserControl.ascx.designer.cs">
+      <DependentUpon>wpExpiredKomisarisUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wpExpiredPermintaanDocument\wpExpiredPermintaanDocument.cs" />
+    <Compile Include="wpExpiredPermintaanDocument\wpExpiredPermintaanDocumentUserControl.ascx.cs">
+      <DependentUpon>wpExpiredPermintaanDocumentUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wpExpiredPermintaanDocument\wpExpiredPermintaanDocumentUserControl.ascx.designer.cs">
+      <DependentUpon>wpExpiredPermintaanDocumentUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wpNotifExpiredDocument\wpNotifExpiredDocument.cs" />
+    <Compile Include="wpNotifExpiredDocument\wpNotifExpiredDocumentUserControl.ascx.cs">
+      <DependentUpon>wpNotifExpiredDocumentUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wpNotifExpiredDocument\wpNotifExpiredDocumentUserControl.ascx.designer.cs">
+      <DependentUpon>wpNotifExpiredDocumentUserControl.ascx.cs</DependentUpon>
     </Compile>
     <Compile Include="wpRedirectURL\wpRedirectURL.cs" />
   </ItemGroup>
@@ -101,10 +121,18 @@
     <None Include="PerubahanAnggaranDasarDanDataPerseroan\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{02f4e632-c2fa-4e69-9022-ec1b76f0c04c}</SharePointProjectItemId>
     </None>
-    <None Include="wpNotification\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{228274b2-83b8-468f-928d-57cf8314a1fa}</SharePointProjectItemId>
+    <None Include="wpExpiredKomisaris\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{5ebf60ed-b947-4663-a8f0-3d47fded687b}</SharePointProjectItemId>
     </None>
-    <None Include="wpNotification\wpNotification.webpart" />
+    <None Include="wpExpiredKomisaris\wpExpiredKomisaris.webpart" />
+    <None Include="wpExpiredPermintaanDocument\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{1c4fb4e4-2dd6-42f0-b4c0-bad3e7765300}</SharePointProjectItemId>
+    </None>
+    <None Include="wpExpiredPermintaanDocument\wpExpiredPermintaanDocument.webpart" />
+    <None Include="wpNotifExpiredDocument\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{099a3f5e-6ab9-4a62-8b11-1b6cc7c2b2a6}</SharePointProjectItemId>
+    </None>
+    <None Include="wpNotifExpiredDocument\wpNotifExpiredDocument.webpart" />
     <None Include="wpRedirectURL\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{5f26f96e-41b2-4c7a-9b02-d72b59d6ede8}</SharePointProjectItemId>
     </None>
@@ -126,21 +154,19 @@
     <Content Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="wpNotification\Elements.xml" />
-    <Content Include="wpNotification\wpNotificationUserControl.ascx">
+    <Content Include="wpExpiredKomisaris\Elements.xml" />
+    <Content Include="wpExpiredKomisaris\wpExpiredKomisarisUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="wpExpiredPermintaanDocument\Elements.xml" />
+    <Content Include="wpExpiredPermintaanDocument\wpExpiredPermintaanDocumentUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="wpNotifExpiredDocument\Elements.xml" />
+    <Content Include="wpNotifExpiredDocument\wpNotifExpiredDocumentUserControl.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="wpRedirectURL\Elements.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SPVisionet.CorporateSecretary.Common\SPVisionet.CorporateSecretary.Common.csproj">
-      <Project>{562511DA-67DB-4BF7-80F9-4A8B97FEB452}</Project>
-      <Name>SPVisionet.CorporateSecretary.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SPVisionet.CorporateSecretary.WebParts\SPVisionet.CorporateSecretary.WebParts.csproj">
-      <Project>{F0C8B302-666F-418E-9499-ABA1CCEF5196}</Project>
-      <Name>SPVisionet.CorporateSecretary.WebParts</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" />

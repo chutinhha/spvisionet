@@ -11,6 +11,7 @@ using System.Text;
 using System.IO;
 using Microsoft.SharePoint.WebControls;
 using Microsoft.Office.DocumentManagement.DocumentSets;
+using Microsoft.SharePoint.Workflow;
 
 namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 {
@@ -337,7 +338,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             }
         }
 
-        private string SaveUpdate()
+        private string SaveUpdate(string mode)
         {
             web.AllowUnsafeUpdates = true;
             SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PerubahanAnggaranDasarDanDataPerseroan"));
@@ -494,12 +495,6 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     /* SKDP */
                     if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == "PIC Upload SKDP")
                     {
-                        /* BNRI */
-                        item["NoBNRI"] = txtBNRINo.Text.Trim();
-                        item["TanggalMulaiBerlakuBNRI"] = dtBNRIMulaiBerlaku.SelectedDate;
-                        item["KeteranganBNRI"] = txtBNRIKeterangan.Text.Trim();
-                        item["PembuatBNRI"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-
                         item["NoSKDP"] = txtSKDPNo.Text.Trim();
                         item["TanggalMulaiBerlakuSKDP"] = dtSKDPTanggalMulai.SelectedDate;
                         item["TanggalAkhirBerlakuSKDP"] = dtSKDPTanggalAkhir.SelectedDate;
@@ -580,6 +575,16 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                         item["KeteranganSK"] = txtSKKeterangan.Text.Trim();
                         item["PembuatSK"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                     }
+
+                    if (Convert.ToBoolean(ViewState["Admin"]) == true || divBNRI.Visible)
+                    {
+                        /* BNRI */
+                        item["NoBNRI"] = txtBNRINo.Text.Trim();
+                        item["TanggalMulaiBerlakuBNRI"] = dtBNRIMulaiBerlaku.SelectedDate;
+                        item["KeteranganBNRI"] = txtBNRIKeterangan.Text.Trim();
+                        item["PembuatBNRI"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                    }
+
                     item["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                     item.Web.AllowUnsafeUpdates = true;
                     item.Update();
@@ -614,6 +619,21 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     message = SaveDocument(fuSetoranModal, Convert.ToInt32(hfIDCompany.Value), "Setoran Modal");
                     if (message != string.Empty)
                         return message;
+                }
+                web.AllowUnsafeUpdates = true;
+
+                if (item["Status"] == null)
+                {
+                    if (mode == "SaveRunWf")
+                    {
+                        if (list.WorkflowAssociations.Count > 0)
+                        {
+                            string WfId = Util.GetSettingValue(web, "Workflow BasedId", "Perubahan Anggaran Dasar & Data Perseroan");
+                            Guid wfBaseId = new Guid(WfId);
+                            SPWorkflowAssociation associationTemplate = list.WorkflowAssociations.GetAssociationByBaseID(wfBaseId);
+                            web.Site.WorkflowManager.StartWorkflow(item, associationTemplate, associationTemplate.AssociationData, true);
+                        }
+                    }
                 }
                 web.AllowUnsafeUpdates = false;
             }
@@ -752,11 +772,11 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 GetPemegangSahamSemula(IDCompany);
                 BindPemegangSahamSemula();
 
-                dgPemegangSaham.Columns[6].Visible = true;
-                dgPemegangSaham.Columns[7].Visible = true;
+                //dgPemegangSaham.Columns[6].Visible = true;
+                //dgPemegangSaham.Columns[7].Visible = true;
 
-                dgKomisaris.Columns[5].Visible = true;
-                dgKomisaris.Columns[6].Visible = true;
+                //dgKomisaris.Columns[5].Visible = true;
+                //dgKomisaris.Columns[6].Visible = true;
 
                 if (IDP == 0)
                 {
@@ -1058,8 +1078,27 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             {
                 string workflowStatus = (item["Step"] != null ? item["Step"].ToString() : string.Empty);
                 string approvalStatus = (item["ApprovalStatus"] != null ? item["ApprovalStatus"].ToString() : string.Empty);
-                if (approvalStatus.Equals("Approved")) mode = "display";
+                if (approvalStatus.Equals("Approved"))
+                {
+                    //mode = "display";
+                    workflowStatus = approvalStatus;
+                }
+
                 ViewState["Status"] = workflowStatus;
+
+                if (item.Workflows.Count > 0 || ViewState["Status"].ToString() == "Approved")
+                    btnSaveUpdateRunWf.Visible = false;
+
+                if (mode == "edit")
+                {
+                    btnSaveUpdate.Text = "Update";
+                    btnSaveUpdateRunWf.Text = "Update & Run Workflow";
+                }
+                else if (mode == "display")
+                {
+                    btnSaveUpdate.Visible = false;
+                    btnSaveUpdateRunWf.Visible = false;
+                }
 
                 ltrWorkflow.Text = workflowStatus;
                 ltrRequestCode.Text = item["Title"].ToString();
@@ -1106,6 +1145,8 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ltrRemarks.Text = txtRemarks.Text;
                 hfIDCompany.Value = (item["CompanyCode"] != null ? new SPFieldLookupValue(item["CompanyCode"].ToString()).LookupId.ToString() : string.Empty);
                 hfIDPemohon.Value = new SPFieldLookupValue(item["Requestor"].ToString()).LookupId.ToString();
+                txtAlamatSKDP.Text = (item["AlamatSKDP"] != null ? item["AlamatSKDP"].ToString() : string.Empty);
+                ltrAlamatSKDP.Text = txtAlamatSKDP.Text;
 
                 if (item["JenisPerubahan"] != null)
                 {
@@ -1128,7 +1169,10 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     lblPerusahaanName.Text = txtCompanyName.Text;
 
                     if (string.IsNullOrEmpty(txtAlamatSKDP.Text))
+                    {
                         txtAlamatSKDP.Text = (itemPerusahaanBaru["AlamatSKDP"] != null ? itemPerusahaanBaru["AlamatSKDP"].ToString() : string.Empty);
+                        ltrAlamatSKDP.Text = txtAlamatSKDP.Text;
+                    }
 
                     if (itemPerusahaanBaru["TempatKedudukan"] != null)
                     {
@@ -1340,6 +1384,14 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 txtSKNo.Visible = false;
                 dtSKMulaiBerlaku.Visible = false;
                 txtSKKeterangan.Visible = false;
+                txtAlamatSKDP.Visible = false;
+                txtKodePerusahaanAPV.Visible = false;
+                txtNoAPV.Visible = false;
+                dtTanggalAPV.Visible = false;
+                txtKeteranganAPV.Visible = false;
+                dtTanggalSetoran.Visible = false;
+                txtKeteranganSetoran.Visible = false;
+                chkStatusSetoran.Visible = false; 
 
                 txtSKNo.Visible = false;
                 dtSKMulaiBerlaku.Visible = false;
@@ -1367,10 +1419,12 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 dgPemegangSaham.ShowFooter = false;
                 dgPemegangSaham.Columns[6].Visible = true;
                 dgPemegangSaham.Columns[7].Visible = true;
+                dgPemegangSaham.Columns[8].Visible = false;
 
                 dgKomisaris.ShowFooter = false;
                 dgKomisaris.Columns[5].Visible = true;
                 dgKomisaris.Columns[6].Visible = true;
+                dgKomisaris.Columns[7].Visible = false;
 
                 dgNPWPLainnya.ShowFooter = false;
                 dgNPWPLainnya.Columns[4].Visible = false;
@@ -1429,6 +1483,11 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ltrSKNo.Visible = false;
                 ltrSKMulaiBerlaku.Visible = false;
                 ltrSKKeterangan.Visible = false;
+                ltrNoAkte.Visible = false;
+                ltrNotarisAkte.Visible = false;
+                ltrKeteranganAkte.Visible = false;
+                ltrTanggalAkte.Visible = false;
+                ltrAlamatSKDP.Visible = false; 
 
                 dgPemegangSaham.Columns[6].Visible = true;
                 dgPemegangSaham.Columns[7].Visible = true;
@@ -1474,7 +1533,9 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
             switch (workflowStatus)
             {
+                case "Entry Perubahan Anggaran Dasar" :
                 case "Entry request perubahan anggaran dasar":
+                    break; 
                 case "Approve oleh Authorized Person":
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = false;
@@ -1487,19 +1548,16 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = true;
                     divAkta.Visible = true;
-                    divBNRI.Visible = true;
                     divSKDP.Visible = true; break;
                 case "PIC Upload NPWP dan SKT":
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = true;
                     divAkta.Visible = true;
-                    divBNRI.Visible = true;
                     divSKDP.Visible = true;
                     divNPWPSKT.Visible = true; break;
                 case "PIC Upload APV":
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = true;
-                    divBNRI.Visible = true;
                     divAkta.Visible = true;
                     if (rdPerubahanNama.SelectedValue.Equals("Yes"))
                     {
@@ -1510,7 +1568,6 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 case "PIC Upload Setoran Modal":
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = true;
-                    divBNRI.Visible = true;
                     divAkta.Visible = true;
                     if (rdPerubahanNama.SelectedValue.Equals("Yes"))
                     {
@@ -1522,7 +1579,6 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 case "PIC Upload SK Persetujuan":
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = true;
-                    divBNRI.Visible = true;
                     divAkta.Visible = true;
                     if (rdPerubahanNama.SelectedValue.Equals("Yes"))
                     {
@@ -1538,15 +1594,27 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
                     divSK.Visible = true; break;
                 default:
-                    divPerubahanDataPerseroan.Visible = true;
-                    divPerubahanAnggaran.Visible = true;
-                    divBNRI.Visible = true;
-                    divAkta.Visible = true;
-                    divSKDP.Visible = true;
-                    divNPWPSKT.Visible = true;
-                    divAccounting.Visible = true;
-                    divFinance.Visible = true;
-                    divSK.Visible = true;
+
+                    if (!string.IsNullOrEmpty(ViewState["Status"].ToString()))
+                    {
+                        divPerubahanDataPerseroan.Visible = true;
+                        divPerubahanAnggaran.Visible = true;
+                        divAkta.Visible = true;
+                        if (rdPerubahanNama.SelectedValue.Equals("Yes"))
+                        {
+                            divSKDP.Visible = true;
+                            divNPWPSKT.Visible = true;
+                        }
+
+                        if (rdPerubahanModal.SelectedValue.Equals("Yes"))
+                        {
+                            divAccounting.Visible = true;
+                            divFinance.Visible = true;
+                        }
+
+                        divSK.Visible = true;
+                        divBNRI.Visible = true;
+                    }
                     break;
             }
         }
@@ -1603,6 +1671,21 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 }
             }
             return false;
+        }
+
+        private void SaveAction(string mode)
+        {
+            string msg = Validation();
+            if (msg != string.Empty)
+            {
+                Util.ShowMessage(Page, msg);
+                return;
+            }
+            string result = SaveUpdate(mode);
+            if (result == string.Empty)
+                SPUtility.Redirect(SPContext.Current.Web.Url, SPRedirectFlags.UseSource, this.Context);
+            else
+                Util.ShowMessage(Page, result);
         }
 
         #endregion
@@ -1725,6 +1808,11 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             VisiblePanel(false);
         }
 
+        protected void btnSaveUpdateRunWf_Click(object sender, EventArgs e)
+        {
+            SaveAction("SaveRunWf");
+        }
+
         private void VisiblePanel(bool isVisible)
         {
             pnlPemohon.Visible = !isVisible;
@@ -1790,17 +1878,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
         protected void btnSaveUpdate_Click(object sender, EventArgs e)
         {
-            string msg = Validation();
-            if (msg != string.Empty)
-            {
-                Util.ShowMessage(Page, msg);
-                return;
-            }
-            string result = SaveUpdate();
-            if (result == string.Empty)
-                SPUtility.Redirect(SPContext.Current.Web.Url, SPRedirectFlags.UseSource, this.Context);
-            else
-                Util.ShowMessage(Page, result);
+            SaveAction("Save");
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -1929,17 +2007,19 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 o.NoKTP = txtNoKTPAdd.Text;
                 o.NoNPWP = txtNoNPWPAdd.Text;
 
-
                 dtTanggalMulaiMenjabatAdd = e.Item.FindControl("dtTanggalMulaiMenjabatAdd") as DateTimeControl;
                 dtTanggalAkhirMenjabatAdd = e.Item.FindControl("dtTanggalAkhirMenjabatAdd") as DateTimeControl;
-                o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
-                o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
-
-                int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
-                if (i > 0)
+                if (dtTanggalMulaiMenjabatAdd != null && dtTanggalAkhirMenjabatAdd != null)
                 {
-                    Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
-                    return;
+                    o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
+                    o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
+
+                    int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
+                    if (i > 0)
+                    {
+                        Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
+                        return;
+                    }
                 }
 
                 o.ID = 0;
@@ -1953,8 +2033,8 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 DropDownList ddlJabatanEdit = e.Item.FindControl("ddlJabatanEdit") as DropDownList;
                 TextBox txtNoKTPEdit = e.Item.FindControl("txtNoKTPEdit") as TextBox;
                 TextBox txtNoNPWPEdit = e.Item.FindControl("txtNoNPWPEdit") as TextBox;
-                DateTimeControl dtTanggalMulaiMenjabatAdd = null;
-                DateTimeControl dtTanggalAkhirMenjabatAdd = null;
+                DateTimeControl dtTanggalMulaiMenjabatEdit = null;
+                DateTimeControl dtTanggalAkhirMenjabatEdit = null;
 
                 if (isExistInKomisarisDireksiGrid(txtNamaEdit.Text))
                 {
@@ -1962,23 +2042,26 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     return;
                 }
 
-                KomisarisDireksi o = new KomisarisDireksi();
+                KomisarisDireksi o = coll[e.Item.ItemIndex] as KomisarisDireksi;
                 o.Nama = txtNamaEdit.Text.Trim();
                 o.IDJabatan = Convert.ToInt32(ddlJabatanEdit.SelectedValue);
                 o.Jabatan = ddlJabatanEdit.SelectedItem.Text;
                 o.NoKTP = txtNoKTPEdit.Text;
                 o.NoNPWP = txtNoNPWPEdit.Text;
 
-                dtTanggalMulaiMenjabatAdd = e.Item.FindControl("dtTanggalMulaiMenjabatAdd") as DateTimeControl;
-                dtTanggalAkhirMenjabatAdd = e.Item.FindControl("dtTanggalAkhirMenjabatAdd") as DateTimeControl;
-                o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
-                o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
-
-                int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
-                if (i > 0)
+                dtTanggalMulaiMenjabatEdit = e.Item.FindControl("dtTanggalMulaiMenjabatEdit") as DateTimeControl;
+                dtTanggalAkhirMenjabatEdit = e.Item.FindControl("dtTanggalAkhirMenjabatEdit") as DateTimeControl;
+                if (dtTanggalMulaiMenjabatEdit != null && dtTanggalAkhirMenjabatEdit != null)
                 {
-                    Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
-                    return;
+                    o.MulaiMenjabat = dtTanggalMulaiMenjabatEdit.SelectedDate;
+                    o.AkhirMenjabat = dtTanggalAkhirMenjabatEdit.SelectedDate;
+
+                    int i = DateTime.Compare(dtTanggalMulaiMenjabatEdit.SelectedDate, dtTanggalAkhirMenjabatEdit.SelectedDate);
+                    if (i > 0)
+                    {
+                        Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
+                        return;
+                    }
                 }
 
                 coll[e.Item.ItemIndex] = o;
@@ -2036,17 +2119,19 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 o.Partner = cboPartnerAdd.Checked;
                 o.Percentages = Convert.ToDouble(txtPercentagesAdd.Text);
 
-
                 dtTanggalMulaiMenjabatAdd = e.Item.FindControl("dtTanggalMulaiMenjabatAdd") as DateTimeControl;
                 dtTanggalAkhirMenjabatAdd = e.Item.FindControl("dtTanggalAkhirMenjabatAdd") as DateTimeControl;
-                o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
-                o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
-
-                int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
-                if (i > 0)
+                if (dtTanggalMulaiMenjabatAdd != null && dtTanggalAkhirMenjabatAdd != null)
                 {
-                    Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
-                    return;
+                    o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
+                    o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
+
+                    int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
+                    if (i > 0)
+                    {
+                        Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
+                        return;
+                    }
                 }
 
                 o.ID = 0;
@@ -2061,8 +2146,8 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 TextBox txtJumlahNominalEdit = e.Item.FindControl("txtJumlahNominalEdit") as TextBox;
                 TextBox txtPercentagesEdit = e.Item.FindControl("txtPercentagesEdit") as TextBox;
                 CheckBox cboPartnerEdit = e.Item.FindControl("cboPartnerEdit") as CheckBox;
-                DateTimeControl dtTanggalMulaiMenjabatAdd = null;
-                DateTimeControl dtTanggalAkhirMenjabatAdd = null;
+                DateTimeControl dtTanggalMulaiMenjabatEdit = null;
+                DateTimeControl dtTanggalAkhirMenjabatEdit = null;
 
                 if (isExistInPemegangSahamGrid(txtNamaPemegangSahamEdit.Text))
                 {
@@ -2070,24 +2155,26 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     return;
                 }
 
-                PemegangSaham o = new PemegangSaham();
+                PemegangSaham o = coll[e.Item.ItemIndex] as PemegangSaham;
                 o.Nama = txtNamaPemegangSahamEdit.Text.Trim();
                 o.JumlahNominal = Convert.ToDouble(txtJumlahNominalEdit.Text);
                 o.JumlahSaham = Convert.ToDouble(txtJumlahSahamEdit.Text);
                 o.Partner = cboPartnerEdit.Checked;
                 o.Percentages = Convert.ToDouble(txtPercentagesEdit.Text);
 
-
-                dtTanggalMulaiMenjabatAdd = e.Item.FindControl("dtTanggalMulaiMenjabatAdd") as DateTimeControl;
-                dtTanggalAkhirMenjabatAdd = e.Item.FindControl("dtTanggalAkhirMenjabatAdd") as DateTimeControl;
-                o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
-                o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
-
-                int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
-                if (i > 0)
+                dtTanggalMulaiMenjabatEdit = e.Item.FindControl("dtTanggalMulaiMenjabatEdit") as DateTimeControl;
+                dtTanggalAkhirMenjabatEdit = e.Item.FindControl("dtTanggalAkhirMenjabatEdit") as DateTimeControl;
+                if (dtTanggalMulaiMenjabatEdit != null && dtTanggalAkhirMenjabatEdit != null)
                 {
-                    Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
-                    return;
+                    o.MulaiMenjabat = dtTanggalMulaiMenjabatEdit.SelectedDate;
+                    o.AkhirMenjabat = dtTanggalAkhirMenjabatEdit.SelectedDate;
+
+                    int i = DateTime.Compare(dtTanggalMulaiMenjabatEdit.SelectedDate, dtTanggalAkhirMenjabatEdit.SelectedDate);
+                    if (i > 0)
+                    {
+                        Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
+                        return;
+                    }
                 }
 
                 coll[e.Item.ItemIndex] = o;
@@ -2268,7 +2355,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     return;
                 }
 
-                NPWP o = coll[e.Item.ItemIndex];
+                NPWP o = coll[e.Item.ItemIndex] as NPWP;
                 o.NoNPWP = txtNPWPEdit.Text.Trim();
 
                 if (fuEdit.PostedFile != null)
