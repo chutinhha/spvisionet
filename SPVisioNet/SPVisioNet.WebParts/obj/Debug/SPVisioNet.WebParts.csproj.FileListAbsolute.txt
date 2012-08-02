@@ -16,3 +16,12 @@ C:\SPVisioNet\SPVisioNet.WebParts\obj\Debug\ResGen.read.1.tlog
 C:\SPVisioNet\SPVisioNet.WebParts\obj\Debug\ResGen.write.1.tlog
 C:\SPVisioNet\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.dll
 C:\SPVisioNet\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.pdb
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\obj\Debug\ResolveAssemblyReference.cache
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.SR.resources
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\obj\Debug\ResGen.read.1.tlog
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\obj\Debug\ResGen.write.1.tlog
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.dll
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\obj\Debug\SPVisioNet.WebParts.pdb
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\bin\Debug\SPVisioNet.WebParts.dll
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\bin\Debug\SPVisioNet.WebParts.pdb
+D:\Webparts\Visionet\Code\SPVisioNet.WebParts\bin\Debug\SPVisionet.CorporateSecretary.Common.dll

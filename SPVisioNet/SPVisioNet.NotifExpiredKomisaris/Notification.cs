@@ -261,7 +261,7 @@ namespace SPVisioNet.NotifExpiredKomisaris
                     else
                         msg.FieldValue = (item[field] != null ? item[field].ToString() : string.Empty);
 
-                    msg.Url = items[0].Web.Url + lookupfieldList.DefaultEditFormUrl + "?ID=" + new SPFieldLookupValue(item[lookupfieldName].ToString()).LookupId.ToString();
+                    msg.Url = items[0].Web.ParentWeb.Url  + lookupfieldList.DefaultEditFormUrl + "?ID=" + new SPFieldLookupValue(item[lookupfieldName].ToString()).LookupId.ToString();
                     if (toEmail.Substring(toEmail.Length - 1, 1).Equals(";"))
                         toEmail = toEmail.Substring(0, toEmail.Length - 1);
                     msg.UserEmail = toEmail;

@@ -3,15 +3,19 @@
   <Assemblies>
     <Assembly Location="SPVisioNet.WebParts.dll" DeploymentTarget="GlobalAssemblyCache">
       <SafeControls>
-        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpNotification" TypeName="*" />
         <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpRedirectURL" TypeName="*" />
         <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan" TypeName="*" />
+        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpNotifExpiredDocument" TypeName="*" />
+        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpExpiredKomisaris" TypeName="*" />
+        <SafeControl Assembly="SPVisioNet.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0df5bbccecf641" Namespace="SPVisioNet.WebParts.wpExpiredPermintaanDocument" TypeName="*" />
       </SafeControls>
     </Assembly>
   </Assemblies>
   <TemplateFiles>
-    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\wpNotification\wpNotificationUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\wpNotifExpiredDocument\wpNotifExpiredDocumentUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\wpExpiredKomisaris\wpExpiredKomisarisUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisioNet.WebParts\wpExpiredPermintaanDocument\wpExpiredPermintaanDocumentUserControl.ascx" />
     <TemplateFile Location="Layouts\SPVisioNet.WebParts\style.css" />
     <TemplateFile Location="Images\SPVisioNet.WebParts\popup.gif" />
   </TemplateFiles>
