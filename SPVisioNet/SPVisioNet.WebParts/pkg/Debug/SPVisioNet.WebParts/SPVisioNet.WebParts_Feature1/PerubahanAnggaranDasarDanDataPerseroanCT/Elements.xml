@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Item (0x01) -->
+  <ContentType ID="0x0100fd56e2454f35413b9f3805f31eb2ef8a"
+               Name="Perubahan Anggaran Dasar Dan Data Perseroan"
+               Group="Corporate Secretary Content Types"
+               Description="Form Perubahan Anggaran Dasar Dan Data Perseroan"
+               Inherits="FALSE"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>/cs/Lists/PerubahanAnggaranDasarDanDataPerseroan/PerubahanAnggaranDasarDanDataPerseroan.aspx?mode=display</Display>
+          <Edit>/cs/Lists/PerubahanAnggaranDasarDanDataPerseroan/PerubahanAnggaranDasarDanDataPerseroan.aspx?mode=edit</Edit>
+          <New>/cs/Lists/PerubahanAnggaranDasarDanDataPerseroan/PerubahanAnggaranDasarDanDataPerseroan.aspx?mode=new</New>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+</Elements>

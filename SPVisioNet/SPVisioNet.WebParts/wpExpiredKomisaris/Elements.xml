@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
+  <Module Name="wpExpiredKomisaris" List="113" Url="_catalogs/wp">
+    <File Path="wpExpiredKomisaris\wpExpiredKomisaris.webpart" Url="wpExpiredKomisaris.webpart" Type="GhostableInLibrary" >
+      <Property Name="Group" Value="LippoWebParts" />
+    </File>
+  </Module>
+</Elements>

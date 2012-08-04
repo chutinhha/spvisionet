@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Description="This WebParts is Belonging to Lippo Webparts" Id="ac1ca6d9-9647-4884-9992-fc6fe73f4464" Scope="Site" Title="SPVisioNet.WebParts Feature1">
+  <ElementManifests>
+    <ElementManifest Location="wpNotification\Elements.xml" />
+    <ElementFile Location="wpNotification\wpNotification.webpart" />
+    <ElementManifest Location="wpRedirectURL\Elements.xml" />
+    <ElementFile Location="wpRedirectURL\wpRedirectURL.webpart" />
+    <ElementManifest Location="PerubahanAnggaranDasarDanDataPerseroan\Elements.xml" />
+    <ElementFile Location="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroan.webpart" />
+    <ElementManifest Location="PerubahanAnggaranDasarDanDataPerseroanCT\Elements.xml" />
+  </ElementManifests>
+</Feature>
