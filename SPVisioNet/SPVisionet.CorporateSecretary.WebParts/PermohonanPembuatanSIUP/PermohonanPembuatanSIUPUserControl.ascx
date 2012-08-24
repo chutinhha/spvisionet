@@ -50,8 +50,7 @@
                         :
                     </td>
                     <td>
-                        <asp:DropDownList ID="ddlAlasanPembuatan" runat="server" AutoPostBack="true" 
-                            onselectedindexchanged="ddlAlasanPembuatan_SelectedIndexChanged">
+                        <asp:DropDownList ID="ddlAlasanPembuatan" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlAlasanPembuatan_SelectedIndexChanged">
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="reqddlAlasanPembuatan" ValidationGroup="Save" Display="Dynamic"
                             runat="server" ControlToValidate="ddlAlasanPembuatan" ErrorMessage="Required Field" />
@@ -186,14 +185,20 @@
             <legend><b>Laporan Pembuatan SIUP</b></legend>
             <table border="0">
                 <tr>
-                    <td valign="top" width="250px">
+                    <td valign="top" width="315px">
                         SIUP<span style="color: Red">*</span>
+                        <br />
+                        <br />
+                        <b>Note:
+                            <br />
+                            Penulisan harus ada [ORI]xxxxx / [Soft]xxxxx</b>
                         <br />
                         <br />
                         <asp:Literal ID="ltrfu" runat="server" />
                         <br />
                         <br />
                         <asp:FileUpload ID="fu" runat="server" />
+                        <br />
                         <asp:RequiredFieldValidator ID="reqfu" Display="Dynamic" ValidationGroup="Save" runat="server"
                             ControlToValidate="fu" ErrorMessage="Required Field" />
                     </td>
@@ -289,7 +294,9 @@
     <fieldset>
         <div style="text-align: right">
             <asp:Button ID="btnSaveUpdate" runat="server" Text="Save" ValidationGroup="Save"
-                OnClick="btnSaveUpdate_Click" />&nbsp;
+                OnClick="btnSaveUpdate_Click" />&nbsp;<asp:Button ID="btnSaveUpdateRunWf" runat="server"
+                    Text="Save & Run Workflow" ValidationGroup="Save" OnClick="btnSaveUpdateRunWf_Click"
+                    Width="160px" />&nbsp;
             <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
         </div>
     </fieldset>

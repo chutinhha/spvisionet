@@ -155,7 +155,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                     }
                     else if (taskItem["WorkflowLink"].ToString().Contains("Lists/PerusahaanBaru"))
                     {
-                        string msg = ValidationPendirianPerusahaanBaruIndonesia(taskItem["WorkflowLink"].ToString());
+                        string msg = ValidationPendirianPembelianPerusahaanBaruIndonesia(taskItem["WorkflowLink"].ToString());
                         if (msg != string.Empty)
                         {
                             Util.ShowMessage(Page, msg);
@@ -517,9 +517,9 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
 
         #endregion
 
-        #region Pendirian Perusahaan Baru Indonesia
+        #region Pendirian / Pembelian Perusahaan Baru Indonesia
 
-        private string ValidationPendirianPerusahaanBaruIndonesia(string wfLink)
+        private string ValidationPendirianPembelianPerusahaanBaruIndonesia(string wfLink)
         {
             string[] relatedItemLink = wfLink.Split(',');
             string link = string.Format("{0}", relatedItemLink[0].Trim());
@@ -551,10 +551,14 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                 SPListItem item = list.GetItemById(Convert.ToInt32(ID));
 
                 SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "PerusahaanBaruDokumen"));
-                if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_AKTA)
+                if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_AKTA || item["Status"].ToString() == PIC_CORSEC)
                 {
                     SPQuery query = new SPQuery();
-                    query.Query = string.Format(qry, "Akta");
+                    if (item["Tipe"].ToString() == "Pendirian Perusahaan Baru")
+                        query.Query = string.Format(qry, "Akta");
+                    else
+                        query.Query = string.Format(qry, "Akta and SK Pengesahan Pendirian");
+
                     query.Folder = web.Folders["PerusahaanBaruDokumen"].SubFolders[item.Title];
 
                     SPListItemCollection coll = null;
@@ -599,7 +603,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                             sb.Append(SR.FieldCanNotEmpty("Tanggal Mulai dan Akhir Menjabat Komisaris and Direksi for " + i.Title + "") + " \\n");
                     }
                 }
-                else if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_SKDP)
+                else if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_SKDP || item["Status"].ToString() == PIC_CORSEC)
                 {
                     SPQuery query = new SPQuery();
                     query.Query = string.Format(qry, "SKDP");
@@ -640,7 +644,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                     if (item["TanggalAPV"] == null)
                         sb.Append(SR.FieldCanNotEmpty("Tanggal APV") + " \\n");
                 }
-                else if (item["Status"].ToString() == FINANCE_UPLOAD_SETORAN_MODAL)
+                else if (item["Status"].ToString() == FINANCE_UPLOAD_SETORAN_MODAL || item["Status"].ToString() == PIC_CORSEC)
                 {
                     SPQuery query = new SPQuery();
                     query.Query = string.Format(qry, "Setoran Modal");
@@ -654,7 +658,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                     if (item["TanggalSetoran"] == null)
                         sb.Append(SR.FieldCanNotEmpty("Tanggal Setoran") + " \\n");
                 }
-                else if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_SK_PENGESAHAN)
+                else if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_SK_PENGESAHAN || item["Status"].ToString() == PIC_CORSEC)
                 {
                     SPQuery query = new SPQuery();
                     query.Query = string.Format(qry, "Akta and SK Pengesahan Pendirian");
@@ -683,7 +687,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                     //if (item["TanggalBNRI"] == null)
                     //    sb.Append(SR.FieldCanNotEmpty("Tanggal BNRI") + " \\n");
                 }
-                else if (item["Status"].ToString() == TAX_UPLOAD_NPWP)
+                else if (item["Status"].ToString() == TAX_UPLOAD_NPWP || item["Status"].ToString() == PIC_CORSEC)
                 {
                     SPQuery query = new SPQuery();
                     query.Query = string.Format(qry, "NPWP");
@@ -705,7 +709,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                     if (item["NamaKPPNPWP"] == null)
                         sb.Append(SR.FieldCanNotEmpty("Nama KPP") + " \\n");
                 }
-                else if (item["Status"].ToString() == TAX_UPLOAD_PKP)
+                else if (item["Status"].ToString() == TAX_UPLOAD_PKP || item["Status"].ToString() == PIC_CORSEC)
                 {
                     if (Convert.ToBoolean(item["StatusPKP"]))
                     {
@@ -769,18 +773,18 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                 if (item["Status"].ToString() == PIC_CORSEC)
                 {
                     SPQuery query = new SPQuery();
-                    query.Query = string.Format(qry, "Akta");
+                    query.Query = string.Format(qry, "M&A");
                     query.Folder = web.Folders["PendirianPerusahaanBaruForeignDokumen"].SubFolders[item.Title];
 
                     SPListItemCollection coll = null;
                     coll = document.GetItems(query);
                     if (coll.Count == 0)
-                        sb.Append(SR.FieldCanNotEmpty("File Upload Akta") + " \\n");
+                        sb.Append(SR.FieldCanNotEmpty("File Upload M&A") + " \\n");
 
-                    if (item["NoAkta"] == null)
-                        sb.Append(SR.FieldCanNotEmpty("No Akta") + " \\n");
-                    if (item["DateOfEntryAkta"] == null)
-                        sb.Append(SR.FieldCanNotEmpty("Date Of Entry for Akta") + " \\n");
+                    if (item["NoMA"] == null)
+                        sb.Append(SR.FieldCanNotEmpty("No M&A") + " \\n");
+                    if (item["DateOfEntryMA"] == null)
+                        sb.Append(SR.FieldCanNotEmpty("Date Of Entry for M&A") + " \\n");
 
                     query = new SPQuery();
                     query.Query = string.Format(qry, "Certification of Incorporation");

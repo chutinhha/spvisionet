@@ -345,7 +345,7 @@
         <table border="0">
             <tr>
                 <td valign="top">
-                    Keterangan
+                    Note
                 </td>
                 <td valign="top">
                     :
@@ -355,368 +355,286 @@
                     <asp:Literal ID="ltrKeterangan" runat="server" />
                 </td>
             </tr>
-            <tr>
-                <td>
-                    Diajukan Oleh
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    PIC Corporate Secretary
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Disetujui Oleh
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    Div Head Corporate Secretary & Chief
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Mengetahui
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    CEO
-                </td>
-            </tr>
         </table>
     </fieldset>
+    <asp:Panel ID="pnlPICCorsec" runat="server" Visible="false">
+        <fieldset>
+            <legend><b>M&A</b> <span style="color: Red">*</span></legend>
+            <table border="0">
+                <tr>
+                    <td valign="top" width="335px">
+                        <br />
+                        <b>Note:
+                            <br />
+                            The file name should be [ORI]xxxxx / [Soft]xxxxx</b>
+                        <br />
+                        <br />
+                        <asp:Literal ID="ltrfuMA" runat="server" />
+                        <br />
+                        <br />
+                        <asp:FileUpload ID="fuMA" runat="server" />
+                        <br />
+                        <asp:RequiredFieldValidator ID="reqfuMA" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="fuMA" ErrorMessage="Required Field" />
+                    </td>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td width="190px">
+                                    No <span style="color: Red">*</span>
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtNoMA" runat="server" />
+                                    <asp:RequiredFieldValidator ID="reqtxtNoMA" Display="Dynamic" ValidationGroup="Save"
+                                        runat="server" ControlToValidate="txtNoMA" ErrorMessage="Required Field" />
+                                    <asp:Literal ID="ltrNoMA" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date of Entry <span style="color: Red">*</span>
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td>
+                                                <SharePoint:DateTimeControl ID="dtTanggalMulaiBerlakuMA" DateOnly="true" runat="server">
+                                                </SharePoint:DateTimeControl>
+                                                <asp:Literal ID="ltrTanggalMulaiBerlakuMA" runat="server" />
+                                            </td>
+                                            <td>
+                                                <asp:RequiredFieldValidator ID="reqdtTanggalMulaiBerlakuMA" ValidationGroup="Save"
+                                                    runat="server" ControlToValidate="dtTanggalMulaiBerlakuMA$dtTanggalMulaiBerlakuMADate"
+                                                    ErrorMessage="Required Field" Display="Dynamic" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    Note
+                                </td>
+                                <td valign="top">
+                                    :
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtKeteranganMA" runat="server" Width="350px" Rows="4" TextMode="MultiLine" />
+                                    <asp:Literal ID="ltrKeteranganMA" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend><b>Certification of Incorporation</b> <span style="color: Red">*</span></legend>
+            <table border="0">
+                <tr>
+                    <td valign="top" width="335px">
+                        <br />
+                        <b>Note:
+                            <br />
+                            The file name should be [ORI]xxxxx / [Soft]xxxxx</b>
+                        <br />
+                        <br />
+                        <asp:Literal ID="ltrfuCI" runat="server" />
+                        <br />
+                        <br />
+                        <asp:FileUpload ID="fuCI" runat="server" />
+                        <br />
+                        <asp:RequiredFieldValidator ID="reqfuCI" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="fuCI" ErrorMessage="Required Field" />
+                    </td>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td width="190px">
+                                    Company Registration Number <span style="color: Red">*</span>
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtNoCI" runat="server" />
+                                    <asp:RequiredFieldValidator ID="reqtxtNoCI" Display="Dynamic" ValidationGroup="Save"
+                                        runat="server" ControlToValidate="txtNoCI" ErrorMessage="Required Field" />
+                                    <asp:Literal ID="ltrNoCI" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date of Entry <span style="color: Red">*</span>
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td>
+                                                <SharePoint:DateTimeControl ID="dtTanggalMulaiBerlakuCI" DateOnly="true" runat="server">
+                                                </SharePoint:DateTimeControl>
+                                                <asp:Literal ID="ltrTanggalMulaiBerlakuCI" runat="server" />
+                                            </td>
+                                            <td>
+                                                <asp:RequiredFieldValidator ID="reqdtTanggalMulaiBerlakuCI" ValidationGroup="Save"
+                                                    runat="server" ControlToValidate="dtTanggalMulaiBerlakuCI$dtTanggalMulaiBerlakuCIDate"
+                                                    ErrorMessage="Required Field" Display="Dynamic" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    Note
+                                </td>
+                                <td valign="top">
+                                    :
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtKeteranganCI" runat="server" Width="350px" Rows="4" TextMode="MultiLine" />
+                                    <asp:Literal ID="ltrKeteranganCI" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend><b>Business Profile</b> <span style="color: Red">*</span></legend>
+            <table border="0">
+                <tr>
+                    <td valign="top" width="335px">
+                        <br />
+                        <b>Note:
+                            <br />
+                            The file name should be [ORI]xxxxx / [Soft]xxxxx</b>
+                        <br />
+                        <br />
+                        <asp:Literal ID="ltrfuBP" runat="server" />
+                        <br />
+                        <br />
+                        <asp:FileUpload ID="fuBP" runat="server" />
+                        <br />
+                        <asp:RequiredFieldValidator ID="reqfuBP" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="fuBP" ErrorMessage="Required Field" />
+                    </td>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td width="190px">
+                                    No <span style="color: Red">*</span>
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtNoBP" runat="server" />
+                                    <asp:RequiredFieldValidator ID="reqtxtNoBP" Display="Dynamic" ValidationGroup="Save"
+                                        runat="server" ControlToValidate="txtNoBP" ErrorMessage="Required Field" />
+                                    <asp:Literal ID="ltrNoBP" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date of Entry <span style="color: Red">*</span>
+                                </td>
+                                <td>
+                                    :
+                                </td>
+                                <td>
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td>
+                                                <SharePoint:DateTimeControl ID="dtTanggalMulaiBerlakuBP" DateOnly="true" runat="server">
+                                                </SharePoint:DateTimeControl>
+                                                <asp:Literal ID="ltrTanggalMulaiBerlakuBP" runat="server" />
+                                            </td>
+                                            <td>
+                                                <asp:RequiredFieldValidator ID="reqdtTanggalMulaiBerlakuBP" ValidationGroup="Save"
+                                                    runat="server" ControlToValidate="dtTanggalMulaiBerlakuBP$dtTanggalMulaiBerlakuBPDate"
+                                                    ErrorMessage="Required Field" Display="Dynamic" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    Note
+                                </td>
+                                <td valign="top">
+                                    :
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtKeteranganBP" runat="server" Width="350px" Rows="4" TextMode="MultiLine" />
+                                    <asp:Literal ID="ltrKeteranganBP" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </asp:Panel>
+    <asp:Panel ID="pnlAssigned" runat="server" Visible="false">
+        <fieldset>
+            <table border="0">
+                <tr>
+                    <td>
+                        Diajukan Oleh
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        PIC Corporate Secretary
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Disetujui Oleh
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        Div Head Corporate Secretary & Chief
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Mengetahui
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        CEO
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </asp:Panel>
     <fieldset>
         <div style="text-align: right">
             <asp:Button ID="btnSaveUpdate" runat="server" Text="Save" ValidationGroup="Save"
                 OnClick="btnSaveUpdate_Click" />&nbsp;
+            <asp:Button ID="btnSaveUpdateRunWf" runat="server" Text="Save & Run Workflow" ValidationGroup="Save"
+                OnClick="btnSaveUpdateRunWf_Click" Width="160px" />&nbsp;
             <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
         </div>
     </fieldset>
-</fieldset>
-<fieldset runat="server" visible="false">
-    <legend>
-        <h3>
-            <b>Company Data</b></h3>
-    </legend>
-    <table border="0">
-        <tr>
-            <td>
-                Date
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:Literal ID="ltrDateDP" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Request Code
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:Literal ID="ltrRequestCodeDP" runat="server" />
-            </td>
-        </tr>
-    </table>
-    <br />
-    <table border="0">
-        <tr>
-            <td>
-                Company Code
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtCompanyCode" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Company's Name
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtCompanyNameDP" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Country of Establishment
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:Literal ID="ltrCountryEstablishment" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Registration Number
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtRegistrationNumber" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Date of Establishment
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <SharePoint:DateTimeControl ID="dtEstablishment" DateOnly="true" runat="server">
-                </SharePoint:DateTimeControl>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Activity
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:Literal ID="ltrActivity" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Activity Code
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtActivityCode" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                Ownership Status
-            </td>
-            <td valign="top">
-                :
-            </td>
-            <td>
-                <asp:Literal ID="ltrOwnershipStatusDP" runat="server" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Type of Company
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                <asp:Literal ID="ltrTypeOfCompany" runat="server" />
-            </td>
-        </tr>
-    </table>
-    <fieldset>
-        <legend><b>Capital Structure</b></legend>
-        <table border="0">
-            <tr>
-                <td>
-                    Rate
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    <asp:DropDownList ID="ddlRateDP" runat="server" />
-                </td>
-            </tr>
-        </table>
-        <table border="0">
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td align="center">
-                    Saham
-                </td>
-                <td align="center">
-                    Nominal
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Modal Dasar <span style="color: Red">*</span>
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    <asp:TextBox ID="txtModalDasar" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic" ValidationGroup="Save"
-                        runat="server" ControlToValidate="txtModalDasar" ErrorMessage="Required Field" />
-                </td>
-                <td>
-                    <asp:TextBox ID="txtNominalModalDasar" Enabled="false" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Modal Setor <span style="color: Red">*</span>
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    <asp:TextBox ID="txtModalSetor" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic" ValidationGroup="Save"
-                        runat="server" ControlToValidate="txtModalSetor" ErrorMessage="Required Field" />
-                </td>
-                <td>
-                    <asp:TextBox ID="txtNominalModalSetor" Enabled="false" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Nominal Saham <span style="color: Red">*</span>
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    <asp:TextBox ID="txtNominalSaham" runat="server" />
-                    <asp:RequiredFieldValidator ID="reqtxtNominalSaham" Display="Dynamic" ValidationGroup="Save"
-                        runat="server" ControlToValidate="txtNominalSaham" ErrorMessage="Required Field" />
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-    <fieldset>
-        <legend><b>Shareholder</b></legend>
-        <asp:DataGrid ID="dgShareholderDP" runat="server" AutoGenerateColumns="false" CssClass="table"
-            ShowFooter="true" Width="100%">
-            <HeaderStyle CssClass="header" />
-            <ItemStyle CssClass="odd" />
-            <AlternatingItemStyle CssClass="white" />
-            <Columns>
-                <asp:TemplateColumn HeaderText="Name">
-                    <ItemTemplate>
-                        <asp:Label ID="lblName" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="ID">
-                    <ItemTemplate>
-                        <asp:Label ID="lblID" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Address">
-                    <ItemTemplate>
-                        <asp:Label ID="lblAddress" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Country of Establishment">
-                    <ItemTemplate>
-                        <asp:Label ID="lblCountryEstablishment" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Share">
-                    <ItemTemplate>
-                        <asp:Label ID="lblShare" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Nominal">
-                    <ItemTemplate>
-                        <asp:Label ID="lblNominal" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="%">
-                    <ItemTemplate>
-                        <asp:Label ID="lblPersen" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-            </Columns>
-        </asp:DataGrid>
-    </fieldset>
-    <fieldset>
-        <legend><b>Officer</b></legend>
-        <asp:DataGrid ID="dgOfficerDP" runat="server" AutoGenerateColumns="false" CssClass="table"
-            ShowFooter="true" Width="100%">
-            <HeaderStyle CssClass="header" />
-            <ItemStyle CssClass="odd" />
-            <AlternatingItemStyle CssClass="white" />
-            <Columns>
-                <asp:TemplateColumn HeaderText="Name">
-                    <ItemTemplate>
-                        <asp:Label ID="lblName" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Roles">
-                    <ItemTemplate>
-                        <asp:Label ID="lblRole" runat="server" />
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Date of Appointment">
-                    <ItemTemplate>
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-                <asp:TemplateColumn HeaderText="Tanggal Akhir Menjabat">
-                    <ItemTemplate>
-                    </ItemTemplate>
-                </asp:TemplateColumn>
-            </Columns>
-        </asp:DataGrid>
-    </fieldset>
-    <table border="0">
-        <tr>
-            <td valign="top">
-                Remarks
-            </td>
-            <td valign="top">
-                :
-            </td>
-            <td>
-                <asp:TextBox ID="txtRemarksDP" runat="server" Width="400px" Rows="5" TextMode="MultiLine" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Diupdate Oleh
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                Corporate Secretary
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Dibuat Oleh
-            </td>
-            <td>
-                :
-            </td>
-            <td>
-                Accounting
-            </td>
-        </tr>
-    </table>
 </fieldset>
 <div id="divPemohonDlgContainer">
     <div id="divPemohonSearch" style="display: none">
@@ -731,12 +649,21 @@
                                 &nbsp;<asp:Button ID="btnSearchPemohon" runat="server" Text="Search" OnClick="btnSearchPemohon_Click" />
                                 &nbsp;<asp:Button ID="btnAddPemohon" runat="server" Text="Add New" OnClick="btnAddPemohon_Click" />
                             </td>
+                            <td>
+                                <asp:UpdateProgress ID="upProg" AssociatedUpdatePanelID="upPemohon" runat="server"
+                                    DynamicLayout="true">
+                                    <ProgressTemplate>
+                                        <img border="0" src="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/loading.gif"
+                                            title="Loading" alt="Loading" />
+                                    </ProgressTemplate>
+                                </asp:UpdateProgress>
+                            </td>
                         </tr>
                         <tr>
                             <td>
                                 <asp:GridView ID="grvPemohon" runat="server" AutoGenerateColumns="false" CssClass="table"
                                     Width="100%" EmptyDataText="No Data Available" DataSourceID="odsPemohon" AllowPaging="true"
-                                    PageSize="15" OnRowCommand="grvPemohon_RowCommand" OnRowDataBound="grvPemohon_RowDataBound">
+                                    PageSize="10" OnRowCommand="grvPemohon_RowCommand" OnRowDataBound="grvPemohon_RowDataBound">
                                     <HeaderStyle CssClass="header" />
                                     <RowStyle CssClass="odd" />
                                     <AlternatingRowStyle CssClass="even" />
@@ -778,7 +705,8 @@
                         <tr align="right">
                             <td>
                                 <asp:Button ID="btnSelectPemohon" runat="server" Text="Select" OnClick="btnSelectPemohon_Click" />
-                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')" />
+                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')"
+                                    OnClick="btnCloseSearchPemohon_Click" />
                             </td>
                         </tr>
                     </table>

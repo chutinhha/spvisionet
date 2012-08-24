@@ -679,6 +679,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.Literal ltrUsernameSKDP;
         
         /// <summary>
+        /// upSKDP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upSKDP;
+        
+        /// <summary>
+        /// lnbSKDPLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnbSKDPLog;
+        
+        /// <summary>
         /// ltrfuSKDP control.
         /// </summary>
         /// <remarks>
@@ -1183,114 +1201,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.Literal ltrKeteranganSK;
         
         /// <summary>
-        /// ltrUsernameBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrUsernameBNRI;
-        
-        /// <summary>
-        /// ltrfuBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrfuBNRI;
-        
-        /// <summary>
-        /// fuBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuBNRI;
-        
-        /// <summary>
-        /// reqfuBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuBNRI;
-        
-        /// <summary>
-        /// txtNoBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNoBNRI;
-        
-        /// <summary>
-        /// ltrNoBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrNoBNRI;
-        
-        /// <summary>
-        /// reqtxtNoBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNoBNRI;
-        
-        /// <summary>
-        /// dtTanggalBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Microsoft.SharePoint.WebControls.DateTimeControl dtTanggalBNRI;
-        
-        /// <summary>
-        /// ltrTanggalBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrTanggalBNRI;
-        
-        /// <summary>
-        /// reqdtTanggalBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalBNRI;
-        
-        /// <summary>
-        /// txtTambahanNoBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTambahanNoBNRI;
-        
-        /// <summary>
-        /// ltrTambahanNoBNRI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrTambahanNoBNRI;
-        
-        /// <summary>
         /// pnlTax control.
         /// </summary>
         /// <remarks>
@@ -1669,6 +1579,96 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.DataGrid dgPKPLainnya;
         
         /// <summary>
+        /// pnlPICCorsec4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPICCorsec4;
+        
+        /// <summary>
+        /// ltrUsernameBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrUsernameBNRI;
+        
+        /// <summary>
+        /// ltrfuBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrfuBNRI;
+        
+        /// <summary>
+        /// fuBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuBNRI;
+        
+        /// <summary>
+        /// txtNoBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNoBNRI;
+        
+        /// <summary>
+        /// ltrNoBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrNoBNRI;
+        
+        /// <summary>
+        /// dtTanggalBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Microsoft.SharePoint.WebControls.DateTimeControl dtTanggalBNRI;
+        
+        /// <summary>
+        /// ltrTanggalBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrTanggalBNRI;
+        
+        /// <summary>
+        /// txtTambahanNoBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTambahanNoBNRI;
+        
+        /// <summary>
+        /// ltrTambahanNoBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrTambahanNoBNRI;
+        
+        /// <summary>
         /// dgDokumenLainnya control.
         /// </summary>
         /// <remarks>
@@ -1685,6 +1685,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveUpdate;
+        
+        /// <summary>
+        /// btnSaveUpdateRunWf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveUpdateRunWf;
         
         /// <summary>
         /// btnCancel control.
@@ -1865,5 +1874,41 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdateProgress upProgAdd;
+        
+        /// <summary>
+        /// upSKDPLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upSKDPLog;
+        
+        /// <summary>
+        /// grvSKDPLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grvSKDPLog;
+        
+        /// <summary>
+        /// odsSKDPLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource odsSKDPLog;
+        
+        /// <summary>
+        /// btnClose control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClose;
     }
 }

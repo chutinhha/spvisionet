@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Item (0x01) -->
+  <ContentType ID="0x01004e8f86e2d4504f648a9ca1be48cacfec"
+               Name="Perubahan PT Biasa menjadi PMAPMDN"
+               Group="Corporate Secretary Content Types"
+               Description="Form Permohonan Perubahan PT Biasa menjadi PMAPMDN"
+               Inherits="false"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=display</Display>
+          <Edit>/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=edit</Edit>
+          <New>/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=new</New>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+</Elements>

@@ -23,6 +23,7 @@
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPerdaftaranPMAPMDN\PermohonanPerdaftaranPMAPMDNUserControl.ascx" />
+    <TemplateFile Location="Images\SPVisionet.CorporateSecretary.WebParts\loading.gif" />
     <TemplateFile Location="Images\SPVisionet.CorporateSecretary.WebParts\popup.gif" />
   </TemplateFiles>
   <FeatureManifests>

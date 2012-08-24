@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.SharePoint;
 using SPVisionet.CorporateSecretary.Common;
 using Microsoft.SharePoint.Utilities;
+using Microsoft.SharePoint.Workflow;
 
 namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
 {
@@ -85,8 +86,10 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
             if (coll.Count > 0)
             {
                 SPListItem documentItem = coll[0];
-                ltrlinkDocument.Text = string.Format("<a href='/TDPDokumen/{0}'>{0}</a>", documentItem["Name"].ToString());
+                ltrlinkDocument.Text = string.Format("<a href='{0}/TDPDokumen/{1}'>{1}</a>", web.Url, documentItem["Name"].ToString());
             }
+            else
+                ltrlinkDocument.Text = string.Empty;
 
             upDataPerusahaan.Update();
         }
@@ -130,10 +133,10 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
             return sb.ToString();
         }
 
-        private string SaveUpdate()
+        private string SaveUpdate(string mode)
         {
             SPWeb currentWeb = SPContext.Current.Web;
-            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(web.Url, "TDP"));//web.Lists[ListId];
+            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(currentWeb.Url, "TDP"));//web.Lists[ListId];
             currentWeb.AllowUnsafeUpdates = true;
             SPListItem item;
 
@@ -205,6 +208,20 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
                 }
 
                 currentWeb.AllowUnsafeUpdates = false;
+
+                if (item["Status"] == null)
+                {
+                    if (mode == "SaveRunWf")
+                    {
+                        if (list.WorkflowAssociations.Count > 0)
+                        {
+                            string WfId = Util.GetSettingValue(web, "Workflow BasedId", "TDP");
+                            Guid wfBaseId = new Guid(WfId);
+                            SPWorkflowAssociation associationTemplate = list.WorkflowAssociations.GetAssociationByBaseID(wfBaseId);
+                            currentWeb.Site.WorkflowManager.StartWorkflow(item, associationTemplate, associationTemplate.AssociationData, true);
+                        }
+                    }
+                }
             }
             catch
             {
@@ -223,6 +240,14 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
 
             if (item["Status"] != null)
                 ViewState["Status"] = item["Status"].ToString();
+            else
+            {
+                if (item["ApprovalStatus"] != null)
+                    ViewState["Status"] = item["ApprovalStatus"].ToString();
+            }
+
+            if (item.Workflows.Count > 0 || ViewState["Status"].ToString() == "Approved")
+                btnSaveUpdateRunWf.Visible = false;
 
             ltrRequestCode.Text = item["Title"].ToString();
             ltrDate.Text = Convert.ToDateTime(item["Tanggal"].ToString()).ToString("dd-MMM-yyyy HH:mm");
@@ -257,9 +282,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
             ltrKeteranganTDP.Text = txtKeteranganTDP.Text;
 
             if (mode == "edit")
+            {
                 btnSaveUpdate.Text = "Update";
+                btnSaveUpdateRunWf.Text = "Update & Run Workflow";
+            }
             else if (mode == "display")
+            {
                 btnSaveUpdate.Visible = false;
+                btnSaveUpdateRunWf.Visible = false;
+            }
 
             SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "TDPDokumen"));
             SPQuery query = new SPQuery();
@@ -276,7 +307,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
             if (coll.Count > 0)
             {
                 SPListItem documentItem = coll[0];
-                ltrfu.Text = string.Format("<a href='/TDPDokumen/{0}'>{0}</a>", documentItem["Name"].ToString());
+                ltrfu.Text = string.Format("<a href='{0}/TDPDokumen/{1}'>{1}</a>", web.Url, documentItem["Name"].ToString());
             }
 
             if (item["Status"] != null)
@@ -304,7 +335,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
 
             if (pnlOriginator.Visible == false && item["Status"] == null)
             {
-                if (ddlAlasanPembuatan.SelectedItem.Text.ToLower() == "perubahan")
+                if (ddlAlasanPembuatan.SelectedItem.Text.ToLower() != "baru" && ddlAlasanPembuatan.SelectedValue != string.Empty)
                 {
                     if (txtKodePerusahaan.Text != string.Empty)
                         GetLatestDocument(txtKodePerusahaan.Text);
@@ -361,6 +392,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
                 }
                 else
                 {
+                    ltrKodePerusahaan.Visible = false;
                     ltrKeterangan.Visible = false;
                     ltrAlasanPembuatan.Visible = false;
                     ltrNamaPerusahaan.Visible = false;
@@ -388,7 +420,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
         {
             Util.RegisterStartupScript(Page, "Perusahaan", "RegisterDialog('divPerusahaanSearch','divPerusahaanDlgContainer', '630');");
 
-            using (SPSite site = new SPSite(SPContext.Current.Site.Url, SPContext.Current.Site.SystemAccount.UserToken))
+            using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
                 using (web = site.OpenWeb())
                 {
@@ -425,7 +457,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
 
         protected void ddlAlasanPembuatan_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlAlasanPembuatan.SelectedItem.Text.ToLower() == "perubahan")
+            if (ddlAlasanPembuatan.SelectedItem.Text.ToLower() != "baru" && ddlAlasanPembuatan.SelectedValue != string.Empty)
             {
                 if (txtKodePerusahaan.Text != string.Empty)
                     GetLatestDocument(txtKodePerusahaan.Text);
@@ -437,7 +469,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
             }
         }
 
-        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        private void SaveAction(string mode)
         {
             string msg = Validation();
             if (msg != string.Empty)
@@ -445,16 +477,26 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
                 Util.ShowMessage(Page, msg);
                 return;
             }
-            string result = SaveUpdate();
+            string result = SaveUpdate(mode);
             if (result == string.Empty)
             {
                 if (Source != string.Empty)
                     SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
                 else
-                    Response.Redirect("/Lists/TDP", true);
+                    Response.Redirect(string.Format("{0}/Lists/TDP", web.Url), true);
             }
             else
                 Util.ShowMessage(Page, result);
+        }
+
+        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        {
+            SaveAction("Save");
+        }
+
+        protected void btnSaveUpdateRunWf_Click(object sender, EventArgs e)
+        {
+            SaveAction("SaveRunWf");
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -462,7 +504,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
             if (Source != string.Empty)
                 SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
             else
-                Response.Redirect("/Lists/TDP", true);
+                Response.Redirect(string.Format("{0}/Lists/TDP", web.Url), true);
         }
 
         #region Search Perusahaan
@@ -480,7 +522,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP
                 else
                     ddlTempatKedudukan.SelectedValue = string.Empty;
 
-                if (ddlAlasanPembuatan.SelectedItem.Text.ToLower() == "perubahan")
+                if (ddlAlasanPembuatan.SelectedItem.Text.ToLower() != "baru" && ddlAlasanPembuatan.SelectedValue != string.Empty)
                 {
                     if (txtKodePerusahaan.Text != string.Empty)
                         GetLatestDocument(txtKodePerusahaan.Text);

@@ -486,14 +486,20 @@
             <legend><b>Laporan Pendaftaran PMA / PMDN</b></legend>
             <table border="0">
                 <tr>
-                    <td valign="top" width="250px">
+                    <td valign="top" width="315px">
                         Surat Persetujuan PMA / PMDN Baru <span style="color: Red">*</span>
+                        <br />
+                        <br />
+                        <b>Note:
+                            <br />
+                            Penulisan harus ada [ORI]xxxxx / [Soft]xxxxx</b>
                         <br />
                         <br />
                         <asp:Literal ID="ltrfu" runat="server" />
                         <br />
                         <br />
                         <asp:FileUpload ID="fu" runat="server" />
+                        <br />
                         <asp:RequiredFieldValidator ID="reqfu" Display="Dynamic" ValidationGroup="Save" runat="server"
                             ControlToValidate="fu" ErrorMessage="Required Field" />
                     </td>
@@ -590,6 +596,8 @@
         <div style="text-align: right">
             <asp:Button ID="btnSaveUpdate" runat="server" Text="Save" ValidationGroup="Save"
                 OnClick="btnSaveUpdate_Click" />&nbsp;
+            <asp:Button ID="btnSaveUpdateRunWf" runat="server" Text="Save & Run Workflow" ValidationGroup="Save"
+                OnClick="btnSaveUpdateRunWf_Click" Width="160px" />&nbsp;
             <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
         </div>
     </fieldset>
@@ -669,7 +677,8 @@
                         <tr align="right">
                             <td>
                                 <asp:Button ID="btnSelectPemohon" runat="server" Text="Select" OnClick="btnSelectPemohon_Click" />
-                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')" />
+                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')"
+                                    OnClick="btnCloseSearchPemohon_Click" />
                             </td>
                         </tr>
                     </table>

@@ -10,6 +10,7 @@ using System.IO;
 using SPVisionet.CorporateSecretary.Common;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
+using Microsoft.SharePoint.Workflow;
 
 namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
 {
@@ -261,6 +262,14 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
 
             if (item["Status"] != null)
                 ViewState["Status"] = item["Status"].ToString();
+            else
+            {
+                if (item["ApprovalStatus"] != null)
+                    ViewState["Status"] = item["ApprovalStatus"].ToString();
+            }
+
+            if (item.Workflows.Count > 0 || ViewState["Status"].ToString() == "Approved")
+                btnSaveUpdateRunWf.Visible = false;
 
             ltrRequestCode.Text = item["Title"].ToString();
             ltrDate.Text = Convert.ToDateTime(item["Tanggal"].ToString()).ToString("dd-MMM-yyyy HH:mm");
@@ -344,9 +353,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
             ltrKeteranganPMAPMDN.Text = txtKeteranganPMAPMDN.Text;
 
             if (mode == "edit")
+            {
                 btnSaveUpdate.Text = "Update";
+                btnSaveUpdateRunWf.Text = "Update & Run Workflow";
+            }
             else if (mode == "display")
+            {
                 btnSaveUpdate.Visible = false;
+                btnSaveUpdateRunWf.Visible = false;
+            }
 
             SPList listPemegangSaham = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PemegangSahamPMAPMDN"));
             SPQuery query = new SPQuery();
@@ -382,7 +397,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
             if (coll.Count > 0)
             {
                 SPListItem documentItem = coll[0];
-                ltrfu.Text = string.Format("<a href='/PendaftaranPMAPMDNDokumen/{0}'>{0}</a>", documentItem["Name"].ToString());
+                ltrfu.Text = string.Format("<a href='{0}/PendaftaranPMAPMDNDokumen/{1}'>{1}</a>", web.Url, documentItem["Name"].ToString());
             }
 
             if (item["Status"] != null)
@@ -510,10 +525,10 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
             }
         }
 
-        private string SaveUpdate()
+        private string SaveUpdate(string mode)
         {
             SPWeb currentWeb = SPContext.Current.Web;
-            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(web.Url, "PendaftaranPMAPMDN"));
+            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(currentWeb.Url, "PendaftaranPMAPMDN"));
             currentWeb.AllowUnsafeUpdates = true;
 
             SPListItem item;
@@ -562,6 +577,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
 
                 ViewState["ID"] = item.ID;
 
+                int j = 0;
                 SPList listPemegangSaham = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PemegangSahamPMAPMDN"));
                 web.AllowUnsafeUpdates = true;
                 if (IDP == 0)
@@ -569,34 +585,43 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                     List<PemegangSaham> collPemegangSaham = ViewState["PemegangSaham"] as List<PemegangSaham>;
                     foreach (PemegangSaham i in collPemegangSaham)
                     {
-                        SPListItem itemPemegangSaham = listPemegangSaham.Items.Add();
+                        SPListItem itemPemegangSaham;
+                        if (i.ID == 0)
+                        {
+                            itemPemegangSaham = listPemegangSaham.Items.Add();
+                            itemPemegangSaham["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        }
+                        else
+                        {
+                            itemPemegangSaham = listPemegangSaham.GetItemById(i.ID);
+                            itemPemegangSaham["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        }
+
                         itemPemegangSaham["PendaftaranPMAPMDN"] = item.ID;
                         itemPemegangSaham["Title"] = i.Nama;
                         itemPemegangSaham["JumlahSaham"] = i.JumlahSaham;
                         itemPemegangSaham["JumlahNominal"] = i.JumlahNominal;
                         itemPemegangSaham["Percentages"] = i.Percentages;
                         itemPemegangSaham["Partner"] = i.Partner;
-                        itemPemegangSaham["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                         itemPemegangSaham.Update();
+
+                        collPemegangSaham[j].ID = itemPemegangSaham.ID;
+
+                        j += 1;
                     }
                 }
                 else
                 {
                     if (dgPemegangSaham.Items.Count > 0)
                     {
-                        foreach (DataGridItem dgItem in dgPemegangSaham.Items)
+                        j = 0;
+                        List<PemegangSaham> collPemegangSaham = ViewState["PemegangSaham"] as List<PemegangSaham>;
+                        foreach (PemegangSaham i in collPemegangSaham)
                         {
-                            Label lblID = dgItem.FindControl("lblID") as Label;
-                            Label lblNamaPemegangSaham = dgItem.FindControl("lblNamaPemegangSaham") as Label;
-                            Label lblJumlahSaham = dgItem.FindControl("lblJumlahSaham") as Label;
-                            Label lblJumlahNominal = dgItem.FindControl("lblJumlahNominal") as Label;
-                            Label lblPercentages = dgItem.FindControl("lblPercentages") as Label;
-                            Label lblPartner = dgItem.FindControl("lblPartner") as Label;
-
                             SPListItem itemPemegangSaham;
-                            if (Convert.ToInt32(lblID.Text) != 0)
+                            if (i.ID != 0)
                             {
-                                itemPemegangSaham = listPemegangSaham.GetItemById(Convert.ToInt32(lblID.Text));
+                                itemPemegangSaham = listPemegangSaham.GetItemById(i.ID);
                                 itemPemegangSaham["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                             }
                             else
@@ -606,12 +631,16 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                             }
 
                             itemPemegangSaham["PendaftaranPMAPMDN"] = item.ID;
-                            itemPemegangSaham["Title"] = lblNamaPemegangSaham.Text;
-                            itemPemegangSaham["JumlahSaham"] = lblJumlahSaham.Text;
-                            itemPemegangSaham["JumlahNominal"] = lblJumlahNominal.Text;
-                            itemPemegangSaham["Percentages"] = lblPercentages.Text;
-                            itemPemegangSaham["Partner"] = lblPartner.Text == "Yes" ? true : false;
+                            itemPemegangSaham["Title"] = i.Nama;
+                            itemPemegangSaham["JumlahSaham"] = i.JumlahSaham;
+                            itemPemegangSaham["JumlahNominal"] = i.JumlahNominal;
+                            itemPemegangSaham["Percentages"] = i.Percentages;
+                            itemPemegangSaham["Partner"] = i.Partner;
                             itemPemegangSaham.Update();
+
+                            collPemegangSaham[j].ID = itemPemegangSaham.ID;
+
+                            j += 1;
                         }
                     }
 
@@ -673,6 +702,20 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                         }
                     }
                 }
+
+                if (item["Status"] == null)
+                {
+                    if (mode == "SaveRunWf")
+                    {
+                        if (list.WorkflowAssociations.Count > 0)
+                        {
+                            string WfId = Util.GetSettingValue(web, "Workflow BasedId", "Pendaftaran PMA/PMDN");
+                            Guid wfBaseId = new Guid(WfId);
+                            SPWorkflowAssociation associationTemplate = list.WorkflowAssociations.GetAssociationByBaseID(wfBaseId);
+                            currentWeb.Site.WorkflowManager.StartWorkflow(item, associationTemplate, associationTemplate.AssociationData, true);
+                        }
+                    }
+                }
             }
             catch
             {
@@ -692,7 +735,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
         {
             Util.RegisterStartupScript(Page, "Pemohon", "RegisterDialog('divPemohonSearch','divPemohonDlgContainer', '480');");
 
-            using (SPSite site = new SPSite(SPContext.Current.Site.Url, SPContext.Current.Site.SystemAccount.UserToken))
+            using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
                 using (web = site.OpenWeb())
                 {
@@ -760,7 +803,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
             upStrukturPermodalan.Update();
         }
 
-        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        private void SaveAction(string mode)
         {
             string msg = Validation();
             if (msg != string.Empty)
@@ -768,16 +811,26 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                 Util.ShowMessage(Page, msg);
                 return;
             }
-            string result = SaveUpdate();
+            string result = SaveUpdate(mode);
             if (result == string.Empty)
             {
                 if (Source != string.Empty)
                     SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
                 else
-                    Response.Redirect("/Lists/PendaftaranPMAPMDN", true);
+                    Response.Redirect(string.Format("{0}/Lists/PendaftaranPMAPMDN", web.Url), true);
             }
             else
                 Util.ShowMessage(Page, result);
+        }
+
+        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        {
+            SaveAction("Save");
+        }
+
+        protected void btnSaveUpdateRunWf_Click(object sender, EventArgs e)
+        {
+            SaveAction("SaveRunWf");
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -785,7 +838,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
             if (Source != string.Empty)
                 SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
             else
-                Response.Redirect("/Lists/PendaftaranPMAPMDN", true);
+                Response.Redirect(string.Format("{0}/Lists/PendaftaranPMAPMDN", web.Url), true);
         }
 
         #region Pemegang Saham
@@ -1125,6 +1178,13 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
         protected void btnCancelPemohon_Click(object sender, EventArgs e)
         {
             VisiblePanel(false);
+        }
+
+        protected void btnCloseSearchPemohon_Click(object sender, EventArgs e)
+        {
+            BindPemegangSaham();
+
+            upMain.Update();
         }
 
         #endregion
