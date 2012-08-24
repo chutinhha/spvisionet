@@ -18,7 +18,7 @@
      Sequence="8000"
      Title="Redirect"
  Description="This action to Redirect Task.">
-    <UrlAction Url="javascript:window.showModalDialog('{SiteUrl}/WorkflowControls/Redirect.aspx?IDP={ItemId}&amp;ListID={ListId}','','dialogWidth:400px;dialogHeight:143px;resizable:yes'); window.location=window.location;"/>
+    <UrlAction Url="javascript:window.showModalDialog('{SiteUrl}/_layouts/WorkflowControls/Redirect.aspx?IDP={ItemId}&amp;ListID={ListId}','','dialogWidth:400px;dialogHeight:145px;resizable:yes'); window.location=window.location;"/>
   </CustomAction>
   <CustomAction
       Id="77EEFA85-9521-4af1-A28F-83E9258E1910"
@@ -28,6 +28,6 @@
       Sequence="8000"
       Title="Delegate"
       Description="This action to Delegate Task.">
-    <UrlAction Url="javascript:window.showModalDialog('{SiteUrl}/WorkflowControls/Delegate.aspx?IDP={ItemId}&amp;ListID={ListId}','','dialogWidth:400px;dialogHeight:143px;resizable:yes'); window.location=window.location;"/>
+    <UrlAction Url="javascript:window.showModalDialog('{SiteUrl}/_layouts/WorkflowControls/Delegate.aspx?IDP={ItemId}&amp;ListID={ListId}','','dialogWidth:400px;dialogHeight:145px;resizable:yes'); window.location=window.location;"/>
   </CustomAction>
 </Elements>

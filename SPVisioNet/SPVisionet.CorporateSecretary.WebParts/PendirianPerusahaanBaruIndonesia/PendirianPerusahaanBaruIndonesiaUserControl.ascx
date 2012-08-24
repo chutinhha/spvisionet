@@ -631,7 +631,7 @@
                                 <asp:Label ID="lblIDEdit" runat="server" Text='<%# Eval("ID") %>' />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="Nama">
+                        <asp:TemplateColumn HeaderText="Wewenang">
                             <ItemTemplate>
                                 <asp:Label ID="lblNama" runat="server" Text='<%# Eval("Nama") %>' />
                             </ItemTemplate>
@@ -820,6 +820,13 @@
                 <table border="0">
                     <tr>
                         <td valign="top" width="315px">
+                            <asp:UpdatePanel ID="upSKDP" runat="server" UpdateMode="Conditional" Visible="false">
+                                <ContentTemplate>
+                                    <br />
+                                    <asp:LinkButton ID="lnbSKDPLog" runat="server" ValidationGroup="SKDPLog" Text="SKDP Log"
+                                        OnClientClick="openDialog(event, 'SKDP Log', 'divSKDPLog')" CausesValidation="false"
+                                        OnClick="lnbSKDPLog_Click" /></ContentTemplate>
+                            </asp:UpdatePanel>
                             <br />
                             <b>Note:
                                 <br />
@@ -835,7 +842,7 @@
                                 runat="server" ControlToValidate="fuSKDP" ErrorMessage="Required Field" />
                         </td>
                         <td>
-                            <table border="0">
+                            <table border="0" width="100%">
                                 <tr>
                                     <td width="150px">
                                         No <span style="color: Red">*</span>
@@ -920,7 +927,7 @@
         </asp:Panel>
         <asp:Panel ID="pnlAccounting" runat="server" Visible="false">
             <fieldset>
-                <legend><b>APV [ dilaporkan oleh Accounting (<asp:Literal ID="ltrUsernameAPV" runat="server" />)
+                <legend><b>Journal Voucher (JV) [ dilaporkan oleh Accounting (<asp:Literal ID="ltrUsernameAPV" runat="server" />)
                     ]</b></legend>
                 <table border="0">
                     <tr>
@@ -957,7 +964,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        No APV <span style="color: Red">*</span>
+                                        No. Journal Voucher (JV) <span style="color: Red">*</span>
                                     </td>
                                     <td>
                                         :
@@ -971,7 +978,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Tanggal APV <span style="color: Red">*</span>
+                                        Tanggal Journal Voucher (JV) <span style="color: Red">*</span>
                                     </td>
                                     <td>
                                         :
@@ -1035,7 +1042,7 @@
                             <table border="0">
                                 <tr>
                                     <td width="150px">
-                                        Tanggal Setoran <span style="color: Red">*</span>
+                                        Tanggal Setoran
                                     </td>
                                     <td>
                                         :
@@ -1071,13 +1078,15 @@
                                 </tr>
                                 <tr>
                                     <td valign="top">
-                                        Status
+                                        Modal telah disetor?
                                     </td>
                                     <td valign="top">
                                         :
                                     </td>
                                     <td>
-                                        <asp:CheckBox ID="chkStatusSetoran" runat="server" />
+                                        <asp:CheckBox ID="chkStatusSetoran" runat="server" 
+                                            Text="Jika YA maka Bukti Setor harus di upload dan Tanggal Setor harus diisi" 
+                                            oncheckedchanged="chkStatusSetoran_CheckedChanged" AutoPostBack="true" Checked="true" />
                                         <asp:Literal ID="ltrStatusSetoran" runat="server" />
                                     </td>
                                 </tr>
@@ -1160,82 +1169,6 @@
                                     <td>
                                         <asp:TextBox ID="txtKeteranganSK" runat="server" Width="350px" Rows="3" TextMode="MultiLine" />
                                         <asp:Literal ID="ltrKeteranganSK" runat="server" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset>
-                <legend><b>BNRI [ dilaporkan oleh PIC Corporate Secretary (<asp:Literal ID="ltrUsernameBNRI"
-                    runat="server" />) ]</b></legend>
-                <table border="0">
-                    <tr>
-                        <td valign="top" width="315px">
-                            <br />
-                            <b>Note:
-                                <br />
-                                Penulisan harus ada [ORI]xxxxx / [Soft]xxxxx</b>
-                            <br />
-                            <br />
-                            <asp:Literal ID="ltrfuBNRI" runat="server" />
-                            <br />
-                            <br />
-                            <asp:FileUpload ID="fuBNRI" runat="server" />
-                            <br />
-                            <asp:RequiredFieldValidator ID="reqfuBNRI" ValidationGroup="Save" runat="server"
-                                ControlToValidate="fuBNRI" ErrorMessage="Required Field" Display="Dynamic" />
-                        </td>
-                        <td>
-                            <table border="0">
-                                <tr>
-                                    <td width="150px">
-                                        No <span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        <asp:TextBox ID="txtNoBNRI" runat="server" />
-                                        <asp:Literal ID="ltrNoBNRI" runat="server" />
-                                        <asp:RequiredFieldValidator ID="reqtxtNoBNRI" ValidationGroup="Save" runat="server"
-                                            ControlToValidate="txtNoBNRI" ErrorMessage="Required Field" Display="Dynamic" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Tanggal <span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        :
-                                    </td>
-                                    <td>
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td>
-                                                    <SharePoint:DateTimeControl ID="dtTanggalBNRI" DateOnly="true" runat="server"></SharePoint:DateTimeControl>
-                                                    <asp:Literal ID="ltrTanggalBNRI" runat="server" />
-                                                </td>
-                                                <td>
-                                                    <asp:RequiredFieldValidator ID="reqdtTanggalBNRI" ValidationGroup="Save" runat="server"
-                                                        ControlToValidate="dtTanggalBNRI$dtTanggalBNRIDate" ErrorMessage="Required Field"
-                                                        Display="Dynamic" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td valign="top">
-                                        Tambahan No
-                                    </td>
-                                    <td valign="top">
-                                        :
-                                    </td>
-                                    <td>
-                                        <asp:TextBox ID="txtTambahanNoBNRI" runat="server" />
-                                        <asp:Literal ID="ltrTambahanNoBNRI" runat="server" />
                                     </td>
                                 </tr>
                             </table>
@@ -1405,7 +1338,7 @@
                                     <asp:FileUpload ID="fuEdit" runat="server" />
                                 </EditItemTemplate>
                             </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="NPWP" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top">
+                            <asp:TemplateColumn HeaderText="No. NPWP" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top">
                                 <ItemTemplate>
                                     <asp:Label ID="lblNPWP" runat="server" Text='<%# Eval("NoNPWP") %>' />
                                 </ItemTemplate>
@@ -1586,7 +1519,7 @@
                                     <asp:FileUpload ID="fuEdit" runat="server" />
                                 </EditItemTemplate>
                             </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="PKP" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top">
+                            <asp:TemplateColumn HeaderText="No. PKP" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top">
                                 <ItemTemplate>
                                     <asp:Label ID="lblPKP" runat="server" Text='<%# Eval("NoPKP") %>' />
                                 </ItemTemplate>
@@ -1631,6 +1564,86 @@
                 </fieldset>
             </fieldset>
         </asp:Panel>
+        <asp:Panel ID="pnlPICCorsec4" runat="server" Visible="false">
+            <fieldset>
+                <legend><b>BNRI [ dilaporkan oleh PIC Corporate Secretary (<asp:Literal ID="ltrUsernameBNRI"
+                    runat="server" />) ]</b></legend>
+                <table border="0">
+                    <tr>
+                        <td valign="top" width="315px">
+                            <br />
+                            <b>Note:
+                                <br />
+                                Penulisan harus ada [ORI]xxxxx / [Soft]xxxxx</b>
+                            <br />
+                            <br />
+                            <asp:Literal ID="ltrfuBNRI" runat="server" />
+                            <br />
+                            <br />
+                            <asp:FileUpload ID="fuBNRI" runat="server" />
+                            <br />
+                            <%--  <asp:RequiredFieldValidator ID="reqfuBNRI" ValidationGroup="Save" runat="server"
+                                ControlToValidate="fuBNRI" ErrorMessage="Required Field" Display="Dynamic" />--%>
+                        </td>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td width="150px">
+                                        No
+                                        <%--<span style="color: Red">*</span>--%>
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtNoBNRI" runat="server" />
+                                        <asp:Literal ID="ltrNoBNRI" runat="server" />
+                                        <%--   <asp:RequiredFieldValidator ID="reqtxtNoBNRI" ValidationGroup="Save" runat="server"
+                                            ControlToValidate="txtNoBNRI" ErrorMessage="Required Field" Display="Dynamic" />--%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tanggal
+                                        <%--<span style="color: Red">*</span>--%>
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td>
+                                                    <SharePoint:DateTimeControl ID="dtTanggalBNRI" DateOnly="true" runat="server"></SharePoint:DateTimeControl>
+                                                    <asp:Literal ID="ltrTanggalBNRI" runat="server" />
+                                                </td>
+                                                <td>
+                                                    <%--  <asp:RequiredFieldValidator ID="reqdtTanggalBNRI" ValidationGroup="Save" runat="server"
+                                                        ControlToValidate="dtTanggalBNRI$dtTanggalBNRIDate" ErrorMessage="Required Field"
+                                                        Display="Dynamic" />--%>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">
+                                        Tambahan No
+                                    </td>
+                                    <td valign="top">
+                                        :
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtTambahanNoBNRI" runat="server" />
+                                        <asp:Literal ID="ltrTambahanNoBNRI" runat="server" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </asp:Panel>
     </fieldset>
     <fieldset>
         <legend><b>Dokumen Lainnya</b></legend>
@@ -1657,7 +1670,7 @@
                         <asp:DropDownList ID="ddlTipeDokumenAdd" runat="server">
                             <asp:ListItem Selected="True" Text="--Select--" Value="" />
                             <asp:ListItem Text="Sertifikat" />
-                            <asp:ListItem Text="Aset" />
+                            <asp:ListItem Text="Asset" />
                             <asp:ListItem Text="Insurance" />
                             <asp:ListItem Text="Ijin Operasional" />
                             <asp:ListItem Text="Compliance" />
@@ -1669,7 +1682,7 @@
                         <asp:DropDownList ID="ddlTipeDokumenEdit" runat="server">
                             <asp:ListItem Selected="True" Text="--Select--" Value="" />
                             <asp:ListItem Text="Sertifikat" />
-                            <asp:ListItem Text="Aset" />
+                            <asp:ListItem Text="Asset" />
                             <asp:ListItem Text="Insurance" />
                             <asp:ListItem Text="Ijin Operasional" />
                             <asp:ListItem Text="Compliance" />
@@ -1730,6 +1743,8 @@
     <div style="text-align: right">
         <asp:Button ID="btnSaveUpdate" runat="server" ValidationGroup="Save" Text="Save"
             OnClick="btnSaveUpdate_Click" />&nbsp;
+        <asp:Button ID="btnSaveUpdateRunWf" runat="server" Text="Save & Run Workflow" ValidationGroup="Save"
+            OnClick="btnSaveUpdateRunWf_Click" Width="160px" />&nbsp;
         <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
     </div>
 </fieldset>
@@ -1808,7 +1823,8 @@
                         <tr align="right">
                             <td>
                                 <asp:Button ID="btnSelectPemohon" runat="server" Text="Select" OnClick="btnSelectPemohon_Click" />
-                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')" />
+                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')"
+                                    OnClick="btnCloseSearchPemohon_Click" />
                             </td>
                         </tr>
                     </table>
@@ -1868,6 +1884,58 @@
                         </tr>
                     </table>
                 </asp:Panel>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+</div>
+<div id="divSKDPLogDlgContainer">
+    <div id="divSKDPLog" style="display: none">
+        <asp:UpdatePanel ID="upSKDPLog" runat="server">
+            <ContentTemplate>
+                <asp:GridView ID="grvSKDPLog" runat="server" AutoGenerateColumns="false" CssClass="table"
+                    Width="100%" EmptyDataText="No Data Available" DataSourceID="odsSKDPLog" AllowPaging="true"
+                    Visible="false" PageSize="5" OnRowDataBound="grvSKDPLog_RowDataBound">
+                    <HeaderStyle CssClass="header" />
+                    <RowStyle CssClass="odd" />
+                    <AlternatingRowStyle CssClass="even" />
+                    <PagerStyle CssClass="pager" />
+                    <Columns>
+                        <asp:BoundField DataField="Title" HeaderText="No SKDP" />
+                        <asp:TemplateField HeaderText="Tanggal Mulai Berlaku">
+                            <ItemTemplate>
+                                <asp:Label ID="lblTanggalMulaiBerlaku" runat="server" Text='<%# Eval("TanggalMulaiBerlakuSKDP", "{0:dd-MMM-yyyy}") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Tanggal Akhir Berlaku">
+                            <ItemTemplate>
+                                <asp:Label ID="lblTanggalAkhirBerlaku" runat="server" Text='<%# Eval("TanggalAkhirBerlakuSKDP", "{0:dd-MMM-yyyy}") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="AlamatSKDP" HeaderText="Alamat SKDP" />
+                        <asp:TemplateField HeaderText="Document">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="hypDocument" runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+                <asp:ObjectDataSource ID="odsSKDPLog" runat="server" EnablePaging="True" MaximumRowsParameterName="pageSize"
+                    SelectMethod="GetItemDataTable" SelectCountMethod="ListItemCount" StartRowIndexParameterName="pageIndex"
+                    TypeName="SPVisionet.CorporateSecretary.Common.Util">
+                    <SelectParameters>
+                        <asp:Parameter Name="ListURL" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
+                        <asp:Parameter Name="pageSize" Type="Int32" />
+                        <asp:Parameter Name="pageIndex" Type="Int32" />
+                        <asp:Parameter Name="strSortFieldName" Type="String" DefaultValue="Created" ConvertEmptyStringToNull="false" />
+                        <asp:Parameter Name="strDataType" Type="String" DefaultValue="DateTime" ConvertEmptyStringToNull="false" />
+                        <asp:Parameter Name="blAscendingTrueFalse" Type="Boolean" DefaultValue="false" />
+                        <asp:Parameter Name="strViewFields" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
+                        <asp:Parameter Name="strQuery" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
+                    </SelectParameters>
+                </asp:ObjectDataSource>
+                <br />
+                <div style="text-align: right">
+                    <asp:Button ID="btnClose" runat="server" Text="Close" OnClientClick="closeDialog('divSKDPLog')" /></div>
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

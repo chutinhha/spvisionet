@@ -9,12 +9,19 @@ using System.Text;
 using SPVisionet.CorporateSecretary.Common;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
+using Microsoft.Office.DocumentManagement.DocumentSets;
+using System.IO;
+using Microsoft.SharePoint.Workflow;
 
 namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
 {
     public partial class PendirianPerusahaanBaruForeignUserControl : UserControl
     {
         #region Properties
+
+        private const string CHIEF_CORSEC = Roles.CHIEF_CORSEC;
+        private const string PIC_CORSEC = Roles.PIC_CORSEC;
+        private const string APPROVED = "Approved";
 
         private SPWeb web;
         private int IDP = 0;
@@ -52,6 +59,42 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
 
             ListItem item = new ListItem("--Select--", string.Empty);
             ddl.Items.Insert(0, item);
+        }
+
+        private string SaveDocument(FileUpload fu, string RequestCode, string Folder)
+        {
+            if (fu.PostedFile != null)
+            {
+                if (fu.PostedFile.ContentLength > 0)
+                {
+                    string fileName = fu.FileName.Replace("&", string.Empty);
+
+                    try
+                    {
+                        Stream strm = fu.PostedFile.InputStream;
+                        byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
+                        strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
+                        strm.Close();
+
+                        SPFolder document = web.Folders["PendirianPerusahaanBaruForeignDokumen"].SubFolders[RequestCode];
+                        SPFile file = document.Files.Add(fileName, bytes);
+                        SPItem itemDocument = file.Item;
+                        itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
+                        itemDocument["DocumentType"] = Folder;
+                        itemDocument["PendirianPerusahaanBaruForeign"] = Convert.ToInt32(ViewState["ID"]);
+                        itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        itemDocument.Update();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("already exist"))
+                            return SR.DataIsExist(fileName);
+                        else
+                            return SR.AttachmentFailed(fileName);
+                    }
+                }
+            }
+            return string.Empty;
         }
 
         private string Validation()
@@ -113,6 +156,39 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
             if (dgOfficer.Items.Count == 0)
                 sb.Append("At least one data must be inserted in Officer Grid");
 
+            if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
+            {
+                if (IDP == 0)
+                {
+                    if (!fuMA.HasFile)
+                        sb.Append(SR.FieldCanNotEmpty("File Upload M&A") + " \\n");
+                }
+                if (txtNoMA.Text.Trim() == string.Empty)
+                    sb.Append(SR.FieldCanNotEmpty("No M&A") + " \\n");
+                if (dtTanggalMulaiBerlakuMA.IsDateEmpty || dtTanggalMulaiBerlakuMA.ErrorMessage != null)
+                    sb.Append(SR.FieldCanNotEmpty("Date Of Entry for M&A") + " \\n");
+
+                if (IDP == 0)
+                {
+                    if (!fuCI.HasFile)
+                        sb.Append(SR.FieldCanNotEmpty("File Upload Certification of Incorporation") + " \\n");
+                }
+                if (txtNoCI.Text.Trim() == string.Empty)
+                    sb.Append(SR.FieldCanNotEmpty("Company Registration Number") + " \\n");
+                if (dtTanggalMulaiBerlakuCI.IsDateEmpty || dtTanggalMulaiBerlakuCI.ErrorMessage != null)
+                    sb.Append(SR.FieldCanNotEmpty("Date Of Entry for Certification of Incorporation") + " \\n");
+
+                if (IDP == 0)
+                {
+                    if (!fuBP.HasFile)
+                        sb.Append(SR.FieldCanNotEmpty("File Upload Business Profile") + " \\n");
+                }
+                if (txtNoBP.Text.Trim() == string.Empty)
+                    sb.Append(SR.FieldCanNotEmpty("No Business Profile") + " \\n");
+                if (dtTanggalMulaiBerlakuBP.IsDateEmpty || dtTanggalMulaiBerlakuBP.ErrorMessage != null)
+                    sb.Append(SR.FieldCanNotEmpty("Date Of Entry for Business Profile") + " \\n");
+            }
+
             return sb.ToString();
         }
 
@@ -121,60 +197,63 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
             SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PendirianPerusahaanBaruForeign"));
             SPListItem item = list.GetItemById(IDP);
 
+            if (item["Status"] != null)
+                ViewState["Status"] = item["Status"].ToString();
+            else
+            {
+                if (item["ApprovalStatus"] != null)
+                    ViewState["Status"] = item["ApprovalStatus"].ToString();
+            }
+
+            if (item.Workflows.Count > 0 || ViewState["Status"].ToString() == "Approved")
+                btnSaveUpdateRunWf.Visible = false;
+
             if (mode == "edit")
             {
                 btnSaveUpdate.Text = "Update";
-
-                ltrRequestCode.Text = item["Title"].ToString();
-                ltrDate.Text = Convert.ToDateTime(item["Date"].ToString()).ToString("dd-MMM-yyyy HH:mm");
-                txtProject.Text = item["Project"].ToString();
-
-                if (item["Requestor"] != null)
-                {
-                    int IDPemohon = Convert.ToInt32(item["Requestor"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0]);
-                    hfIDRequestor.Value = IDPemohon.ToString();
-                    SPList listPemohon = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
-                    SPListItem itemPemohon = listPemohon.GetItemById(IDPemohon);
-                    txtRequestor.Text = itemPemohon.Title;
-                    txtRequestorEmail.Text = itemPemohon["EmailPemohon"].ToString();
-                }
-
-                txtCompanyName.Text = item["CompanyName"].ToString();
-                txtCountryEst.Text = item["CountryOfEstablishment"].ToString();
-                txtActivities.Text = item["Activities"].ToString();
-                txtAuthorizedCapital.Text = item["AuthorizeCapital"].ToString();
-                txtPaidUpCapital.Text = item["PaidUpCapital"].ToString();
-                txtParValue.Text = item["ParValue"].ToString();
-
-                txtKeterangan.Text = item["Keterangan"] == null ? string.Empty : item["Keterangan"].ToString();
+                btnSaveUpdateRunWf.Text = "Update & Run Workflow";
             }
             else if (mode == "display")
             {
                 btnSaveUpdate.Visible = false;
-
-                ltrRequestCode.Text = item["Title"].ToString();
-                ltrDate.Text = Convert.ToDateTime(item["Date"].ToString()).ToString("dd-MMM-yyyy HH:mm");
-                ltrProject.Text = item["Project"].ToString();
-
-                if (item["Requestor"] != null)
-                {
-                    int IDPemohon = Convert.ToInt32(item["Requestor"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0]);
-                    hfIDRequestor.Value = IDPemohon.ToString();
-                    SPList listPemohon = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
-                    SPListItem itemPemohon = listPemohon.GetItemById(IDPemohon);
-                    ltrRequestor.Text = itemPemohon.Title;
-                    ltrRequestorEmail.Text = itemPemohon["EmailPemohon"].ToString();
-                }
-
-                ltrCompanyName.Text = item["CompanyName"].ToString();
-                ltrCountryEst.Text = item["CountryOfEstablishment"].ToString();
-                ltrActivities.Text = item["Activities"].ToString();
-                ltrAuthorizedCapital.Text = item["AuthorizeCapital"].ToString();
-                ltrPaidUpCapital.Text = item["PaidUpCapital"].ToString();
-                ltrParValue.Text = item["ParValue"].ToString();
-
-                ltrKeterangan.Text = item["Keterangan"] == null ? string.Empty : item["Keterangan"].ToString();
+                btnSaveUpdateRunWf.Visible = false;
             }
+
+            ltrRequestCode.Text = item["Title"].ToString();
+            ltrDate.Text = Convert.ToDateTime(item["Date"].ToString()).ToString("dd-MMM-yyyy HH:mm");
+            txtProject.Text = item["Project"].ToString();
+
+            if (item["Requestor"] != null)
+            {
+                int IDPemohon = Convert.ToInt32(item["Requestor"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0]);
+                hfIDRequestor.Value = IDPemohon.ToString();
+                SPList listPemohon = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
+                SPListItem itemPemohon = listPemohon.GetItemById(IDPemohon);
+                txtRequestor.Text = itemPemohon.Title;
+                txtRequestorEmail.Text = itemPemohon["EmailPemohon"].ToString();
+            }
+
+            txtCompanyName.Text = item["CompanyName"].ToString();
+            txtCountryEst.Text = item["CountryOfEstablishment"].ToString();
+            txtActivities.Text = item["Activities"].ToString();
+            txtAuthorizedCapital.Text = Convert.ToDouble(item["AuthorizeCapital"]).ToString("#,##0");
+            txtPaidUpCapital.Text = Convert.ToDouble(item["PaidUpCapital"]).ToString("#,##0");
+            txtParValue.Text = Convert.ToDouble(item["ParValue"]).ToString("#,##0");
+
+            txtKeterangan.Text = item["Keterangan"] == null ? string.Empty : item["Keterangan"].ToString();
+
+            ltrProject.Text = txtProject.Text;
+            ltrRequestor.Text = txtRequestor.Text;
+            ltrRequestorEmail.Text = txtRequestorEmail.Text;
+
+            ltrCompanyName.Text = txtCompanyName.Text;
+            ltrCountryEst.Text = txtCountryEst.Text;
+            ltrActivities.Text = txtActivities.Text;
+            ltrAuthorizedCapital.Text = txtAuthorizedCapital.Text;
+            ltrPaidUpCapital.Text = txtPaidUpCapital.Text;
+            ltrParValue.Text = txtParValue.Text;
+
+            ltrKeterangan.Text = txtKeterangan.Text;
 
             SPList shareholder = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Shareholder"));
             SPQuery query = new SPQuery();
@@ -223,10 +302,77 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
             ViewState["OfficerEdit"] = collOfficer;
             BindOfficer();
 
-            HiddenControls(mode);
+            /* Akta */
+            if (item["NoMA"] != null)
+            {
+                txtNoMA.Text = item["NoMA"].ToString();
+                ltrNoMA.Text = item["NoMA"].ToString();
+            }
+            if (item["DateOfEntryMA"] != null)
+            {
+                dtTanggalMulaiBerlakuMA.SelectedDate = Convert.ToDateTime(item["DateOfEntryMA"]);
+                ltrTanggalMulaiBerlakuMA.Text = Convert.ToDateTime(item["DateOfEntryMA"]).ToString("dd-MMM-yyyy");
+            }
+            if (item["NoteMA"] != null)
+            {
+                txtKeteranganMA.Text = item["NoteMA"].ToString();
+                ltrKeteranganMA.Text = item["NoteMA"].ToString();
+            }
+
+            /* CI */
+            if (item["NoCI"] != null)
+            {
+                txtNoCI.Text = item["NoCI"].ToString();
+                ltrNoCI.Text = item["NoCI"].ToString();
+            }
+            if (item["DateOfEntryCI"] != null)
+            {
+                dtTanggalMulaiBerlakuCI.SelectedDate = Convert.ToDateTime(item["DateOfEntryCI"]);
+                ltrTanggalMulaiBerlakuCI.Text = Convert.ToDateTime(item["DateOfEntryCI"]).ToString("dd-MMM-yyyy");
+            }
+            if (item["NoteCI"] != null)
+            {
+                txtKeteranganCI.Text = item["NoteCI"].ToString();
+                ltrKeteranganCI.Text = item["NoteCI"].ToString();
+            }
+
+            /* BP */
+            if (item["NoBP"] != null)
+            {
+                txtNoBP.Text = item["NoBP"].ToString();
+                ltrNoBP.Text = item["NoBP"].ToString();
+            }
+            if (item["DateOfEntryBP"] != null)
+            {
+                dtTanggalMulaiBerlakuBP.SelectedDate = Convert.ToDateTime(item["DateOfEntryBP"]);
+                ltrTanggalMulaiBerlakuBP.Text = Convert.ToDateTime(item["DateOfEntryBP"]).ToString("dd-MMM-yyyy");
+            }
+            if (item["NoteBP"] != null)
+            {
+                txtKeteranganBP.Text = item["NoteBP"].ToString();
+                ltrKeteranganBP.Text = item["NoteBP"].ToString();
+            }
+
+            DisplayDocument(ltrfuMA, item.Title, "M&A");
+            DisplayDocument(ltrfuCI, item.Title, "Certification of Incorporation");
+            DisplayDocument(ltrfuBP, item.Title, "Business Profile");
+
+            if (ViewState["Status"].ToString() == PIC_CORSEC)
+                pnlPICCorsec.Visible = true;
+
+            if (item["ApprovalStatus"] != null)
+            {
+                if (item["ApprovalStatus"].ToString() == APPROVED)
+                {
+                    pnlPICCorsec.Visible = true;
+                    pnlAssigned.Visible = true;
+                }
+            }
+
+            HiddenControls(mode, ViewState["Status"].ToString());
         }
 
-        private void HiddenControls(string mode)
+        private void HiddenControls(string mode, string status)
         {
             if (mode == "display")
             {
@@ -247,20 +393,159 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
 
                 dgOfficer.ShowFooter = false;
                 dgOfficer.Columns[3].Visible = false;
+
+                fuMA.Visible = false;
+                txtNoMA.Visible = false;
+                dtTanggalMulaiBerlakuMA.Visible = false;
+                txtKeteranganMA.Visible = false;
+
+                fuCI.Visible = false;
+                txtNoCI.Visible = false;
+                dtTanggalMulaiBerlakuCI.Visible = false;
+                txtKeteranganCI.Visible = false;
+
+                fuBP.Visible = false;
+                txtNoBP.Visible = false;
+                dtTanggalMulaiBerlakuBP.Visible = false;
+                txtKeteranganBP.Visible = false;
             }
             else if (mode == "edit")
             {
+                if (Convert.ToBoolean(ViewState["Admin"]) == false)
+                {
+                    if (status == APPROVED || status == PIC_CORSEC || status == CHIEF_CORSEC)
+                    {
+                        txtProject.Visible = false;
+                        txtRequestor.Visible = false;
+                        txtRequestorEmail.Visible = false;
+                        txtCompanyName.Visible = false;
+                        txtCountryEst.Visible = false;
+                        txtActivities.Visible = false;
+                        txtAuthorizedCapital.Visible = false;
+                        txtPaidUpCapital.Visible = false;
+                        txtParValue.Visible = false;
+                        txtKeterangan.Visible = false;
+                        imgbtnNamaPemohon.Visible = false;
+
+                        dgShareholder.ShowFooter = false;
+                        dgShareholder.Columns[4].Visible = false;
+
+                        dgOfficer.ShowFooter = false;
+                        dgOfficer.Columns[3].Visible = false;
+                    }
+
+                    if (status == PIC_CORSEC)
+                    {
+                        ltrNoMA.Visible = false;
+                        ltrTanggalMulaiBerlakuMA.Visible = false;
+                        ltrKeteranganMA.Visible = false;
+
+                        ltrNoCI.Visible = false;
+                        ltrTanggalMulaiBerlakuCI.Visible = false;
+                        ltrKeteranganCI.Visible = false;
+
+                        ltrNoBP.Visible = false;
+                        ltrTanggalMulaiBerlakuBP.Visible = false;
+                        ltrKeteranganBP.Visible = false;
+                    }
+                    else
+                    {
+                        txtNoMA.Visible = false;
+                        dtTanggalMulaiBerlakuMA.Visible = false;
+                        txtKeteranganMA.Visible = false;
+
+                        txtNoCI.Visible = false;
+                        dtTanggalMulaiBerlakuCI.Visible = false;
+                        txtKeteranganCI.Visible = false;
+
+                        txtNoBP.Visible = false;
+                        dtTanggalMulaiBerlakuBP.Visible = false;
+                        txtKeteranganBP.Visible = false;
+                    }
+                }
+
+                if (Convert.ToBoolean(ViewState["Admin"]) == true || status == string.Empty)
+                {
+                    ltrProject.Visible = false;
+                    ltrRequestor.Visible = false;
+                    ltrRequestorEmail.Visible = false;
+                    ltrCompanyName.Visible = false;
+                    ltrCountryEst.Visible = false;
+                    ltrActivities.Visible = false;
+                    ltrAuthorizedCapital.Visible = false;
+                    ltrPaidUpCapital.Visible = false;
+                    ltrParValue.Visible = false;
+                    ltrKeterangan.Visible = false;
+
+                    ltrNoMA.Visible = false;
+                    ltrTanggalMulaiBerlakuMA.Visible = false;
+                    ltrKeteranganMA.Visible = false;
+
+                    ltrNoCI.Visible = false;
+                    ltrTanggalMulaiBerlakuCI.Visible = false;
+                    ltrKeteranganCI.Visible = false;
+
+                    ltrNoBP.Visible = false;
+                    ltrTanggalMulaiBerlakuBP.Visible = false;
+                    ltrKeteranganBP.Visible = false;
+                }
+
+                if (ltrfuMA.Text.Trim() == string.Empty)
+                    reqfuMA.Visible = true;
+                else
+                    reqfuMA.Visible = false;
+
+                if (ltrfuCI.Text.Trim() == string.Empty)
+                    reqfuCI.Visible = true;
+                else
+                    reqfuCI.Visible = false;
+
+                if (ltrfuBP.Text.Trim() == string.Empty)
+                    reqfuBP.Visible = true;
+                else
+                    reqfuBP.Visible = false;
             }
         }
 
-        private string SaveUpdate()
+        private void DisplayDocument(Literal ltr, string RequestCode, string DocumentType)
         {
-            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PendirianPerusahaanBaruForeign"));
+            SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "PendirianPerusahaanBaruForeignDokumen"));
+            SPQuery query = new SPQuery();
+            query.Query = "<Where>" +
+                             "<And>" +
+                                 "<Eq>" +
+                                      "<FieldRef Name='PendirianPerusahaanBaruForeign' LookupId='True' />" +
+                                      "<Value Type='Lookup'>" + IDP + "</Value>" +
+                                  "</Eq>" +
+                                  "<Eq>" +
+                                      "<FieldRef Name='DocumentType' />" +
+                                      "<Value Type='Text'>" + DocumentType + "</Value>" +
+                                  "</Eq>" +
+                             "</And>" +
+                          "</Where>" +
+                          "<OrderBy>" +
+                            "<FieldRef Name='Created' Ascending='False' />" +
+                          "</OrderBy>";
+            query.Folder = web.Folders["PendirianPerusahaanBaruForeignDokumen"].SubFolders[RequestCode];
+
+            SPListItemCollection coll = document.GetItems(query);
+            if (coll.Count > 0)
+            {
+                SPListItem item = coll[0];
+                if (item != null)
+                    ltr.Text = string.Format("<a href='{0}/PendirianPerusahaanBaruForeignDokumen/{1}/{2}'>{2}</a>", web.Url, RequestCode, item["Name"].ToString());
+            }
+        }
+
+        private string SaveUpdate(string mode)
+        {
+            SPWeb currentWeb = SPContext.Current.Web;
+            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(currentWeb.Url, "PendirianPerusahaanBaruForeign"));
+            currentWeb.AllowUnsafeUpdates = true;
+            SPListItem item;
+
             SPList listShareholder = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Shareholder"));
             SPList listOfficer = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Officer"));
-
-            web.AllowUnsafeUpdates = true;
-            SPListItem item;
 
             try
             {
@@ -276,74 +561,114 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
                     item["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                 }
 
-                item["Date"] = Convert.ToDateTime(ltrDate.Text);
-                item["Requestor"] = hfIDRequestor.Value;
-                item["Activities"] = txtActivities.Text.Trim();
-                item["AuthorizeCapital"] = txtAuthorizedCapital.Text.Trim();
-                item["CompanyName"] = txtCompanyName.Text.Trim();
-                item["CountryOfEstablishment"] = txtCountryEst.Text.Trim();
-                item["Keterangan"] = txtKeterangan.Text.Trim();
-                item["PaidUpCapital"] = txtPaidUpCapital.Text.Trim();
-                item["ParValue"] = txtParValue.Text.Trim();
-                item["Project"] = txtProject.Text.Trim();
+                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == string.Empty)
+                {
+                    item["Date"] = Convert.ToDateTime(ltrDate.Text);
+                    item["Requestor"] = hfIDRequestor.Value;
+                    item["Activities"] = txtActivities.Text.Trim();
+                    item["AuthorizeCapital"] = txtAuthorizedCapital.Text.Trim();
+                    item["CompanyName"] = txtCompanyName.Text.Trim();
+                    item["CountryOfEstablishment"] = txtCountryEst.Text.Trim();
+                    item["Keterangan"] = txtKeterangan.Text.Trim();
+                    item["PaidUpCapital"] = txtPaidUpCapital.Text.Trim();
+                    item["ParValue"] = txtParValue.Text.Trim();
+                    item["Project"] = txtProject.Text.Trim();
+                }
+
+                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
+                {
+                    item["NoMA"] = txtNoMA.Text.Trim();
+                    item["DateOfEntryMA"] = dtTanggalMulaiBerlakuMA.SelectedDate;
+                    item["NoteMA"] = txtKeteranganMA.Text.Trim();
+
+                    item["NoCI"] = txtNoCI.Text.Trim();
+                    item["DateOfEntryCI"] = dtTanggalMulaiBerlakuCI.SelectedDate;
+                    item["NoteCI"] = txtKeteranganCI.Text.Trim();
+
+                    item["NoBP"] = txtNoBP.Text.Trim();
+                    item["DateOfEntryBP"] = dtTanggalMulaiBerlakuBP.SelectedDate;
+                    item["NoteBP"] = txtKeteranganBP.Text.Trim();
+                }
                 item.Update();
 
                 ViewState["ID"] = item.ID;
 
+                currentWeb.AllowUnsafeUpdates = false;
+
                 if (IDP == 0)
                 {
+                    web.AllowUnsafeUpdates = true;
+
+                    SPDocumentLibrary listDocument = (SPDocumentLibrary)web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "PendirianPerusahaanBaruForeignDokumen"));
+                    System.Collections.Hashtable properties = new System.Collections.Hashtable();
+                    properties.Add("PendirianPerusahaanBaruForeign", item.ID);
+
+                    // Creating the document set
+                    SPContentType ctype = web.Site.RootWeb.ContentTypes["Document Set"];
+                    DocumentSet.Create(listDocument.RootFolder, item.Title, listDocument.ContentTypes.BestMatch(ctype.Id), properties, true);
+
+                    web.AllowUnsafeUpdates = false;
+                }
+
+                web.AllowUnsafeUpdates = true;
+
+                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == string.Empty)
+                {
+                    int j = 0;
+
+                    j = 0;
                     List<Shareholder> collShareholder = ViewState["Shareholder"] as List<Shareholder>;
                     foreach (Shareholder i in collShareholder)
                     {
-                        SPListItem itemShareholder = listShareholder.Items.Add();
+                        SPListItem itemShareholder;
+                        if (i.ID == 0)
+                        {
+                            itemShareholder = listShareholder.Items.Add();
+                            itemShareholder["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        }
+                        else
+                        {
+                            itemShareholder = listShareholder.GetItemById(i.ID);
+                            itemShareholder["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        }
+
                         itemShareholder["PendirianPerusahaanBaruForeign"] = ViewState["ID"].ToString();
                         itemShareholder["Title"] = i.Name;
                         itemShareholder["Address"] = i.Address;
                         itemShareholder["CountryOfEstablishment"] = i.Country;
                         itemShareholder["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                         itemShareholder.Update();
+
+                        collShareholder[j].ID = itemShareholder.ID;
+
+                        j += 1;
                     }
 
+                    j = 0;
                     List<Officer> collOfficer = ViewState["Officer"] as List<Officer>;
                     foreach (Officer i in collOfficer)
                     {
-                        SPListItem itemOfficer = listOfficer.Items.Add();
+                        SPListItem itemOfficer;
+                        if (i.ID == 0)
+                        {
+                            itemOfficer = listOfficer.Items.Add();
+                            itemOfficer["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        }
+                        else
+                        {
+                            itemOfficer = listOfficer.GetItemById(i.ID);
+                            itemOfficer["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        }
+
                         itemOfficer["PendirianPerusahaanBaruForeign"] = ViewState["ID"].ToString();
                         itemOfficer["Title"] = i.Name;
                         itemOfficer["Roles"] = i.RoleID;
                         itemOfficer["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                         itemOfficer.Update();
-                    }
-                }
-                else
-                {
-                    if (dgShareholder.Items.Count > 0)
-                    {
-                        foreach (DataGridItem dgItem in dgShareholder.Items)
-                        {
-                            Label lblID = dgItem.FindControl("lblID") as Label;
-                            Label lblName = dgItem.FindControl("lblName") as Label;
-                            Label lblAddress = dgItem.FindControl("lblAddress") as Label;
-                            Label lblCountryEstablishment = dgItem.FindControl("lblCountryEstablishment") as Label;
 
-                            SPListItem itemShareholder;
-                            if (Convert.ToInt32(lblID.Text) != 0)
-                            {
-                                itemShareholder = listShareholder.GetItemById(Convert.ToInt32(lblID.Text));
-                                itemShareholder["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                            }
-                            else
-                            {
-                                itemShareholder = listShareholder.Items.Add();
-                                itemShareholder["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                            }
+                        collOfficer[j].ID = itemOfficer.ID;
 
-                            itemShareholder["PendirianPerusahaanBaruForeign"] = ViewState["ID"].ToString();
-                            itemShareholder["Title"] = lblName.Text;
-                            itemShareholder["Address"] = lblAddress.Text;
-                            itemShareholder["CountryOfEstablishment"] = lblCountryEstablishment.Text;
-                            itemShareholder.Update();
-                        }
+                        j += 1;
                     }
 
                     if (ViewState["ShareholderEdit"] != null)
@@ -367,33 +692,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
                                 if (itemShareholder != null)
                                     itemShareholder.Delete();
                             }
-                        }
-                    }
-
-                    if (dgOfficer.Items.Count > 0)
-                    {
-                        foreach (DataGridItem dgItem in dgOfficer.Items)
-                        {
-                            Label lblID = dgItem.FindControl("lblID") as Label;
-                            Label lblName = dgItem.FindControl("lblName") as Label;
-                            Label lblRoleID = dgItem.FindControl("lblRoleID") as Label;
-
-                            SPListItem itemOfficer;
-                            if (Convert.ToInt32(lblID.Text) != 0)
-                            {
-                                itemOfficer = listOfficer.GetItemById(Convert.ToInt32(lblID.Text));
-                                itemOfficer["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                            }
-                            else
-                            {
-                                itemOfficer = listOfficer.Items.Add();
-                                itemOfficer["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                            }
-
-                            itemOfficer["PendirianPerusahaanBaruForeign"] = ViewState["ID"].ToString();
-                            itemOfficer["Title"] = lblName.Text;
-                            itemOfficer["Roles"] = lblRoleID.Text;
-                            itemOfficer.Update();
                         }
                     }
 
@@ -422,7 +720,36 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
                     }
                 }
 
+                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
+                {
+                    string message = SaveDocument(fuMA, item.Title, "M&A");
+                    if (message != string.Empty)
+                        return message;
+
+                    message = SaveDocument(fuCI, item.Title, "Certification of Incorporation");
+                    if (message != string.Empty)
+                        return message;
+
+                    message = SaveDocument(fuBP, item.Title, "Business Profile");
+                    if (message != string.Empty)
+                        return message;
+                }
+
                 web.AllowUnsafeUpdates = false;
+
+                if (item["Status"] == null)
+                {
+                    if (mode == "SaveRunWf")
+                    {
+                        if (list.WorkflowAssociations.Count > 0)
+                        {
+                            string WfId = Util.GetSettingValue(web, "Workflow BasedId", "Pendirian Perusahaan Baru (Foreign)");
+                            Guid wfBaseId = new Guid(WfId);
+                            SPWorkflowAssociation associationTemplate = list.WorkflowAssociations.GetAssociationByBaseID(wfBaseId);
+                            currentWeb.Site.WorkflowManager.StartWorkflow(item, associationTemplate, associationTemplate.AssociationData, true);
+                        }
+                    }
+                }
             }
             catch
             {
@@ -442,7 +769,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
         {
             Util.RegisterStartupScript(Page, "Pemohon", "RegisterDialog('divPemohonSearch','divPemohonDlgContainer', '480');");
 
-            using (SPSite site = new SPSite(SPContext.Current.Site.Url, SPContext.Current.Site.SystemAccount.UserToken))
+            using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
                 using (web = site.OpenWeb())
                 {
@@ -460,6 +787,13 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
 
                     if (!IsPostBack)
                     {
+                        ViewState["Status"] = string.Empty;
+
+                        string AdministratorGroup = Util.GetSettingValue(web, "SharePoint Group", "Administrator");
+                        ViewState["Admin"] = Util.IsUserExistInSharePointGroup(web, SPContext.Current.Web.CurrentUser.LoginName, AdministratorGroup);
+                        if (Convert.ToBoolean(ViewState["Admin"]) == true)
+                            pnlPICCorsec.Visible = true;
+
                         txtAuthorizedCapital.Attributes.Add("onkeyup", "FormatNumber('" + txtAuthorizedCapital.ClientID + "');");
                         txtAuthorizedCapital.Attributes.Add("onblur", "FormatNumber('" + txtAuthorizedCapital.ClientID + "')");
 
@@ -483,7 +817,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
             }
         }
 
-        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        private void SaveAction(string mode)
         {
             string msg = Validation();
             if (msg != string.Empty)
@@ -491,16 +825,26 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
                 Util.ShowMessage(Page, msg);
                 return;
             }
-            string result = SaveUpdate();
+            string result = SaveUpdate(mode);
             if (result == string.Empty)
             {
                 if (Source != string.Empty)
                     SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
                 else
-                    Response.Redirect("/Lists/PendirianPerusahaanBaruForeign", true);
+                    Response.Redirect(string.Format("{0}/Lists/PendirianPerusahaanBaruForeign", web.Url), true);
             }
             else
                 Util.ShowMessage(Page, result);
+        }
+
+        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        {
+            SaveAction("Save");
+        }
+
+        protected void btnSaveUpdateRunWf_Click(object sender, EventArgs e)
+        {
+            SaveAction("SaveRunWf");
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -508,7 +852,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
             if (Source != string.Empty)
                 SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
             else
-                Response.Redirect("/Lists/PendirianPerusahaanBaruForeign", true);
+                Response.Redirect(string.Format("{0}/Lists/PendirianPerusahaanBaruForeign", web.Url), true);
         }
 
         #region Shareholder
@@ -896,6 +1240,14 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruForeign
         protected void btnCancelPemohon_Click(object sender, EventArgs e)
         {
             VisiblePanel(false);
+        }
+
+        protected void btnCloseSearchPemohon_Click(object sender, EventArgs e)
+        {
+            BindShareholder();
+            BindOfficer();
+
+            upMain.Update();
         }
 
         #endregion

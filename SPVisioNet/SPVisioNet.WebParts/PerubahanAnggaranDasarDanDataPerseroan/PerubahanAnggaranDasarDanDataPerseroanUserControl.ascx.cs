@@ -27,6 +27,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
         private string CodeName = "ADP"; //PERUBAHAN_ANGGARAN_DASAR_DAN_DATA_PERUSAHAAN
         private string Source = string.Empty;
         private string[] StepWF = { "Entry Perubahan Anggaran Dasar", "Approve oleh Authorized Person", "PIC Update Akta", "PIC Upload SKDP", "PIC Upload NPWP dan SKT", "PIC Upload APV", "PIC Upload Setoran Modal", "PIC Upload SK Persetujuan" };
+        private const string NPWP_FORMAT = "99.999.999.9-999.999";
 
         /// <summary>
         /// WewenangDireksi
@@ -166,15 +167,70 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
         private string Validation()
         {
             StringBuilder sb = new StringBuilder();
-            if (ddlMataUang.SelectedValue.Trim() == string.Empty)
-                sb.Append(SR.FieldCanNotEmpty("Mata Uang") + " \\n");
-            if (txtModalDasarNominalMenjadi.Text.Trim() == string.Empty)
+            decimal ModalDasar = 0;
+            if (txtModalDasar.Text.Trim() == string.Empty)
                 sb.Append(SR.FieldCanNotEmpty("Modal Dasar") + " \\n");
-            if (txtModalSetorNominalSemula.Text.Trim() == string.Empty)
-                sb.Append(SR.FieldCanNotEmpty("Modal Setor") + " \\n");
-            if (txtNominalMataUang.Text.Trim() == string.Empty)
-                sb.Append(SR.FieldCanNotEmpty("Nominal") + " \\n");
+            else
+            {
+                try
+                {
+                    ModalDasar = Convert.ToDecimal(txtModalDasar.Text.Trim());
+                }
+                catch
+                {
+                    sb.Append(SR.IntegerData("Modal Dasar") + " \\n");
+                }
+            }
 
+            decimal ModalSetor = 0;
+            if (txtModalSetor.Text.Trim() == string.Empty)
+                sb.Append(SR.FieldCanNotEmpty("Modal Setor") + " \\n");
+            else
+            {
+                try
+                {
+                    ModalSetor = Convert.ToDecimal(txtModalSetor.Text.Trim());
+                }
+                catch
+                {
+                    sb.Append(SR.IntegerData("Modal Setor") + " \\n");
+                }
+            }
+
+            decimal NominalSaham = 0;
+            if (txtNominalSaham.Text.Trim() == string.Empty)
+                sb.Append(SR.FieldCanNotEmpty("Nominal Saham") + " \\n");
+            else
+            {
+                try
+                {
+                    NominalSaham = Convert.ToDecimal(txtNominalSaham.Text.Trim());
+                }
+                catch
+                {
+                    sb.Append(SR.IntegerData("Nominal Saham") + " \\n");
+                }
+            }
+
+            txtNominalModalDasar.Text = (ModalDasar * NominalSaham).ToString("#,##0");
+            txtNominalModalSetor.Text = (ModalSetor * NominalSaham).ToString("#,##0");
+
+            if (ModalDasar < ModalSetor)
+                sb.Append("Modal Dasar must be greater or equal to Modal Setor\\n");
+            if (dgPemegangSaham.Items.Count == 0)
+                sb.Append(SR.FieldCanNotEmpty("Pemegang Saham") + " \\n");
+            else
+            {
+                decimal NominalModalSetor = Convert.ToDecimal(txtNominalModalSetor.Text);
+                decimal JumlahNominal = 0;
+                foreach (DataGridItem item in dgPemegangSaham.Items)
+                {
+                    Label lblJumlahNominal = item.FindControl("lblJumlahNominal") as Label;
+                    JumlahNominal += Convert.ToDecimal(lblJumlahNominal.Text);
+                }
+                if (NominalModalSetor != JumlahNominal)
+                    sb.Append("Data in Pemegang Saham is not equal to Struktur Permodalan\\n");
+            }
 
             if (dgKomisaris.Items.Count == 0)
                 sb.Append(SR.FieldCanNotEmpty("Komisaris and Direksi") + " \\n");
@@ -384,9 +440,10 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 item["AlasanPerubahan"] = txtAlasanPerubahan.Text.Trim();
                 item["BNRI"] = (rbBNRI.SelectedValue.Equals("Yes") ? true : false);
                 item["MataUang"] = ddlMataUang.SelectedValue;
-                item["ModalDasar"] = (!string.IsNullOrEmpty(txtModalDasarNominalSemula.Text) ? txtModalDasarNominalSemula.Text.Trim() : "0");
-                item["ModalSetor"] = (!string.IsNullOrEmpty(txtModalSetorNominalSemula.Text) ? txtModalSetorNominalSemula.Text.Trim() : "0");
-                item["Nominal"] = (!string.IsNullOrEmpty(txtNominalMataUang.Text) ? txtNominalMataUang.Text.Trim() : "0");
+
+                item["ModalDasar"] = (!string.IsNullOrEmpty(txtModalDasar.Text) ? txtModalDasar.Text.Trim() : "0");
+                item["ModalSetor"] = (!string.IsNullOrEmpty(txtModalSetor.Text) ? txtModalSetor.Text.Trim() : "0");
+                item["Nominal"] = (!string.IsNullOrEmpty(txtNominalSaham.Text) ? txtNominalSaham.Text.Trim() : "0");
                 item["NominalModalDasar"] = Convert.ToDouble(item["ModalDasar"]) * Convert.ToDouble(item["Nominal"]);
                 item["NominalModalSetor"] = Convert.ToDouble(item["ModalSetor"]) * Convert.ToDouble(item["Nominal"]);
                 item["Keterangan"] = txtRemarks.Text.Trim();
@@ -760,23 +817,17 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ddlTempatKedudukan.SelectedValue = (item["TempatKedudukan"] != null ? new SPFieldLookupValue(item["TempatKedudukan"].ToString()).LookupId.ToString() : string.Empty);
                 ddlMaksudDanTujuan.SelectedValue = (item["MaksudTujuan"] != null ? new SPFieldLookupValue(item["MaksudTujuan"].ToString()).LookupId.ToString() : string.Empty);
                 ddlMataUang.SelectedValue = (item["MataUang"] != null ? new SPFieldLookupValue(item["MataUang"].ToString()).LookupId.ToString() : string.Empty);
-                txtModalDasarNominalSemula.Text = Convert.ToDouble(item["ModalDasar"]).ToString("#,##0");
-                txtModalSetorNominalSemula.Text = Convert.ToDouble(item["ModalSetor"]).ToString("#,##0");
-                txtNominalMataUang.Text = Convert.ToDouble(item["Nominal"]).ToString("#,##0");
-                txtModalDasarNominalMenjadi.Text = (Convert.ToDouble(txtModalDasarNominalSemula.Text) * Convert.ToDouble(txtNominalMataUang.Text)).ToString("#,##0");
-                txtModalSetorNominalMenjadi.Text = (Convert.ToDouble(txtModalSetorNominalSemula.Text) * Convert.ToDouble(txtNominalMataUang.Text)).ToString("#,##0");
+                txtModalDasar.Text = Convert.ToDouble(item["ModalDasar"]).ToString("#,##0");
+                txtModalSetor.Text = Convert.ToDouble(item["ModalSetor"]).ToString("#,##0");
+                txtNominalSaham.Text = Convert.ToDouble(item["Nominal"]).ToString("#,##0");
+                txtNominalModalDasar.Text = (Convert.ToDouble(txtModalDasar.Text) * Convert.ToDouble(txtNominalSaham.Text)).ToString("#,##0");
+                txtNominalModalSetor.Text = (Convert.ToDouble(txtModalSetor.Text) * Convert.ToDouble(txtNominalSaham.Text)).ToString("#,##0");
 
                 GetKomisarisDireksiSemula(IDCompany);
                 BindKomisarisDireksiSemula();
 
                 GetPemegangSahamSemula(IDCompany);
                 BindPemegangSahamSemula();
-
-                //dgPemegangSaham.Columns[6].Visible = true;
-                //dgPemegangSaham.Columns[7].Visible = true;
-
-                //dgKomisaris.Columns[5].Visible = true;
-                //dgKomisaris.Columns[6].Visible = true;
 
                 if (IDP == 0)
                 {
@@ -1131,16 +1182,19 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
                 ddlMataUang.SelectedValue = new SPFieldLookupValue(item["MataUang"].ToString()).LookupId.ToString();
                 ltrMataUang.Text = ddlMataUang.SelectedItem.Text;
-                txtModalDasarNominalSemula.Text = (item["ModalDasar"] != null ? Convert.ToDouble(item["ModalDasar"]).ToString("#,##0") : "0");
-                ltrtxtModalDasarNominalSemula.Text = txtModalDasarNominalSemula.Text;
-                txtModalSetorNominalSemula.Text = (item["ModalSetor"] != null ? Convert.ToDouble(item["ModalSetor"]).ToString("#,##0") : "0");
-                ltrtxtModalSetorNominalSemula.Text = txtModalSetorNominalSemula.Text;
-                txtNominalMataUang.Text = (item["Nominal"] != null ? Convert.ToDouble(item["Nominal"]).ToString("#,##0") : "1");
-                ltrNominalMataUang.Text = txtNominalMataUang.Text;
-                txtModalDasarNominalMenjadi.Text = (item["NominalModalDasar"] != null ? Convert.ToDouble(item["NominalModalDasar"]).ToString("#,##0") : "0");
-                ltrtxtModalDasarNominalMenjadi.Text = txtModalDasarNominalMenjadi.Text;
-                txtModalSetorNominalMenjadi.Text = (item["NominalModalSetor"] != null ? Convert.ToDouble(item["NominalModalSetor"]).ToString("#,##0") : "0");
-                ltrtxtModalSetorNominalMenjadi.Text = txtModalSetorNominalMenjadi.Text;
+                
+                txtModalDasar.Text = (item["ModalDasar"] != null ? Convert.ToDouble(item["ModalDasar"]).ToString("#,##0") : "0");
+                ltrtxtModalDasar.Text = txtModalDasar.Text;
+                txtModalSetor.Text = (item["ModalSetor"] != null ? Convert.ToDouble(item["ModalSetor"]).ToString("#,##0") : "0");
+                ltrtxtModalSetor.Text = txtModalSetor.Text;
+                txtNominalSaham.Text = (item["Nominal"] != null ? Convert.ToDouble(item["Nominal"]).ToString("#,##0") : "1");
+                ltrNominalSaham.Text = txtNominalSaham.Text;
+
+                txtNominalModalDasar.Text = (item["NominalModalDasar"] != null ? Convert.ToDouble(item["NominalModalDasar"]).ToString("#,##0") : "0");
+                ltrtxtNominalModalDasar.Text = txtNominalModalDasar.Text;
+                txtNominalModalSetor.Text = (item["NominalModalSetor"] != null ? Convert.ToDouble(item["NominalModalSetor"]).ToString("#,##0") : "0");
+                ltrtxtNominalModalSetor.Text = txtNominalModalSetor.Text;
+
                 txtRemarks.Text = (item["Keterangan"] != null ? item["Keterangan"].ToString() : string.Empty);
                 ltrRemarks.Text = txtRemarks.Text;
                 hfIDCompany.Value = (item["CompanyCode"] != null ? new SPFieldLookupValue(item["CompanyCode"].ToString()).LookupId.ToString() : string.Empty);
@@ -1372,15 +1426,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 txtRemarks.Visible = false;
                 ddlMataUang.Visible = false;
                 btnSaveUpdate.Visible = false;
-                txtNominalMataUang.Visible = false;
+                txtNominalSaham.Visible = false; 
                 ltrCompanyCode.Visible = true;
                 txtCompanyName.Visible = false;
                 ddlTempatKedudukan.Visible = false;
                 ddlMaksudDanTujuan.Visible = false;
-                txtModalDasarNominalSemula.Visible = false;
-                txtModalDasarNominalMenjadi.Visible = false;
-                txtModalSetorNominalSemula.Visible = false;
-                txtModalSetorNominalMenjadi.Visible = false;
+                txtModalDasar.Visible = false;
+                txtModalSetor.Visible = false;
+                txtModalSetor.Visible = false;
+                txtNominalModalSetor.Visible = false;
                 txtSKNo.Visible = false;
                 dtSKMulaiBerlaku.Visible = false;
                 txtSKKeterangan.Visible = false;
@@ -1446,10 +1500,12 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             else if (mode == "edit")
             {
                 btnSaveUpdate.Text = "Update";
-                ltrtxtModalDasarNominalSemula.Visible = false;
-                ltrtxtModalDasarNominalMenjadi.Visible = false;
-                ltrtxtModalSetorNominalSemula.Visible = false;
-                ltrtxtModalSetorNominalMenjadi.Visible = false;
+                ltrtxtModalDasar.Visible = false;
+                ltrtxtNominalModalDasar.Visible = false;
+                ltrtxtModalSetor.Visible = false;
+                ltrtxtNominalModalSetor.Visible = false;
+                ltrNominalSaham.Visible = false;
+ 
 
                 ltrddlTempatKedudukan.Visible = false;
                 ltrCompanyCode.Visible = false;
@@ -1465,7 +1521,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ltrSKDPKeterangan.Visible = false;
                 ltrSKDPNo.Visible = false;
                 ltrNoNPWP.Visible = false;
-                ltrNominalMataUang.Visible = false;
+                ltrtxtModalSetor.Visible = false;
                 ltrBNRIMulaiBerlaku.Visible = false;
                 ltrSKDPTanggalMulai.Visible = false;
                 ltrSKDPTanggalAkhir.Visible = false;
@@ -1734,15 +1790,17 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                         ltrDate.Text = DateTime.Now.ToString("dd-MMM-yyyy HH:mm");
                         BindKontrol();
 
-                        txtModalDasarNominalSemula.Attributes.Add("onkeyup", "FormatNumber('" + txtModalDasarNominalSemula.ClientID + "'); Total('" + txtModalDasarNominalSemula.ClientID + "','" + txtNominalMataUang.ClientID + "','" + txtModalDasarNominalMenjadi.ClientID + "');");
-                        txtModalDasarNominalSemula.Attributes.Add("onblur", " FormatNumber('" + txtModalDasarNominalSemula.ClientID + "')");
+                        txtModalDasar.Attributes.Add("onkeyup", "FormatNumber('" + txtModalDasar.ClientID + "'); Total('" + txtModalDasar.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtNominalModalDasar.ClientID + "');");
+                        txtModalDasar.Attributes.Add("onblur", " FormatNumber('" + txtModalDasar.ClientID + "')");
 
-                        txtModalSetorNominalSemula.Attributes.Add("onkeyup", "FormatNumber('" + txtModalSetorNominalSemula.ClientID + "'); Total('" + txtModalSetorNominalSemula.ClientID + "','" + txtNominalMataUang.ClientID + "','" + txtModalSetorNominalMenjadi.ClientID + "');");
-                        txtModalSetorNominalSemula.Attributes.Add("onblur", " FormatNumber('" + txtModalSetorNominalSemula.ClientID + "')");
+                        txtModalSetor.Attributes.Add("onkeyup", "FormatNumber('" + txtModalSetor.ClientID + "'); Total('" + txtModalSetor.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtNominalModalSetor.ClientID + "');");
+                        txtModalSetor.Attributes.Add("onblur", " FormatNumber('" + txtModalSetor.ClientID + "')");
 
 
-                        txtNominalMataUang.Attributes.Add("onkeyup", "FormatNumber('" + txtNominalMataUang.ClientID + "'); Total('" + txtModalDasarNominalSemula.ClientID + "','" + txtNominalMataUang.ClientID + "','" + txtModalDasarNominalMenjadi.ClientID + "'); Total('" + txtModalSetorNominalSemula.ClientID + "','" + txtNominalMataUang.ClientID + "','" + txtModalSetorNominalMenjadi.ClientID + "');");
-                        txtNominalMataUang.Attributes.Add("onblur", " FormatNumber('" + txtNominalMataUang.ClientID + "')");
+                        txtNominalSaham.Attributes.Add("onkeyup", "FormatNumber('" + txtNominalSaham.ClientID + "'); Total('" + txtModalDasar.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtNominalModalDasar.ClientID + "'); Total('" + txtModalSetor.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtNominalModalSetor.ClientID + "');");
+                        txtNominalSaham.Attributes.Add("onblur", " FormatNumber('" + txtNominalSaham.ClientID + "')");
+
+                        txtNoNPWP.Attributes.Add("onfocus", "FormatMask('" + txtNoNPWP.ClientID + "','" + NPWP_FORMAT + "');");
 
                         if (isID)
                             Display(mode);
@@ -1751,33 +1809,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 }
             }
         }
-        protected void txtModalDasarNominalSemula_TextChanged(object sender, EventArgs e)
-        {
-            double nominal = 0;
-            double dasarNominal = 0;
-
-            double.TryParse(txtNominalMataUang.Text, out nominal);
-            txtNominalMataUang.Text = nominal.ToString();
-
-            double.TryParse(txtModalDasarNominalSemula.Text, out dasarNominal);
-            txtModalDasarNominalSemula.Text = dasarNominal.ToString();
-
-            txtModalDasarNominalMenjadi.Text = (dasarNominal * nominal).ToString();
-        }
-
-        protected void txtModalSetorNominalSemula_TextChanged(object sender, EventArgs e)
-        {
-            double nominal = 0;
-            double dasarNominal = 0;
-
-            double.TryParse(txtNominalMataUang.Text, out nominal);
-            txtNominalMataUang.Text = nominal.ToString();
-
-            double.TryParse(txtModalSetorNominalSemula.Text, out dasarNominal);
-            txtModalSetorNominalSemula.Text = dasarNominal.ToString();
-
-            txtModalSetorNominalMenjadi.Text = (dasarNominal * nominal).ToString();
-        }
+       
 
         protected void btnSearchPemohon_Click(object sender, EventArgs e)
         {
@@ -1937,6 +1969,9 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             KomisarisDireksi o = e.Item.DataItem as KomisarisDireksi;
             if (e.Item.ItemType == ListItemType.Footer)
             {
+                TextBox txtNoNPWPAdd = e.Item.FindControl("txtNoNPWPAdd") as TextBox;
+                txtNoNPWPAdd.Attributes.Add("onfocus", "FormatMask('" + txtNoNPWPAdd.ClientID + "','" + NPWP_FORMAT + "');");
+
                 DropDownList ddlJabatanAdd = e.Item.FindControl("ddlJabatanAdd") as DropDownList;
                 BindKomisarisDireksiJabatan(ddlJabatanAdd);
 
@@ -1945,6 +1980,9 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             }
             if (e.Item.ItemType == ListItemType.EditItem)
             {
+                TextBox txtNoNPWPEdit = e.Item.FindControl("txtNoNPWPEdit") as TextBox;
+                txtNoNPWPEdit.Attributes.Add("onfocus", "FormatMask('" + txtNoNPWPEdit.ClientID + "','" + NPWP_FORMAT + "');");
+
                 DropDownList ddlJabatanEdit = e.Item.FindControl("ddlJabatanEdit") as DropDownList;
                 BindKomisarisDireksiJabatan(ddlJabatanEdit);
                 ddlJabatanEdit.SelectedValue = o.IDJabatan.ToString();
@@ -2235,9 +2273,13 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 TextBox txtJumlahNominalAdd = e.Item.FindControl("txtJumlahNominalAdd") as TextBox;
                 TextBox txtPercentagesAdd = e.Item.FindControl("txtPercentagesAdd") as TextBox;
 
-                txtJumlahSahamAdd.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamAdd.ClientID + "'); Total('" + txtJumlahSahamAdd.ClientID + "','" + txtModalSetorNominalSemula.ClientID + "','" + txtJumlahNominalAdd.ClientID + "'); Percentages('" + txtJumlahNominalAdd.ClientID + "','" + txtModalSetorNominalSemula.ClientID + "','" + txtPercentagesAdd.ClientID + "');");
                 txtJumlahSahamAdd.Attributes.Add("onblur", " FormatNumber('" + txtJumlahSahamAdd.ClientID + "')");
 
+                if (!ltrNominalSaham.Visible) 
+                    txtJumlahSahamAdd.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamAdd.ClientID + "'); Total('" + txtJumlahSahamAdd.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtJumlahNominalAdd.ClientID + "'); Percentages('" + txtJumlahSahamAdd.ClientID + "','" + txtModalSetor.ClientID + "','" + txtPercentagesAdd.ClientID + "');");
+                else
+                    txtJumlahSahamAdd.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamAdd.ClientID + "'); Total('" + txtJumlahSahamAdd.ClientID + "','" + ltrNominalSaham.ClientID + "','" + txtJumlahNominalAdd.ClientID + "'); Percentages('" + txtJumlahSahamAdd.ClientID + "','" + ltrtxtModalSetor.ClientID + "','" + txtPercentagesAdd.ClientID + "');");
+                
                 TextBox txtNamaPemegangSahamAdd = e.Item.FindControl("txtNamaPemegangSahamAdd") as TextBox;
                 txtNamaPemegangSahamAdd.Attributes.Add("onkeyup", "PemegangSaham('" + txtNamaPemegangSahamAdd.ClientID + "');");
             }
@@ -2246,9 +2288,12 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 TextBox txtJumlahSahamEdit = e.Item.FindControl("txtJumlahSahamEdit") as TextBox;
                 TextBox txtJumlahNominalEdit = e.Item.FindControl("txtJumlahNominalEdit") as TextBox;
                 TextBox txtPercentagesEdit = e.Item.FindControl("txtPercentagesEdit") as TextBox;
-
-                txtJumlahSahamEdit.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamEdit.ClientID + "'); Total('" + txtJumlahSahamEdit.ClientID + "','" + txtModalSetorNominalSemula.ClientID + "','" + txtJumlahNominalEdit.ClientID + "'); Percentages('" + txtJumlahNominalEdit.ClientID + "','" + txtModalSetorNominalSemula.ClientID + "','" + txtPercentagesEdit.ClientID + "');");
                 txtJumlahSahamEdit.Attributes.Add("onblur", " FormatNumber('" + txtJumlahSahamEdit.ClientID + "')");
+
+                if (!ltrNominalSaham.Visible)
+                    txtJumlahSahamEdit.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamEdit.ClientID + "'); Total('" + txtJumlahSahamEdit.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtJumlahSahamEdit.ClientID + "'); Percentages('" + txtJumlahSahamEdit.ClientID + "','" + txtModalSetor.ClientID + "','" + txtJumlahSahamEdit.ClientID + "');");
+                else
+                    txtJumlahSahamEdit.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamEdit.ClientID + "'); Total('" + txtJumlahSahamEdit.ClientID + "','" + ltrNominalSaham.ClientID + "','" + txtJumlahSahamEdit.ClientID + "'); Percentages('" + txtJumlahSahamEdit.ClientID + "','" + ltrtxtModalSetor.ClientID + "','" + txtJumlahSahamEdit.ClientID + "');");
 
                 TextBox txtNamaPemegangSahamEdit = e.Item.FindControl("txtNamaPemegangSahamEdit") as TextBox;
                 txtNamaPemegangSahamEdit.Attributes.Add("onkeyup", "PemegangSaham('" + txtNamaPemegangSahamEdit.ClientID + "');");
@@ -2285,15 +2330,24 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
         protected void dgNPWPLainnya_ItemDataBound(object sender, DataGridItemEventArgs e)
         {
-            if (e.Item.ItemIndex < 0)
-                return;
-
             NPWP o = e.Item.DataItem as NPWP;
-
-            if (!string.IsNullOrEmpty(o.Url))
+            if (e.Item.ItemType == ListItemType.Footer)
             {
-                Label lblAtttachment = e.Item.FindControl("lblAtttachment") as Label;
-                lblAtttachment.Text = o.Url;
+                TextBox txtNPWPAdd = e.Item.FindControl("txtNPWPAdd") as TextBox;
+                txtNPWPAdd.Attributes.Add("onfocus", "FormatMask('" + txtNPWPAdd.ClientID + "','" + NPWP_FORMAT + "');");
+            }
+            else if (e.Item.ItemType == ListItemType.EditItem)
+            {
+                TextBox txtNPWPEdit = e.Item.FindControl("txtNPWPEdit") as TextBox;
+                txtNPWPEdit.Attributes.Add("onfocus", "FormatMask('" + txtNPWPEdit.ClientID + "','" + NPWP_FORMAT + "');");
+            }
+            else if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+            {
+                if (!string.IsNullOrEmpty(o.Url))
+                {
+                    Label lblAtttachment = e.Item.FindControl("lblAtttachment") as Label;
+                    lblAtttachment.Text = o.Url;
+                }
             }
         }
 
@@ -2306,6 +2360,8 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             if (e.CommandName == "add")
             {
                 TextBox txtNPWPAdd = e.Item.FindControl("txtNPWPAdd") as TextBox;
+                txtNPWPAdd.Attributes.Add("onfocus", "FormatMask('" + txtNPWPAdd.ClientID + "','" + NPWP_FORMAT + "');");
+
                 TextBox txtKeteranganAdd = e.Item.FindControl("txtKeteranganAdd") as TextBox;
                 FileUpload fuAdd = e.Item.FindControl("fuAdd") as FileUpload;
 
@@ -2340,6 +2396,8 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             if (e.CommandName == "save")
             {
                 TextBox txtNPWPEdit = e.Item.FindControl("txtNPWPEdit") as TextBox;
+                //txtNPWPEdit.Attributes.Add("onfocus", "FormatMask('" + txtNPWPEdit.ClientID + "','" + NPWP_FORMAT + "');");
+
                 TextBox txtKeteranganEdit = e.Item.FindControl("txtKeteranganEdit") as TextBox;
                 FileUpload fuEdit = e.Item.FindControl("fuEdit") as FileUpload;
 
@@ -2396,6 +2454,20 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ViewState["NPWP"] = coll;
             }
             BindNPWP();
+        }
+
+        protected void chkStatusSetoran_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkStatusSetoran.Checked == true)
+            {
+                reqfuSetoranModal.Visible = true;
+                reqdtTanggalSetoran.Visible = true;
+            }
+            else
+            {
+                reqfuSetoranModal.Visible = false;
+                reqdtTanggalSetoran.Visible = false;
+            }
         }
 
         #endregion

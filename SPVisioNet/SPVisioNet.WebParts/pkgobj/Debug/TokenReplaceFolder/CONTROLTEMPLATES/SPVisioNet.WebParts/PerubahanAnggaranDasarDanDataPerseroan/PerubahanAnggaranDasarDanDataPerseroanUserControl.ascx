@@ -262,15 +262,15 @@
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtModalDasarNominalSemula" runat="server"></asp:TextBox>
-                        <asp:Label ID="ltrtxtModalDasarNominalSemula" runat="server"></asp:Label>
-                        <asp:RequiredFieldValidator ID="reqtxtModalDasarNominalSemula" Display="Dynamic"
-                            ValidationGroup="Save" runat="server" ControlToValidate="txtModalDasarNominalSemula"
+                        <asp:TextBox ID="txtModalDasar" runat="server"></asp:TextBox>
+                        <asp:Label ID="ltrtxtModalDasar" runat="server"></asp:Label>
+                        <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic"
+                            ValidationGroup="Save" runat="server" ControlToValidate="txtModalDasar"
                             ErrorMessage="Required Field" />
                     </td>
                     <td>
-                        <asp:TextBox ID="txtModalDasarNominalMenjadi" runat="server" ReadOnly="true"></asp:TextBox>
-                        <asp:Label ID="ltrtxtModalDasarNominalMenjadi" runat="server"></asp:Label>
+                        <asp:TextBox ID="txtNominalModalDasar" runat="server" ReadOnly="true"></asp:TextBox>
+                        <asp:Label ID="ltrtxtNominalModalDasar" runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr>
@@ -281,15 +281,15 @@
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtModalSetorNominalSemula" runat="server"></asp:TextBox>
-                        <asp:Label ID="ltrtxtModalSetorNominalSemula" runat="server"></asp:Label>
-                        <asp:RequiredFieldValidator ID="reqtxtModalSetorNominalSemula" Display="Dynamic"
-                            ValidationGroup="Save" runat="server" ControlToValidate="txtModalSetorNominalSemula"
+                        <asp:TextBox ID="txtModalSetor" runat="server"></asp:TextBox>
+                        <asp:Label ID="ltrtxtModalSetor" runat="server"></asp:Label>
+                        <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic"
+                            ValidationGroup="Save" runat="server" ControlToValidate="txtModalSetor"
                             ErrorMessage="Required Field" />
                     </td>
                     <td>
-                        <asp:TextBox ID="txtModalSetorNominalMenjadi" runat="server" ReadOnly="true"></asp:TextBox>
-                        <asp:Label ID="ltrtxtModalSetorNominalMenjadi" runat="server"></asp:Label>
+                        <asp:TextBox ID="txtNominalModalSetor" runat="server" ReadOnly="true"></asp:TextBox>
+                        <asp:Label ID="ltrtxtNominalModalSetor" runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr>
@@ -300,10 +300,10 @@
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtNominalMataUang" runat="server" Text="1"></asp:TextBox>
-                        <asp:Literal ID="ltrNominalMataUang" runat="server" />
-                        <asp:RequiredFieldValidator ID="reqtxtNominalMataUang" Display="Dynamic" ValidationGroup="Save"
-                            runat="server" ControlToValidate="txtNominalMataUang" ErrorMessage="Required Field" />
+                        <asp:TextBox ID="txtNominalSaham" runat="server" Text="1"></asp:TextBox>
+                        <asp:Literal ID="ltrNominalSaham" runat="server" />
+                        <asp:RequiredFieldValidator ID="reqtxtNominalSaham" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="txtNominalSaham" ErrorMessage="Required Field" />
                     </td>
                     <td>
                     </td>
@@ -1251,7 +1251,7 @@
     </div>
     <div id="divAccounting" runat="server" visible="false">
         <fieldset>
-            <legend><b>APV [ dilaporkan oleh Accounting (<asp:Literal ID="ltrUsernameAPV" runat="server" />)
+            <legend><b>Journal Voucher (JV) [ dilaporkan oleh Accounting (<asp:Literal ID="ltrUsernameAPV" runat="server" />)
                 ]</b></legend>
             <table border="0">
                 <tr>
@@ -1288,7 +1288,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    No APV <span style="color: Red">*</span>
+                                    No JV<span style="color: Red">*</span>
                                 </td>
                                 <td>
                                     :
@@ -1302,7 +1302,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Tanggal APV <span style="color: Red">*</span>
+                                    Tanggal JV<span style="color: Red">*</span>
                                 </td>
                                 <td>
                                     :
@@ -1366,7 +1366,7 @@
                         <table border="0">
                             <tr>
                                 <td width="150px">
-                                    Tanggal Setoran <span style="color: Red">*</span>
+                                    Tanggal Setoran 
                                 </td>
                                 <td>
                                     :
@@ -1382,7 +1382,7 @@
                                             <td>
                                                 <asp:RequiredFieldValidator ID="reqdtTanggalSetoran" ValidationGroup="Save" runat="server"
                                                     ControlToValidate="dtTanggalSetoran$dtTanggalSetoranDate" ErrorMessage="Required Field"
-                                                    Display="Dynamic" />
+                                                    Display="Dynamic" Visible="false" />
                                             </td>
                                         </tr>
                                     </table>
@@ -1408,7 +1408,9 @@
                                     :
                                 </td>
                                 <td>
-                                    <asp:CheckBox ID="chkStatusSetoran" runat="server" />
+                                    <asp:CheckBox ID="chkStatusSetoran" runat="server" 
+                                            Text="Jika YA maka Bukti Setor harus di upload dan Tanggal Setor harus diisi" 
+                                            oncheckedchanged="chkStatusSetoran_CheckedChanged" AutoPostBack="true" Checked="true" />
                                     <asp:Literal ID="ltrStatusSetoran" runat="server" />
                                 </td>
                             </tr>
@@ -1593,7 +1595,7 @@
                             <td>
                                 <asp:GridView ID="grvPemohon" runat="server" AutoGenerateColumns="false" CssClass="table"
                                     Width="100%" EmptyDataText="No Data Available" DataSourceID="odsPemohon" AllowPaging="true"
-                                    PageSize="15" OnRowCommand="grvPemohon_RowCommand" OnRowDataBound="grvPemohon_RowDataBound">
+                                    PageSize="10" OnRowCommand="grvPemohon_RowCommand" OnRowDataBound="grvPemohon_RowDataBound">
                                     <HeaderStyle CssClass="header" />
                                     <RowStyle CssClass="odd" />
                                     <AlternatingRowStyle CssClass="even" />
@@ -1705,7 +1707,7 @@
                         <td>
                             <asp:GridView ID="grvCompanySearch" runat="server" AutoGenerateColumns="false" CssClass="table"
                                 Width="100%" EmptyDataText="No Data Available" DataSourceID="odsCompany" AllowPaging="true"
-                                PageSize="15" OnRowDataBound="grvCompanySearch_RowDataBound">
+                                PageSize="10" OnRowDataBound="grvCompanySearch_RowDataBound">
                                 <HeaderStyle CssClass="header" />
                                 <RowStyle CssClass="odd" />
                                 <AlternatingRowStyle CssClass="even" />

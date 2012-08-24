@@ -87,22 +87,21 @@
                     <asp:TemplateColumn HeaderText="Nama Dokumen" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top"
                         FooterStyle-Width="180" ItemStyle-Width="180">
                         <ItemTemplate>
-                            <asp:Label ID="lblNamaDokumen" runat="server" Text='<%# Eval("NamaDokumen") %>' />
+                            <asp:HyperLink ID="hypDocumentUrl" runat="server" Width="85%" Target="_blank" />
                         </ItemTemplate>
                         <FooterTemplate>
-                            <asp:TextBox ID="txtNamaDokumenAdd" runat="server" Width="85%" ReadOnly="true" />
-                            <asp:RequiredFieldValidator ID="reqtxtNamaDokumenAdd" runat="server" ControlToValidate="txtNamaDokumenAdd"
-                                Display="Dynamic" ErrorMessage="*" ValidationGroup="dgDokumen" ToolTip="Required Field" />
+                            <asp:HyperLink ID="hypDocumentUrlAdd" runat="server" Width="85%" Target="_blank" />
+                            <%--  <asp:RequiredFieldValidator ID="reqtxtNamaDokumenAdd" runat="server" ControlToValidate="txtNamaDokumenAdd"
+                                Display="Dynamic" ErrorMessage="*" ValidationGroup="dgDokumen" ToolTip="Required Field" />--%>
                             <asp:ImageButton ID="imgbtnNamaDokumenAdd" ValidationGroup="popup" runat="server"
                                 CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
                                 ToolTip="Search" OnClientClick="openDialog(event, 'Search Document', 'divDocumentSearch')"
                                 OnClick="imgbtnNamaDokumen_Click" />
                         </FooterTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtNamaDokumenEdit" runat="server" Width="85%" Text='<%# Eval("NamaDokumen") %>'
-                                ReadOnly="true" />
-                            <asp:RequiredFieldValidator ID="reqtxtNamaDokumenEdit" runat="server" ControlToValidate="txtNamaDokumenEdit"
-                                Display="Dynamic" ErrorMessage="*" ValidationGroup="dgDokumen" ToolTip="Required Field" />
+                            <asp:HyperLink ID="hypDocumentUrlEdit" runat="server" Width="85%" Target="_blank" />
+                            <%-- <asp:RequiredFieldValidator ID="reqtxtNamaDokumenEdit" runat="server" ControlToValidate="txtNamaDokumenEdit"
+                                Display="Dynamic" ErrorMessage="*" ValidationGroup="dgDokumen" ToolTip="Required Field" />--%>
                             <asp:ImageButton ID="imgbtnNamaDokumenEdit" ValidationGroup="popup" runat="server"
                                 ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
                                 ToolTip="Search" CausesValidation="False" CommandName="popup" OnClientClick="openDialog(event, 'Search Document', 'divDocumentSearch')"
@@ -193,28 +192,40 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Tanggal Estimasi Pengembalian" ItemStyle-VerticalAlign="Top"
-                        FooterStyle-VerticalAlign="Top" FooterStyle-Width="110" ItemStyle-Width="110">
+                        FooterStyle-VerticalAlign="Top" FooterStyle-Width="110" ItemStyle-Width="110"
+                        Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblTanggalEstimasi" runat="server" Text='<%# Eval("TanggalEstimasiPengembalian", "{0:dd-MMM-yyyy}") %>' />
+                            <%--  <asp:Label ID="lblTanggalEstimasi" runat="server" Text='<%# Eval("TanggalEstimasiPengembalian", "{0:dd-MMM-yyyy}") %>' />--%>
+                            <div id="spdtinput">
+                                <SharePoint:DateTimeControl ID="dtTanggalEstimasiPengembalian" DateOnly="true" runat="server">
+                                </SharePoint:DateTimeControl>
+                            </div>
                         </ItemTemplate>
-                        <FooterTemplate>
+                        <%--    <FooterTemplate>
                             <div id="spdtinput">
                                 <SharePoint:DateTimeControl ID="dtTanggalEstimasiAdd" DateOnly="true" runat="server">
                                 </SharePoint:DateTimeControl>
-                                <%-- <asp:RequiredFieldValidator ID="reqdtTanggalEstimasiAdd" ValidationGroup="dgDokumen"
+                                 <asp:RequiredFieldValidator ID="reqdtTanggalEstimasiAdd" ValidationGroup="dgDokumen"
                                     runat="server" ControlToValidate="dtTanggalEstimasiAdd$dtTanggalEstimasiAddDate"
-                                    ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />--%>
+                                    ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />
                             </div>
                         </FooterTemplate>
                         <EditItemTemplate>
                             <div id="spdtinput">
                                 <SharePoint:DateTimeControl ID="dtTanggalEstimasiEdit" DateOnly="true" runat="server">
                                 </SharePoint:DateTimeControl>
-                                <%--<asp:RequiredFieldValidator ID="reqdtTanggalEstimasiEdit" ValidationGroup="dgDokumen"
+                                <asp:RequiredFieldValidator ID="reqdtTanggalEstimasiEdit" ValidationGroup="dgDokumen"
                                     runat="server" ControlToValidate="dtTanggalEstimasiEdit$dtTanggalEstimasiEditDate"
-                                    ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />--%>
+                                    ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />
                             </div>
-                        </EditItemTemplate>
+                        </EditItemTemplate>--%>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="Tanggal Estimasi Pengembalian" ItemStyle-VerticalAlign="Top"
+                        FooterStyle-VerticalAlign="Top" FooterStyle-Width="110" ItemStyle-Width="110"
+                        Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblTanggalEstimasiPengembalian" runat="server" />
+                        </ItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Tanggal Pengembalian" ItemStyle-VerticalAlign="Top"
                         FooterStyle-VerticalAlign="Top" FooterStyle-Width="110" ItemStyle-Width="110"
@@ -251,6 +262,20 @@
                             <asp:Label ID="lblTanggalPengembalian" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="Status tidak dikembalikan" ItemStyle-VerticalAlign="Top"
+                        ItemStyle-HorizontalAlign="Center" FooterStyle-VerticalAlign="Top" Visible="false"
+                        FooterStyle-Width="90" ItemStyle-Width="90">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="chkStatusTidakDikembalikan" runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="Status tidak dikembalikan" ItemStyle-VerticalAlign="Top"
+                        ItemStyle-HorizontalAlign="Center" FooterStyle-VerticalAlign="Top" Visible="false"
+                        FooterStyle-Width="90" ItemStyle-Width="90">
+                        <ItemTemplate>
+                            <asp:Label ID="lblStatusTidakDikembalikan" runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateColumn>
                     <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center"
                         ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top" FooterStyle-Width="80"
                         ItemStyle-Width="80">
@@ -264,6 +289,17 @@
                         <EditItemTemplate>
                             <asp:LinkButton ID="btnSave" runat="server" ValidationGroup="dgDokumen" CommandName="save">Save</asp:LinkButton>
                             <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNamaFile" runat="server" Text='<%# Eval("NamaDokumen") %>' />
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            <asp:Label ID="lblNamaFileAdd" runat="server" />
+                        </FooterTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblNamaFileEdit" runat="server" Text='<%# Eval("NamaDokumen") %>' />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                 </Columns>
@@ -313,6 +349,8 @@
         <div style="text-align: right">
             <asp:Button ID="btnSaveUpdate" runat="server" Text="Save" ValidationGroup="Save"
                 OnClick="btnSaveUpdate_Click" />&nbsp;
+            <asp:Button ID="btnSaveUpdateRunWf" runat="server" Text="Save & Run Workflow" ValidationGroup="Save"
+                OnClick="btnSaveUpdateRunWf_Click" Width="160px" />&nbsp;
             <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
         </div>
     </fieldset>
@@ -382,7 +420,11 @@
                                             <asp:Literal ID="ltrrb" runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:BoundField DataField="Title" HeaderText="Nama Dokumen" />
+                                    <asp:TemplateField HeaderText="Nama Dokumen">
+                                        <ItemTemplate>
+                                            <asp:HyperLink ID="hyp" runat="server" Target="_blank" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="LK_x003a_NamaPerusahaan" HeaderText="Nama Perusahaan" />
                                     <asp:TemplateField HeaderText="Status">
                                         <ItemTemplate>

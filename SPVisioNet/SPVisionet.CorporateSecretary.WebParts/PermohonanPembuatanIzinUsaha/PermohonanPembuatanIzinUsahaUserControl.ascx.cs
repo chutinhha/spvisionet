@@ -10,6 +10,7 @@ using System.IO;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using SPVisionet.CorporateSecretary.Common;
+using Microsoft.SharePoint.Workflow;
 
 namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
 {
@@ -83,10 +84,10 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             return sb.ToString();
         }
 
-        private string SaveUpdate()
+        private string SaveUpdate(string mode)
         {
             SPWeb currentWeb = SPContext.Current.Web;
-            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(web.Url, "IzinUsaha"));//web.Lists[ListId];
+            SPList list = currentWeb.GetList(Util.CreateSharePointListStrUrl(currentWeb.Url, "IzinUsaha"));//web.Lists[ListId];
             currentWeb.AllowUnsafeUpdates = true;
             SPListItem item;
 
@@ -157,6 +158,20 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 }
 
                 currentWeb.AllowUnsafeUpdates = false;
+
+                if (item["Status"] == null)
+                {
+                    if (mode == "SaveRunWf")
+                    {
+                        if (list.WorkflowAssociations.Count > 0)
+                        {
+                            string WfId = Util.GetSettingValue(web, "Workflow BasedId", "Izin Usaha");
+                            Guid wfBaseId = new Guid(WfId);
+                            SPWorkflowAssociation associationTemplate = list.WorkflowAssociations.GetAssociationByBaseID(wfBaseId);
+                            currentWeb.Site.WorkflowManager.StartWorkflow(item, associationTemplate, associationTemplate.AssociationData, true);
+                        }
+                    }
+                }
             }
             catch
             {
@@ -175,6 +190,14 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
 
             if (item["Status"] != null)
                 ViewState["Status"] = item["Status"].ToString();
+            else
+            {
+                if (item["ApprovalStatus"] != null)
+                    ViewState["Status"] = item["ApprovalStatus"].ToString();
+            }
+
+            if (item.Workflows.Count > 0 || ViewState["Status"].ToString() == "Approved")
+                btnSaveUpdateRunWf.Visible = false;
 
             ltrRequestCode.Text = item["Title"].ToString();
             ltrDate.Text = Convert.ToDateTime(item["Tanggal"].ToString()).ToString("dd-MMM-yyyy HH:mm");
@@ -205,9 +228,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             ltrKeteranganIzinUsaha.Text = txtKeteranganIzinUsaha.Text;
 
             if (mode == "edit")
+            {
                 btnSaveUpdate.Text = "Update";
+                btnSaveUpdateRunWf.Text = "Update & Run Workflow";
+            }
             else if (mode == "display")
+            {
                 btnSaveUpdate.Visible = false;
+                btnSaveUpdateRunWf.Visible = false;
+            }
 
             SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "IzinUsahaDokumen"));
             SPQuery query = new SPQuery();
@@ -224,7 +253,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             if (coll.Count > 0)
             {
                 SPListItem documentItem = coll[0];
-                ltrfu.Text = string.Format("<a href='/IzinUsahaDokumen/{0}'>{0}</a>", documentItem["Name"].ToString());
+                ltrfu.Text = string.Format("<a href='{0}/IzinUsahaDokumen/{1}'>{1}</a>", web.Url, documentItem["Name"].ToString());
             }
 
             if (item["Status"] != null)
@@ -325,7 +354,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
         {
             Util.RegisterStartupScript(Page, "Perusahaan", "RegisterDialog('divPerusahaanSearch','divPerusahaanDlgContainer', '630');");
 
-            using (SPSite site = new SPSite(SPContext.Current.Site.Url, SPContext.Current.Site.SystemAccount.UserToken))
+            using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
                 using (web = site.OpenWeb())
                 {
@@ -356,7 +385,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             }
         }
 
-        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        private void SaveAction(string mode)
         {
             string msg = Validation();
             if (msg != string.Empty)
@@ -364,16 +393,26 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
                 Util.ShowMessage(Page, msg);
                 return;
             }
-            string result = SaveUpdate();
+            string result = SaveUpdate(mode);
             if (result == string.Empty)
             {
                 if (Source != string.Empty)
                     SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
                 else
-                    Response.Redirect("/Lists/IzinUsaha", true);
+                    Response.Redirect(string.Format("{0}/Lists/IzinUsaha", web.Url), true);
             }
             else
                 Util.ShowMessage(Page, result);
+        }
+
+        protected void btnSaveUpdate_Click(object sender, EventArgs e)
+        {
+            SaveAction("Save");
+        }
+
+        protected void btnSaveUpdateRunWf_Click(object sender, EventArgs e)
+        {
+            SaveAction("SaveRunWf");
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -381,7 +420,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha
             if (Source != string.Empty)
                 SPUtility.Redirect("Default.aspx", SPRedirectFlags.UseSource, this.Context);
             else
-                Response.Redirect("/Lists/IzinUsaha", true);
+                Response.Redirect(string.Format("{0}/Lists/IzinUsaha", web.Url), true);
         }
 
         #region Search Perusahaan

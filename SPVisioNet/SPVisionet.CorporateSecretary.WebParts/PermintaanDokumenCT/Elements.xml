@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Item (0x01) -->
+  <ContentType ID="0x0100afa268ae74864b599bcac378a861786d"
+               Name="Permintaan Dokumen"
+               Group="Corporate Secretary Content Types"
+               Description="Form Permintaan Dokumen"
+               Inherits="false"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>/cs/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=display</Display>
+          <Edit>/cs/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=edit</Edit>
+          <New>/cs/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=new</New>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+</Elements>

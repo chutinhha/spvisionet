@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <!-- Parent ContentType: Item (0x01) -->
+  <ContentType ID="0x010012bb19dca45644d5940bf656f52b5c9b"
+               Name="TDP"
+               Group="Corporate Secretary Content Types"
+               Description="Form TDP"
+               Inherits="false"
+               Version="0">
+    <FieldRefs>
+    </FieldRefs>
+    <XmlDocuments>
+      <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+        <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
+          <Display>/Lists/TDP/TDP.aspx?mode=display</Display>
+          <Edit>/Lists/TDP/TDP.aspx?mode=edit</Edit>
+          <New>/Lists/TDP/TDP.aspx?mode=new</New>
+        </FormUrls>
+      </XmlDocument>
+    </XmlDocuments>
+  </ContentType>
+</Elements>
