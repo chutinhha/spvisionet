@@ -1,0 +1,1622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="table1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>0.33333in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.40625in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.6875in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.70833in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.65625in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.22in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>No.</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox2</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox5">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Nama Perusahaan</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox5</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Maksud &amp; Tujuan Perseroan</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Modal Dasar</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox6">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Modal Disetor</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox6</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Pemegang Saham Terakhir</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox16">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Komisaris Direksi</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox16</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox18">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Wewenang Dirkom</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox18</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox21">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Keterangan</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox21</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>SteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.21in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Request_Code">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=RowNumber("dsPerusahaanBaru")</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Request_Code</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="NamaPerusahaan1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NamaPerusahaan.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>SemiBold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Berkedudukan di : </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Lookup(Fields!ID.Value,Fields!ID.Value,Fields!Title.Value, "dsTempatKedudukan")</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>NamaPerusahaan1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TujuanPenggunaan">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Tujuan Penggunaan Perseroan : </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!TujuanPenggunaan.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Maksud &amp; Tujuan :  </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!MaksudTujuan.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TujuanPenggunaan</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ModalDasar">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=FormatNumber(Fields!ModalDasar.Value*Fields!Nominal.Value,2)</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>(</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!ModalDasar.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value> saham @ </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!MataUang.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Nominal.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ModalDasar</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="MaksudTujuan">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=FormatNumber(Fields!ModalSetor.Value * Fields!Nominal.Value,2)</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>(</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!ModalSetor.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value> saham @ </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!MataUang.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Nominal.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>MaksudTujuan</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ModalSetor">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Join(LookupSet(Fields!Request_Code.Value,Fields!Request_Code.Value,Fields!Nama_Pemegang_Saham.Value + chr(10) + chr(13) + "(" + cstr(Fields!Percentages.Value) + "% " + chr(9) + cstr(Fields!JumlahSaham.Value) + " saham" + ")", "dsPemegangSaham"),chr(10)+chr(13)+chr(10)+chr(13))</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ModalSetor</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox17">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Join(LookupSet(Fields!Request_Code.Value,Fields!Request_Code.Value,Fields!Jabatan.Value + " : " + Fields!Nama.Value, "dsKomisarisDireksi"),chr(10)+chr(13)+chr(10)+chr(13))</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox20">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Join(LookupSet(Fields!Request_Code.Value, Fields!Perusahaan_Baru.Value, Fields!Title.Value, "dsWewenangDirkom"), ",")</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Keterangan">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Keterangan.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Keterangan</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+              <KeepTogether>true</KeepTogether>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="table1_Details_Group">
+                <DataElementName>Detail</DataElementName>
+              </Group>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+              <DataElementName>Detail_Collection</DataElementName>
+              <DataElementOutput>Output</DataElementOutput>
+              <KeepTogether>true</KeepTogether>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>dsPerusahaanBaru</DataSetName>
+        <Top>0.36in</Top>
+        <Height>0.43in</Height>
+        <Width>10.79166in</Width>
+        <Style />
+      </Tablix>
+      <Textbox Name="textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Summary Corporate Information PT. Lippo Karawaci Tbk.</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>20pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>SteelBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>textbox1</rd:DefaultName>
+        <Height>0.36in</Height>
+        <Width>10.79167in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+    </ReportItems>
+    <Height>0.79in</Height>
+    <Style />
+  </Body>
+  <Width>11.15625in</Width>
+  <Page>
+    <LeftMargin>1in</LeftMargin>
+    <RightMargin>1in</RightMargin>
+    <TopMargin>1in</TopMargin>
+    <BottomMargin>1in</BottomMargin>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSourceCorporate">
+      <ConnectionProperties>
+        <DataProvider>SHAREPOINTLIST</DataProvider>
+        <ConnectString>http://lk-sp-app-dev:81/cs</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>95f60fef-1cd5-4444-ae89-d9c84dca2cd8</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsPerusahaanBaru">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="TanggalAkte">
+            <Value>=Parameters!TanggalAkte.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="TanggalAkte2">
+            <Value>=Parameters!TanggalAkte2.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="MaksudTujuan">
+            <Value>=Parameters!MaksudTujuan.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Perusahaan Baru&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="Tanggal" /&gt;
+    &lt;FieldRef Name="TujuanPenggunaan" /&gt;
+    &lt;FieldRef Name="NamaPerusahaan" /&gt;
+    &lt;FieldRef Name="ModalDasar" /&gt;
+    &lt;FieldRef Name="ModalSetor" /&gt;
+    &lt;FieldRef Name="Nominal" /&gt;
+    &lt;FieldRef Name="Keterangan" /&gt;
+    &lt;FieldRef Name="NoSKDP" /&gt;
+    &lt;FieldRef Name="TanggalMulaiBerlakuSKDP" /&gt;
+    &lt;FieldRef Name="TanggalAkhirBerlakuSKDP" /&gt;
+    &lt;FieldRef Name="AlamatSKDP" /&gt;
+    &lt;FieldRef Name="PembuatSKDP" /&gt;
+    &lt;FieldRef Name="NoAkte" /&gt;
+    &lt;FieldRef Name="TanggalAkte" /&gt;
+    &lt;FieldRef Name="KeteranganAkte" /&gt;
+    &lt;FieldRef Name="PembuatAkte" /&gt;
+    &lt;FieldRef Name="NoSKTNPWP" /&gt;
+    &lt;FieldRef Name="TanggalSKTNPWP" /&gt;
+    &lt;FieldRef Name="NoNPWP" /&gt;
+    &lt;FieldRef Name="TanggalTerdaftarNPWP" /&gt;
+    &lt;FieldRef Name="NamaKPPNPWP" /&gt;
+    &lt;FieldRef Name="KeteranganNPWP" /&gt;
+    &lt;FieldRef Name="PembuatNPWP" /&gt;
+    &lt;FieldRef Name="NoPKP" /&gt;
+    &lt;FieldRef Name="NamaPKP" /&gt;
+    &lt;FieldRef Name="KeteranganPKP" /&gt;
+    &lt;FieldRef Name="TanggalTerdaftarPKP" /&gt;
+    &lt;FieldRef Name="PembuatPKP" /&gt;
+    &lt;FieldRef Name="CompanyCodeAPV" /&gt;
+    &lt;FieldRef Name="NoAPV" /&gt;
+    &lt;FieldRef Name="TanggalAPV" /&gt;
+    &lt;FieldRef Name="KeteranganAPV" /&gt;
+    &lt;FieldRef Name="PembuatAPV" /&gt;
+    &lt;FieldRef Name="TanggalSetoran" /&gt;
+    &lt;FieldRef Name="KeteranganSetoran" /&gt;
+    &lt;FieldRef Name="StatusSetoran" /&gt;
+    &lt;FieldRef Name="PembuatSetoran" /&gt;
+    &lt;FieldRef Name="NoSK" /&gt;
+    &lt;FieldRef Name="TanggalDiterbitkanSK" /&gt;
+    &lt;FieldRef Name="KeteranganSK" /&gt;
+    &lt;FieldRef Name="PembuatSK" /&gt;
+    &lt;FieldRef Name="NoBNRI" /&gt;
+    &lt;FieldRef Name="TanggalBNRI" /&gt;
+    &lt;FieldRef Name="TambahanNoBNRI" /&gt;
+    &lt;FieldRef Name="PembuatBNRI" /&gt;
+    &lt;FieldRef Name="MaksudTujuan" /&gt;
+    &lt;FieldRef Name="MataUang" /&gt;
+    &lt;FieldRef Name="Pemohon" /&gt;
+    &lt;FieldRef Name="StatusOwnership" /&gt;
+    &lt;FieldRef Name="TempatKedudukan" /&gt;
+    &lt;FieldRef Name="NotarisAkte" /&gt;
+    &lt;FieldRef Name="Status" /&gt;
+    &lt;FieldRef Name="ApprovalStatus" /&gt;
+    &lt;FieldRef Name="StatusPerseroan" /&gt;
+    &lt;FieldRef Name="StatusPKP" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+  &lt;/ViewFields&gt;
+  &lt;Query&gt;
+    &lt;Where&gt;
+      &lt;And&gt;
+        &lt;And&gt;
+          &lt;Geq&gt;
+            &lt;FieldRef Name="TanggalAkte" /&gt;
+            &lt;Value Type="DateTime"&gt;
+              &lt;Parameter Name="TanggalAkte" /&gt;
+            &lt;/Value&gt;
+          &lt;/Geq&gt;
+          &lt;Leq&gt;
+            &lt;FieldRef Name="TanggalAkte" /&gt;
+            &lt;Value Type="DateTime"&gt;
+              &lt;Parameter Name="TanggalAkte2" /&gt;
+            &lt;/Value&gt;
+          &lt;/Leq&gt;
+        &lt;/And&gt;
+        &lt;Eq&gt;
+          &lt;FieldRef Name="MaksudTujuan" /&gt;
+          &lt;Value Type="Text"&gt;
+            &lt;Parameter Name="MaksudTujuan" /&gt;
+          &lt;/Value&gt;
+        &lt;/Eq&gt;
+      &lt;/And&gt;
+    &lt;/Where&gt;
+  &lt;/Query&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="Tanggal" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TujuanPenggunaan" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NamaPerusahaan" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="ModalDasar" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="ModalSetor" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="Nominal" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="Keterangan" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoSKDP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalMulaiBerlakuSKDP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalAkhirBerlakuSKDP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="AlamatSKDP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatSKDP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoAkte" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalAkte" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="KeteranganAkte" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatAkte" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoSKTNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalSKTNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalTerdaftarNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NamaKPPNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="KeteranganNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatNPWP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoPKP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NamaPKP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="KeteranganPKP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalTerdaftarPKP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatPKP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="CompanyCodeAPV" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoAPV" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalAPV" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="KeteranganAPV" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatAPV" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalSetoran" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="KeteranganSetoran" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="StatusSetoran" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatSetoran" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoSK" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalDiterbitkanSK" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="KeteranganSK" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatSK" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NoBNRI" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalBNRI" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TambahanNoBNRI" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="PembuatBNRI" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="MaksudTujuan" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="MataUang" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="Pemohon" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="StatusOwnership" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TempatKedudukan" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="NotarisAkte" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="Status" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="ApprovalStatus" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="StatusPerseroan" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="StatusPKP" />
+              <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="ID" />
+            </SelectedColumns>
+            <Filters>
+              <Filter Operator="&gt;=" Param="True">
+                <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalAkte" />
+                <FilterValue>07/11/2012 00:00:00</FilterValue>
+              </Filter>
+              <Filter Operator="&lt;=" Param="True">
+                <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="TanggalAkte" />
+                <FilterValue>07/12/2012 00:00:00</FilterValue>
+              </Filter>
+              <Filter Operator="=" Param="True">
+                <ColumnExpression ColumnOwner="Perusahaan Baru" ColumnName="MaksudTujuan" />
+                <FilterValue>Jasa</FilterValue>
+              </Filter>
+            </Filters>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Request_Code">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Tanggal">
+          <DataField>Tanggal</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TujuanPenggunaan">
+          <DataField>TujuanPenggunaan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NamaPerusahaan">
+          <DataField>NamaPerusahaan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModalDasar">
+          <DataField>ModalDasar</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="ModalSetor">
+          <DataField>ModalSetor</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Nominal">
+          <DataField>Nominal</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Keterangan">
+          <DataField>Keterangan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoSKDP">
+          <DataField>NoSKDP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalMulaiBerlakuSKDP">
+          <DataField>TanggalMulaiBerlakuSKDP</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TanggalAkhirBerlakuSKDP">
+          <DataField>TanggalAkhirBerlakuSKDP</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="AlamatSKDP">
+          <DataField>AlamatSKDP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PembuatSKDP">
+          <DataField>PembuatSKDP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoAkte">
+          <DataField>NoAkte</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalAkte">
+          <DataField>TanggalAkte</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KeteranganAkte">
+          <DataField>KeteranganAkte</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PembuatAkte">
+          <DataField>PembuatAkte</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoSKTNPWP">
+          <DataField>NoSKTNPWP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalSKTNPWP">
+          <DataField>TanggalSKTNPWP</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="NoNPWP">
+          <DataField>NoNPWP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalTerdaftarNPWP">
+          <DataField>TanggalTerdaftarNPWP</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="NamaKPPNPWP">
+          <DataField>NamaKPPNPWP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KeteranganNPWP">
+          <DataField>KeteranganNPWP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PembuatNPWP">
+          <DataField>PembuatNPWP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoPKP">
+          <DataField>NoPKP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NamaPKP">
+          <DataField>NamaPKP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KeteranganPKP">
+          <DataField>KeteranganPKP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalTerdaftarPKP">
+          <DataField>TanggalTerdaftarPKP</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="PembuatPKP">
+          <DataField>PembuatPKP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CompanyCodeAPV">
+          <DataField>CompanyCodeAPV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoAPV">
+          <DataField>NoAPV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalAPV">
+          <DataField>TanggalAPV</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KeteranganAPV">
+          <DataField>KeteranganAPV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PembuatAPV">
+          <DataField>PembuatAPV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalSetoran">
+          <DataField>TanggalSetoran</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KeteranganSetoran">
+          <DataField>KeteranganSetoran</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StatusSetoran">
+          <DataField>StatusSetoran</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="PembuatSetoran">
+          <DataField>PembuatSetoran</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoSK">
+          <DataField>NoSK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalDiterbitkanSK">
+          <DataField>TanggalDiterbitkanSK</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KeteranganSK">
+          <DataField>KeteranganSK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PembuatSK">
+          <DataField>PembuatSK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoBNRI">
+          <DataField>NoBNRI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalBNRI">
+          <DataField>TanggalBNRI</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TambahanNoBNRI">
+          <DataField>TambahanNoBNRI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PembuatBNRI">
+          <DataField>PembuatBNRI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MaksudTujuan">
+          <DataField>MaksudTujuan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MataUang">
+          <DataField>MataUang</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Pemohon">
+          <DataField>Pemohon</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StatusOwnership">
+          <DataField>StatusOwnership</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TempatKedudukan">
+          <DataField>TempatKedudukan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NotarisAkte">
+          <DataField>NotarisAkte</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Status">
+          <DataField>Status</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ApprovalStatus">
+          <DataField>ApprovalStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StatusPerseroan">
+          <DataField>StatusPerseroan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StatusPKP">
+          <DataField>StatusPKP</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsPemegangSaham">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Pemegang Saham&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="JumlahSaham" /&gt;
+    &lt;FieldRef Name="JumlahNominal" /&gt;
+    &lt;FieldRef Name="Percentages" /&gt;
+    &lt;FieldRef Name="Partner" /&gt;
+    &lt;FieldRef Name="PerusahaanBaru" /&gt;
+    &lt;FieldRef Name="TanggalMulaiMenjabat" /&gt;
+    &lt;FieldRef Name="TanggalAkhirMenjabat" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+  &lt;/ViewFields&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="JumlahSaham" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="JumlahNominal" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="Percentages" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="Partner" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="PerusahaanBaru" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="TanggalMulaiMenjabat" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="TanggalAkhirMenjabat" />
+              <ColumnExpression ColumnOwner="Pemegang Saham" ColumnName="ID" />
+            </SelectedColumns>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Nama_Pemegang_Saham">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JumlahSaham">
+          <DataField>JumlahSaham</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="JumlahNominal">
+          <DataField>JumlahNominal</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Percentages">
+          <DataField>Percentages</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Partner">
+          <DataField>Partner</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Request_Code">
+          <DataField>PerusahaanBaru</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalMulaiMenjabat">
+          <DataField>TanggalMulaiMenjabat</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TanggalAkhirMenjabat">
+          <DataField>TanggalAkhirMenjabat</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsTempatKedudukan">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Tempat Kedudukan&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="ID" /&gt;
+    &lt;FieldRef Name="Title" /&gt;
+  &lt;/ViewFields&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Tempat Kedudukan" ColumnName="ID" />
+              <ColumnExpression ColumnOwner="Tempat Kedudukan" ColumnName="Title" />
+            </SelectedColumns>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsKomisarisDireksi">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Komisaris Direksi&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="Jabatan" /&gt;
+    &lt;FieldRef Name="NoKTP" /&gt;
+    &lt;FieldRef Name="NoNPWP" /&gt;
+    &lt;FieldRef Name="TanggalMulaiMenjabat" /&gt;
+    &lt;FieldRef Name="TanggalAkhirMenjabat" /&gt;
+    &lt;FieldRef Name="PerusahaanBaru" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+  &lt;/ViewFields&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="Jabatan" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="NoKTP" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="NoNPWP" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="TanggalMulaiMenjabat" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="TanggalAkhirMenjabat" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="PerusahaanBaru" />
+              <ColumnExpression ColumnOwner="Komisaris Direksi" ColumnName="ID" />
+            </SelectedColumns>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Nama">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jabatan">
+          <DataField>Jabatan</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoKTP">
+          <DataField>NoKTP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NoNPWP">
+          <DataField>NoNPWP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TanggalMulaiMenjabat">
+          <DataField>TanggalMulaiMenjabat</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TanggalAkhirMenjabat">
+          <DataField>TanggalAkhirMenjabat</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Request_Code">
+          <DataField>PerusahaanBaru</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsWewenangDirkom">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Wewenang Direksi&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+    &lt;FieldRef Name="PerusahaanBaru" /&gt;
+  &lt;/ViewFields&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Wewenang Direksi" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Wewenang Direksi" ColumnName="ID" />
+              <ColumnExpression ColumnOwner="Wewenang Direksi" ColumnName="PerusahaanBaru" />
+            </SelectedColumns>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Perusahaan_Baru">
+          <DataField>PerusahaanBaru</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsMataUang">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Mata Uang&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+  &lt;/ViewFields&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Mata Uang" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Mata Uang" ColumnName="ID" />
+            </SelectedColumns>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsMaksudTujuan">
+      <Query>
+        <DataSourceName>DataSourceCorporate</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Maksud &amp;amp; Tujuan&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+  &lt;/ViewFields&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Maksud &amp; Tujuan" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Maksud &amp; Tujuan" ColumnName="ID" />
+            </SelectedColumns>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="TanggalAkte">
+      <DataType>DateTime</DataType>
+      <Prompt>Tanggal Akte Dari</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TanggalAkte2">
+      <DataType>DateTime</DataType>
+      <Prompt>Tanggal Akte Sampai</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="MaksudTujuan">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>Jasa</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Maksud Tujuan</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsMaksudTujuan</DataSetName>
+          <ValueField>Title</ValueField>
+          <LabelField>Title</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="NamaPemegangSaham">
+      <DataType>String</DataType>
+      <Prompt>Nama Pemegang Saham</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>=join(Fields!Nama_Pemegang_Saham.Value,"")</Value>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="NamaKomisarisDireksi">
+      <DataType>String</DataType>
+      <Prompt>Nama Komisaris Direksi</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsKomisarisDireksi</DataSetName>
+          <ValueField>Nama</ValueField>
+          <LabelField>Nama</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>c9d01d1e-64a5-4abd-9c6e-a9159bdedf9c</rd:ReportID>
+</Report>
