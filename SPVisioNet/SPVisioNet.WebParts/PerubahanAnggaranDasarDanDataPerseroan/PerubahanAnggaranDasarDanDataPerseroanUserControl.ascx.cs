@@ -306,7 +306,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             return string.Empty;
         }
 
-        private string SaveDocument(FileUpload fu, int idPerusahaan, string Folder)
+        private string SaveDocument(FileUpload fu, int idPerusahaan, string Folder, bool originalDocument)
         {
             if (fu.PostedFile != null)
             {
@@ -338,6 +338,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                         SPItem itemDocument = file.Item;
                         itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
                         itemDocument["PerusahaanBaru"] = idPerusahaan;
+                        itemDocument["Original"] = originalDocument;
                         itemDocument["DocumentType"] = Folder;
                         itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                         itemDocument.Update();
@@ -354,11 +355,14 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             return string.Empty;
         }
 
-        private void DisplayDocument(Literal ltr, int idPerusahaan, string DocumentType)
+        private void DisplayDocument(Literal ltr, CheckBox chkOriginal, int idPerusahaan, string DocumentType)
         {
             SPListItem item = GetLatestDocument(idPerusahaan, DocumentType);
             if (item != null)
+            {
                 ltr.Text = string.Format("<a href='{0}'>{1}</a>", web.Site.Url + "/" + item.Url, item["Name"].ToString());
+                chkOriginal.Checked = (item["Original"] != null ? Convert.ToBoolean(item["Original"]) : false);
+            }
         }
 
         private int GetNotarisID(string Notaris)
@@ -448,6 +452,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 item["NominalModalSetor"] = Convert.ToDouble(item["ModalSetor"]) * Convert.ToDouble(item["Nominal"]);
                 item["Keterangan"] = txtRemarks.Text.Trim();
                 item["CompanyCode"] = hfIDCompany.Value.Trim();
+                item["StatusOwnerShip"] = txtStatusOwnerShip.Text.Trim();
                 item.Web.AllowUnsafeUpdates = true;
                 item.Update();
                 ViewState["ID"] = item.ID;
@@ -648,32 +653,32 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                     ViewState["ID"] = item.ID;
 
                     string message = string.Empty;
-                    message = SaveDocument(fuSK, Convert.ToInt32(hfIDCompany.Value), "SK");
+                    message = SaveDocument(fuSK, Convert.ToInt32(hfIDCompany.Value), "SK",chkOriginalfuSK.Checked);
                     if (message != string.Empty)
                         return message;
 
                     message = string.Empty;
-                    message = SaveDocument(fuAkte, Convert.ToInt32(hfIDCompany.Value), "AKTA");
+                    message = SaveDocument(fuAkte, Convert.ToInt32(hfIDCompany.Value), "AKTA", chkOriginalfuAkte.Checked);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuSKDP, Convert.ToInt32(hfIDCompany.Value), "SKDP");
+                    message = SaveDocument(fuSKDP, Convert.ToInt32(hfIDCompany.Value), "SKDP", chkOriginalfuSKDP.Checked);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuNPWP, Convert.ToInt32(hfIDCompany.Value), "NPWP");
+                    message = SaveDocument(fuNPWP, Convert.ToInt32(hfIDCompany.Value), "NPWP", chkOriginalfuNPWP.Checked);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuSKT, Convert.ToInt32(hfIDCompany.Value), "SKT");
+                    message = SaveDocument(fuSKT, Convert.ToInt32(hfIDCompany.Value), "SKT", chkOriginalfuSKT.Checked);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuAPV, Convert.ToInt32(hfIDCompany.Value), "APV");
+                    message = SaveDocument(fuAPV, Convert.ToInt32(hfIDCompany.Value), "APV", chkOriginalfuAPV.Checked);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuSetoranModal, Convert.ToInt32(hfIDCompany.Value), "Setoran Modal");
+                    message = SaveDocument(fuSetoranModal, Convert.ToInt32(hfIDCompany.Value), "Setoran Modal", chkOriginalfuSetoranModal.Checked);
                     if (message != string.Empty)
                         return message;
                 }
@@ -1158,6 +1163,8 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ltrAlasanPerubahan.Text = txtAlasanPerubahan.Text;
                 rdPerubahanModal.SelectedValue = (Convert.ToBoolean(item["PerubahanModal"]) ? "Yes" : "No");
                 rdPerubahanNama.SelectedValue = (Convert.ToBoolean(item["PerubahanNamaDanTempat"]) ? "Yes" : "No");
+                txtStatusOwnerShip.Text = (item["StatusOwnerShip"] != null ? item["StatusOwnerShip"].ToString() : string.Empty);
+                ltrtxtStatusOwnerShip.Text = txtStatusOwnerShip.Text;
 
                 rdPerubahanModal.Enabled = false;
                 rdPerubahanNama.Enabled = false;
@@ -1182,7 +1189,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
                 ddlMataUang.SelectedValue = new SPFieldLookupValue(item["MataUang"].ToString()).LookupId.ToString();
                 ltrMataUang.Text = ddlMataUang.SelectedItem.Text;
-                
+
                 txtModalDasar.Text = (item["ModalDasar"] != null ? Convert.ToDouble(item["ModalDasar"]).ToString("#,##0") : "0");
                 ltrtxtModalDasar.Text = txtModalDasar.Text;
                 txtModalSetor.Text = (item["ModalSetor"] != null ? Convert.ToDouble(item["ModalSetor"]).ToString("#,##0") : "0");
@@ -1394,13 +1401,13 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                             ltrUsernameSetoran.Text = item["PembuatSetoran"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
                     }
 
-                    DisplayDocument(ltrfuSK, Convert.ToInt32(hfIDCompany.Value), "SK");
-                    DisplayDocument(ltrfuAkte, Convert.ToInt32(hfIDCompany.Value), "AKTA");
-                    DisplayDocument(ltrfuSKDP, Convert.ToInt32(hfIDCompany.Value), "SKDP");
-                    DisplayDocument(ltrfuNPWP, Convert.ToInt32(hfIDCompany.Value), "NPWP");
-                    DisplayDocument(ltrfuSKT, Convert.ToInt32(hfIDCompany.Value), "SKT");
-                    DisplayDocument(ltrfuAPV, Convert.ToInt32(hfIDCompany.Value), "APV");
-                    DisplayDocument(ltrfuSetoranModal, Convert.ToInt32(hfIDCompany.Value), "Setoran Modal");
+                    DisplayDocument(ltrfuSK, chkOriginalfuSK, Convert.ToInt32(hfIDCompany.Value), "SK");
+                    DisplayDocument(ltrfuAkte, chkOriginalfuAkte, Convert.ToInt32(hfIDCompany.Value), "AKTA");
+                    DisplayDocument(ltrfuSKDP, chkOriginalfuSKDP, Convert.ToInt32(hfIDCompany.Value), "SKDP");
+                    DisplayDocument(ltrfuNPWP, chkOriginalfuNPWP, Convert.ToInt32(hfIDCompany.Value), "NPWP");
+                    DisplayDocument(ltrfuSKT, chkOriginalfuSKT, Convert.ToInt32(hfIDCompany.Value), "SKT");
+                    DisplayDocument(ltrfuAPV, chkOriginalfuAPV, Convert.ToInt32(hfIDCompany.Value), "APV");
+                    DisplayDocument(ltrfuSetoranModal, chkOriginalfuSetoranModal, Convert.ToInt32(hfIDCompany.Value), "Setoran Modal");
                 }
 
                 HiddenControls(mode, workflowStatus, approvalStatus);
@@ -1415,6 +1422,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
         {
             if (mode == "display")
             {
+                txtStatusOwnerShip.Visible = false;
                 rbBNRI.Enabled = false;
                 chkBoxListJenisPerubahan.Enabled = false;
                 imgbtnNamaPemohon.Visible = false;
@@ -1426,7 +1434,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 txtRemarks.Visible = false;
                 ddlMataUang.Visible = false;
                 btnSaveUpdate.Visible = false;
-                txtNominalSaham.Visible = false; 
+                txtNominalSaham.Visible = false;
                 ltrCompanyCode.Visible = true;
                 txtCompanyName.Visible = false;
                 ddlTempatKedudukan.Visible = false;
@@ -1445,7 +1453,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 txtKeteranganAPV.Visible = false;
                 dtTanggalSetoran.Visible = false;
                 txtKeteranganSetoran.Visible = false;
-                chkStatusSetoran.Visible = false; 
+                chkStatusSetoran.Visible = false;
 
                 txtSKNo.Visible = false;
                 dtSKMulaiBerlaku.Visible = false;
@@ -1471,13 +1479,13 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 txtSKNo.Visible = false;
                 txtNOSKTNPWP.Visible = false;
                 dgPemegangSaham.ShowFooter = false;
-                dgPemegangSaham.Columns[6].Visible = true;
-                dgPemegangSaham.Columns[7].Visible = true;
+                dgPemegangSaham.Columns[6].Visible = false;
+                dgPemegangSaham.Columns[7].Visible = false;
                 dgPemegangSaham.Columns[8].Visible = false;
 
                 dgKomisaris.ShowFooter = false;
-                dgKomisaris.Columns[5].Visible = true;
-                dgKomisaris.Columns[6].Visible = true;
+                dgKomisaris.Columns[5].Visible = false;
+                dgKomisaris.Columns[6].Visible = false;
                 dgKomisaris.Columns[7].Visible = false;
 
                 dgNPWPLainnya.ShowFooter = false;
@@ -1499,13 +1507,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
             }
             else if (mode == "edit")
             {
+                ltrddlMaksudDanTujuan.Visible = false;
+                ltrtxtStatusOwnerShip.Visible = false;
                 btnSaveUpdate.Text = "Update";
                 ltrtxtModalDasar.Visible = false;
                 ltrtxtNominalModalDasar.Visible = false;
                 ltrtxtModalSetor.Visible = false;
                 ltrtxtNominalModalSetor.Visible = false;
                 ltrNominalSaham.Visible = false;
- 
+
 
                 ltrddlTempatKedudukan.Visible = false;
                 ltrCompanyCode.Visible = false;
@@ -1543,13 +1553,13 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 ltrNotarisAkte.Visible = false;
                 ltrKeteranganAkte.Visible = false;
                 ltrTanggalAkte.Visible = false;
-                ltrAlamatSKDP.Visible = false; 
+                ltrAlamatSKDP.Visible = false;
 
-                dgPemegangSaham.Columns[6].Visible = true;
-                dgPemegangSaham.Columns[7].Visible = true;
+                dgPemegangSaham.Columns[6].Visible = false;
+                dgPemegangSaham.Columns[7].Visible = false;
 
-                dgKomisaris.Columns[5].Visible = true;
-                dgKomisaris.Columns[6].Visible = true;
+                dgKomisaris.Columns[5].Visible = false;
+                dgKomisaris.Columns[6].Visible = false;
 
                 if (ltrfuAkte.Text.Trim() == string.Empty)
                     reqfuAkte.Visible = true;
@@ -1589,9 +1599,9 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
             switch (workflowStatus)
             {
-                case "Entry Perubahan Anggaran Dasar" :
+                case "Entry Perubahan Anggaran Dasar":
                 case "Entry request perubahan anggaran dasar":
-                    break; 
+                    break;
                 case "Approve oleh Authorized Person":
                     divPerubahanDataPerseroan.Visible = true;
                     divPerubahanAnggaran.Visible = false;
@@ -1809,7 +1819,7 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
                 }
             }
         }
-       
+
 
         protected void btnSearchPemohon_Click(object sender, EventArgs e)
         {
@@ -2275,11 +2285,11 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan
 
                 txtJumlahSahamAdd.Attributes.Add("onblur", " FormatNumber('" + txtJumlahSahamAdd.ClientID + "')");
 
-                if (!ltrNominalSaham.Visible) 
+                if (!ltrNominalSaham.Visible)
                     txtJumlahSahamAdd.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamAdd.ClientID + "'); Total('" + txtJumlahSahamAdd.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtJumlahNominalAdd.ClientID + "'); Percentages('" + txtJumlahSahamAdd.ClientID + "','" + txtModalSetor.ClientID + "','" + txtPercentagesAdd.ClientID + "');");
                 else
                     txtJumlahSahamAdd.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamAdd.ClientID + "'); Total('" + txtJumlahSahamAdd.ClientID + "','" + ltrNominalSaham.ClientID + "','" + txtJumlahNominalAdd.ClientID + "'); Percentages('" + txtJumlahSahamAdd.ClientID + "','" + ltrtxtModalSetor.ClientID + "','" + txtPercentagesAdd.ClientID + "');");
-                
+
                 TextBox txtNamaPemegangSahamAdd = e.Item.FindControl("txtNamaPemegangSahamAdd") as TextBox;
                 txtNamaPemegangSahamAdd.Attributes.Add("onkeyup", "PemegangSaham('" + txtNamaPemegangSahamAdd.ClientID + "');");
             }

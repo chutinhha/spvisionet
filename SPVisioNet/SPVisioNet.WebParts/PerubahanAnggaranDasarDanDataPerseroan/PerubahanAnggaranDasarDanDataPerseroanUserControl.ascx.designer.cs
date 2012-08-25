@@ -292,6 +292,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtCompanyName;
         
         /// <summary>
+        /// upPerubahanAnggaranDasar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upPerubahanAnggaranDasar;
+        
+        /// <summary>
         /// ddlTempatKedudukan control.
         /// </summary>
         /// <remarks>
@@ -326,6 +335,24 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltrddlMaksudDanTujuan;
+        
+        /// <summary>
+        /// txtStatusOwnerShip control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStatusOwnerShip;
+        
+        /// <summary>
+        /// ltrtxtStatusOwnerShip control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrtxtStatusOwnerShip;
         
         /// <summary>
         /// upAnggaranDasar control.
@@ -643,6 +670,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         protected global::System.Web.UI.WebControls.FileUpload fuAkte;
         
         /// <summary>
+        /// chkOriginalfuAkte control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuAkte;
+        
+        /// <summary>
         /// reqfuAkte control.
         /// </summary>
         /// <remarks>
@@ -785,6 +821,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuSKDP;
+        
+        /// <summary>
+        /// chkOriginalfuSKDP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuSKDP;
         
         /// <summary>
         /// reqfuSKDP control.
@@ -958,6 +1003,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         protected global::System.Web.UI.WebControls.FileUpload fuSKT;
         
         /// <summary>
+        /// chkOriginalfuSKT control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuSKT;
+        
+        /// <summary>
         /// reqfuSKT control.
         /// </summary>
         /// <remarks>
@@ -1010,6 +1064,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuNPWP;
+        
+        /// <summary>
+        /// chkOriginalfuNPWP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuNPWP;
         
         /// <summary>
         /// reqfuNPWP control.
@@ -1165,6 +1228,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         protected global::System.Web.UI.WebControls.FileUpload fuAPV;
         
         /// <summary>
+        /// chkOriginalfuAPV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuAPV;
+        
+        /// <summary>
         /// reqfuAPV control.
         /// </summary>
         /// <remarks>
@@ -1309,6 +1381,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         protected global::System.Web.UI.WebControls.FileUpload fuSetoranModal;
         
         /// <summary>
+        /// chkOriginalfuSetoranModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuSetoranModal;
+        
+        /// <summary>
         /// reqfuSetoranModal control.
         /// </summary>
         /// <remarks>
@@ -1415,6 +1496,15 @@ namespace SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuSK;
+        
+        /// <summary>
+        /// chkOriginalfuSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalfuSK;
         
         /// <summary>
         /// reqfuSK control.
