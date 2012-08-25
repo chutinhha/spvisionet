@@ -151,9 +151,7 @@
     <Content Include="Layouts\SPVisioNet.WebParts\style.css" />
     <Content Include="PerubahanAnggaranDasarDanDataPerseroanCT\Elements.xml" />
     <Content Include="PerubahanAnggaranDasarDanDataPerseroan\Elements.xml" />
-    <Content Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx" />
     <Content Include="wpExpiredKomisaris\Elements.xml" />
     <Content Include="wpExpiredKomisaris\wpExpiredKomisarisUserControl.ascx">
       <SubType>ASPXCodeBehind</SubType>
