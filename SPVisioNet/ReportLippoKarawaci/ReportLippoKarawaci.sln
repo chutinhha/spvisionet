@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "ReportLippoKarawaci", "ReportLippoKarawaci\ReportLippoKarawaci.rptproj", "{CEE09170-9032-4B61-9B09-F62F1931D7AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.Debug|Default.ActiveCfg = Debug
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.Debug|Default.Build.0 = DebugLocal
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.Debug|Default.Deploy.0 = DebugLocal
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.DebugLocal|Default.Build.0 = DebugLocal
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.Release|Default.ActiveCfg = Release
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.Release|Default.Build.0 = Release
+		{CEE09170-9032-4B61-9B09-F62F1931D7AC}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
