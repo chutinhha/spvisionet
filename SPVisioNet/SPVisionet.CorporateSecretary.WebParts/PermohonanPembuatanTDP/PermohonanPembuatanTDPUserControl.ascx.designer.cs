@@ -283,6 +283,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfu;
         
         /// <summary>
+        /// chkOriginal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginal;
+        
+        /// <summary>
+        /// ltrOriginal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginal;
+        
+        /// <summary>
         /// txtNo control.
         /// </summary>
         /// <remarks>
@@ -409,75 +427,12 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP {
         protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
-        /// upPerusahaan control.
+        /// Perusahaan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upPerusahaan;
-        
-        /// <summary>
-        /// txtSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
-        
-        /// <summary>
-        /// btnSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
-        
-        /// <summary>
-        /// upProg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress upProg;
-        
-        /// <summary>
-        /// grv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grv;
-        
-        /// <summary>
-        /// ods control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ods;
-        
-        /// <summary>
-        /// btnSelect control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSelect;
-        
-        /// <summary>
-        /// btnCloseSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCloseSearch;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.Perusahaan Perusahaan;
     }
 }

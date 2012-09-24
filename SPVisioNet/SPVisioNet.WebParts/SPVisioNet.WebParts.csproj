@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
@@ -58,6 +59,13 @@
     <Reference Include="Microsoft.SharePoint.Security" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="_controltemplates\Lippo1\Pemohon.ascx.cs">
+      <DependentUpon>Pemohon.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_controltemplates\Lippo1\Pemohon.ascx.designer.cs">
+      <DependentUpon>Pemohon.ascx.cs</DependentUpon>
+    </Compile>
     <Compile Include="GridViewExportUtil.cs" />
     <Compile Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroan.cs" />
     <Compile Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx.cs">
@@ -96,8 +104,18 @@
       <DependentUpon>wpNotifExpiredDocumentUserControl.ascx.cs</DependentUpon>
     </Compile>
     <Compile Include="wpRedirectURL\wpRedirectURL.cs" />
+    <Compile Include="_controltemplates\Lippo1\Perusahaan.ascx.cs">
+      <DependentUpon>Perusahaan.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_controltemplates\Lippo1\Perusahaan.ascx.designer.cs">
+      <DependentUpon>Perusahaan.ascx.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="_controltemplates\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{31304fef-93f0-4aff-8b73-b64f2c864b6e}</SharePointProjectItemId>
+    </None>
     <None Include="Features\Feature1\Feature1.feature">
       <FeatureId>{ffc82d5d-2f63-40ed-9175-03fc34171061}</FeatureId>
     </None>
@@ -144,6 +162,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="_controltemplates\Lippo1\Pemohon.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="Features\Feature1\Feature1.Template.xml">
       <DependentUpon>Feature1.feature</DependentUpon>
     </Content>
@@ -151,7 +172,9 @@
     <Content Include="Layouts\SPVisioNet.WebParts\style.css" />
     <Content Include="PerubahanAnggaranDasarDanDataPerseroanCT\Elements.xml" />
     <Content Include="PerubahanAnggaranDasarDanDataPerseroan\Elements.xml" />
-    <Content Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx" />
+    <Content Include="PerubahanAnggaranDasarDanDataPerseroan\PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="wpExpiredKomisaris\Elements.xml" />
     <Content Include="wpExpiredKomisaris\wpExpiredKomisarisUserControl.ascx">
       <SubType>ASPXCodeBehind</SubType>
@@ -165,6 +188,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="wpRedirectURL\Elements.xml" />
+    <Content Include="_controltemplates\Lippo1\Perusahaan.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" />

@@ -11,3 +11,9 @@ D:\Webparts\Visionet\Code\SPVisioNet.Workflow\bin\Debug\SPVisionet.CorporateSecr
 D:\Webparts\Visionet\Code\SPVisioNet.Workflow\obj\Debug\ResolveAssemblyReference.cache
 D:\Webparts\Visionet\Code\SPVisioNet.Workflow\obj\Debug\SPVisioNet.Workflow.dll
 D:\Webparts\Visionet\Code\SPVisioNet.Workflow\obj\Debug\SPVisioNet.Workflow.pdb
+D:\Webparts\Visionet\Code\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisioNet.Workflow.dll
+D:\Webparts\Visionet\Code\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisioNet.Workflow.pdb
+D:\Webparts\Visionet\Code\SPVisioNet\SPVisioNet.Workflow\bin\Debug\SPVisionet.CorporateSecretary.Common.pdb
+D:\Webparts\Visionet\Code\SPVisioNet\SPVisioNet.Workflow\obj\Debug\ResolveAssemblyReference.cache
+D:\Webparts\Visionet\Code\SPVisioNet\SPVisioNet.Workflow\obj\Debug\SPVisioNet.Workflow.dll
+D:\Webparts\Visionet\Code\SPVisioNet\SPVisioNet.Workflow\obj\Debug\SPVisioNet.Workflow.pdb

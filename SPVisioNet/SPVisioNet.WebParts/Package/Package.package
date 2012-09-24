@@ -6,5 +6,6 @@
   <projectItems>
     <projectItemReference itemId="26a872da-8f60-482e-b848-b18fabfdda6d" />
     <projectItemReference itemId="4825d390-f578-4a1f-a8e9-2788a4c04f15" />
+    <projectItemReference itemId="31304fef-93f0-4aff-8b73-b64f2c864b6e" />
   </projectItems>
 </package>

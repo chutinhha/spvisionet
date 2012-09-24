@@ -71,8 +71,6 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             System.Workflow.ComponentModel.ActivityBind activitybind42 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind43 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind44 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference1 = new System.Workflow.Activities.Rules.RuleConditionReference();
-            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference2 = new System.Workflow.Activities.Rules.RuleConditionReference();
             System.Workflow.ComponentModel.ActivityBind activitybind45 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind46 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind47 = new System.Workflow.ComponentModel.ActivityBind();
@@ -81,6 +79,9 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             System.Workflow.ComponentModel.ActivityBind activitybind50 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind51 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind52 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference1 = new System.Workflow.Activities.Rules.RuleConditionReference();
+            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference2 = new System.Workflow.Activities.Rules.RuleConditionReference();
+            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference3 = new System.Workflow.Activities.Rules.RuleConditionReference();
             System.Workflow.ComponentModel.ActivityBind activitybind53 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind54 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind55 = new System.Workflow.ComponentModel.ActivityBind();
@@ -92,7 +93,6 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             System.Workflow.ComponentModel.ActivityBind activitybind61 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind62 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind63 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.CodeCondition codecondition1 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind64 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind65 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind66 = new System.Workflow.ComponentModel.ActivityBind();
@@ -101,9 +101,18 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             System.Workflow.ComponentModel.ActivityBind activitybind69 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind70 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind71 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition1 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind72 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.ComponentModel.ActivityBind activitybind74 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind73 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind74 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind75 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind76 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind77 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind78 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind79 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind80 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind82 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind81 = new System.Workflow.ComponentModel.ActivityBind();
             this.logToHistoryListActivity3 = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.updateAllTasksPicFinance = new Microsoft.SharePoint.WorkflowActions.UpdateAllTasks();
             this.createMultipleTask_PicFinance = new SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask();
@@ -124,10 +133,15 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             this.UpdatePermissionPicCorsec2 = new System.Workflow.Activities.CodeActivity();
             this.PopulateDataPicCorsec2 = new System.Workflow.Activities.CodeActivity();
             this.logToHistoryListActivity2 = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
+            this.updateAllTasksPicCorsecPMAPMDN = new Microsoft.SharePoint.WorkflowActions.UpdateAllTasks();
+            this.createMultipleTaskPMAPMDN = new SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask();
+            this.PopulatePicCorsec = new System.Workflow.Activities.CodeActivity();
             this.ifElseBranchActivity4 = new System.Workflow.Activities.IfElseBranchActivity();
             this.IsPerubahanModalTrue = new System.Workflow.Activities.IfElseBranchActivity();
             this.ifElseBranchActivity2 = new System.Workflow.Activities.IfElseBranchActivity();
             this.IsPerubahanNamaTrue = new System.Workflow.Activities.IfElseBranchActivity();
+            this.ifElseBranchActivity3 = new System.Workflow.Activities.IfElseBranchActivity();
+            this.IfPMDN = new System.Workflow.Activities.IfElseBranchActivity();
             this.sendEmailToOriginator = new Microsoft.SharePoint.WorkflowActions.SendEmail();
             this.UpdatePermissionRejected = new System.Workflow.Activities.CodeActivity();
             this.updateAllTasksPicCorsec4 = new Microsoft.SharePoint.WorkflowActions.UpdateAllTasks();
@@ -139,8 +153,10 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             this.GetPerubahanNamaDanModal = new System.Workflow.Activities.CodeActivity();
             this.updateAllTasks_PicCorsec = new Microsoft.SharePoint.WorkflowActions.UpdateAllTasks();
             this.createMultipleTask_PicCorsec = new SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask();
+            this.PopulatePicCorsec1 = new System.Workflow.Activities.CodeActivity();
+            this.ifElseActivity2 = new System.Workflow.Activities.IfElseActivity();
             this.UpdatePermissionPicCorsec = new System.Workflow.Activities.CodeActivity();
-            this.PopulatePicCorsec = new System.Workflow.Activities.CodeActivity();
+            this.GetPMAPMDN = new System.Workflow.Activities.CodeActivity();
             this.Rejected = new System.Workflow.Activities.IfElseBranchActivity();
             this.Approve = new System.Workflow.Activities.IfElseBranchActivity();
             this.UpdatePermissionCompleted = new System.Workflow.Activities.CodeActivity();
@@ -402,6 +418,46 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             this.logToHistoryListActivity2.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryDescriptionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind43)));
             this.logToHistoryListActivity2.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryOutcomeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind44)));
             // 
+            // updateAllTasksPicCorsecPMAPMDN
+            // 
+            this.updateAllTasksPicCorsecPMAPMDN.CorrelationToken = correlationtoken1;
+            this.updateAllTasksPicCorsecPMAPMDN.Name = "updateAllTasksPicCorsecPMAPMDN";
+            activitybind45.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind45.Path = "updateAllTasksPicCorsecPMAPMDN_TaskProperties1";
+            this.updateAllTasksPicCorsecPMAPMDN.MethodInvoking += new System.EventHandler(this.updateAllTasksPicCorsecPMAPMDN_MethodInvoking);
+            this.updateAllTasksPicCorsecPMAPMDN.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind45)));
+            // 
+            // createMultipleTaskPMAPMDN
+            // 
+            activitybind46.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind46.Path = "createMultipleTaskPMAPMDN___Context1";
+            activitybind47.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind47.Path = "createMultipleTaskPMAPMDN_AssignedTo1";
+            activitybind48.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind48.Path = "createMultipleTaskPMAPMDN_Body1";
+            activitybind49.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind49.Path = "createMultipleTaskPMAPMDN_ContentTypeId1";
+            this.createMultipleTaskPMAPMDN.ListItemId = 0;
+            this.createMultipleTaskPMAPMDN.Name = "createMultipleTaskPMAPMDN";
+            activitybind50.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind50.Path = "createMultipleTaskPMAPMDN_Subject1";
+            activitybind51.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind51.Path = "createMultipleTaskPMAPMDN_TaskTitle1";
+            activitybind52.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind52.Path = "createMultipleTaskPMAPMDN_WFName1";
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind46)));
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind47)));
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind48)));
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind49)));
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind50)));
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind51)));
+            this.createMultipleTaskPMAPMDN.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind52)));
+            // 
+            // PopulatePicCorsec
+            // 
+            this.PopulatePicCorsec.Name = "PopulatePicCorsec";
+            this.PopulatePicCorsec.ExecuteCode += new System.EventHandler(this.PopulateDataOriginator_ExecuteCode);
+            // 
             // ifElseBranchActivity4
             // 
             this.ifElseBranchActivity4.Activities.Add(this.logToHistoryListActivity3);
@@ -442,23 +498,37 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             this.IsPerubahanNamaTrue.Condition = ruleconditionreference2;
             this.IsPerubahanNamaTrue.Name = "IsPerubahanNamaTrue";
             // 
+            // ifElseBranchActivity3
+            // 
+            this.ifElseBranchActivity3.Name = "ifElseBranchActivity3";
+            // 
+            // IfPMDN
+            // 
+            this.IfPMDN.Activities.Add(this.PopulatePicCorsec);
+            this.IfPMDN.Activities.Add(this.createMultipleTaskPMAPMDN);
+            this.IfPMDN.Activities.Add(this.updateAllTasksPicCorsecPMAPMDN);
+            ruleconditionreference3.ConditionName = "IsPMADN==True";
+            this.IfPMDN.Condition = ruleconditionreference3;
+            this.IfPMDN.Description = "PMDN = True";
+            this.IfPMDN.Name = "IfPMDN";
+            // 
             // sendEmailToOriginator
             // 
             this.sendEmailToOriginator.BCC = null;
-            activitybind45.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind45.Path = "sendEmailToOriginator_Body1";
+            activitybind53.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind53.Path = "sendEmailToOriginator_Body1";
             this.sendEmailToOriginator.CC = null;
             this.sendEmailToOriginator.CorrelationToken = correlationtoken1;
             this.sendEmailToOriginator.From = null;
-            activitybind46.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind46.Path = "sendEmailToOriginator_Headers1";
+            activitybind54.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind54.Path = "sendEmailToOriginator_Headers1";
             this.sendEmailToOriginator.IncludeStatus = false;
             this.sendEmailToOriginator.Name = "sendEmailToOriginator";
             this.sendEmailToOriginator.Subject = null;
             this.sendEmailToOriginator.To = null;
             this.sendEmailToOriginator.MethodInvoking += new System.EventHandler(this.sendEmailToOriginator_MethodInvoking);
-            this.sendEmailToOriginator.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind45)));
-            this.sendEmailToOriginator.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.HeadersProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind46)));
+            this.sendEmailToOriginator.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind53)));
+            this.sendEmailToOriginator.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.HeadersProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind54)));
             // 
             // UpdatePermissionRejected
             // 
@@ -469,36 +539,36 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             // 
             this.updateAllTasksPicCorsec4.CorrelationToken = correlationtoken1;
             this.updateAllTasksPicCorsec4.Name = "updateAllTasksPicCorsec4";
-            activitybind47.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind47.Path = "updateAllTasksPicCorsec4_TaskProperties1";
+            activitybind55.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind55.Path = "updateAllTasksPicCorsec4_TaskProperties1";
             this.updateAllTasksPicCorsec4.MethodInvoking += new System.EventHandler(this.updateAllTasksPicCorsec4_MethodInvoking);
-            this.updateAllTasksPicCorsec4.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind47)));
+            this.updateAllTasksPicCorsec4.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind55)));
             // 
             // createMultipleTask_PicCorsec4
             // 
-            activitybind48.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind48.Path = "createMultipleTask_PicCorsec4___Context1";
-            activitybind49.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind49.Path = "createMultipleTask_PicCorsec4_AssignedTo1";
-            activitybind50.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind50.Path = "createMultipleTask_PicCorsec4_Body1";
-            activitybind51.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind51.Path = "createMultipleTask_PicCorsec4_ContentTypeId1";
+            activitybind56.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind56.Path = "createMultipleTask_PicCorsec4___Context1";
+            activitybind57.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind57.Path = "createMultipleTask_PicCorsec4_AssignedTo1";
+            activitybind58.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind58.Path = "createMultipleTask_PicCorsec4_Body1";
+            activitybind59.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind59.Path = "createMultipleTask_PicCorsec4_ContentTypeId1";
             this.createMultipleTask_PicCorsec4.ListItemId = 0;
             this.createMultipleTask_PicCorsec4.Name = "createMultipleTask_PicCorsec4";
-            activitybind52.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind52.Path = "createMultipleTask_PicCorsec4_Subject1";
-            activitybind53.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind53.Path = "createMultipleTask_PicCorsec4_TaskTitle1";
-            activitybind54.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind54.Path = "createMultipleTask_PicCorsec4_WFName1";
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind48)));
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind49)));
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind50)));
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind51)));
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind52)));
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind53)));
-            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind54)));
+            activitybind60.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind60.Path = "createMultipleTask_PicCorsec4_Subject1";
+            activitybind61.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind61.Path = "createMultipleTask_PicCorsec4_TaskTitle1";
+            activitybind62.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind62.Path = "createMultipleTask_PicCorsec4_WFName1";
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind56)));
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind57)));
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind58)));
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind59)));
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind60)));
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind61)));
+            this.createMultipleTask_PicCorsec4.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind62)));
             // 
             // SetPermissionPicCorsec4
             // 
@@ -531,48 +601,59 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             // 
             this.updateAllTasks_PicCorsec.CorrelationToken = correlationtoken1;
             this.updateAllTasks_PicCorsec.Name = "updateAllTasks_PicCorsec";
-            activitybind55.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind55.Path = "updateAllTasks_PicCorsec_TaskProperties1";
+            activitybind63.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind63.Path = "updateAllTasks_PicCorsec_TaskProperties1";
             this.updateAllTasks_PicCorsec.MethodInvoking += new System.EventHandler(this.updateAllTasks1_MethodInvoking);
-            this.updateAllTasks_PicCorsec.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind55)));
+            this.updateAllTasks_PicCorsec.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind63)));
             // 
             // createMultipleTask_PicCorsec
             // 
-            activitybind56.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind56.Path = "createMultipleTask_PicCorsec___Context1";
-            activitybind57.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind57.Path = "createMultipleTask_PicCorsec_AssignedTo1";
-            activitybind58.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind58.Path = "createMultipleTask_PicCorsec_Body1";
-            activitybind59.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind59.Path = "createMultipleTask_PicCorsec_ContentTypeId1";
-            activitybind60.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind60.Path = "createMultipleTask_PicCorsec_ListItemId1";
+            activitybind64.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind64.Path = "createMultipleTask_PicCorsec___Context1";
+            activitybind65.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind65.Path = "createMultipleTask_PicCorsec_AssignedTo1";
+            activitybind66.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind66.Path = "createMultipleTask_PicCorsec_Body1";
+            activitybind67.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind67.Path = "createMultipleTask_PicCorsec_ContentTypeId1";
+            activitybind68.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind68.Path = "createMultipleTask_PicCorsec_ListItemId1";
             this.createMultipleTask_PicCorsec.Name = "createMultipleTask_PicCorsec";
-            activitybind61.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind61.Path = "createMultipleTask_PicCorsec_Subject1";
-            activitybind62.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind62.Path = "createMultipleTask_PicCorsec_TaskTitle1";
-            activitybind63.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind63.Path = "createMultipleTask_PicCorsec_WFName1";
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind56)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind57)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind58)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind59)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ListItemIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind60)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind61)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind62)));
-            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind63)));
+            activitybind69.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind69.Path = "createMultipleTask_PicCorsec_Subject1";
+            activitybind70.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind70.Path = "createMultipleTask_PicCorsec_TaskTitle1";
+            activitybind71.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind71.Path = "createMultipleTask_PicCorsec_WFName1";
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind64)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind65)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind66)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind67)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ListItemIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind68)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind69)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind70)));
+            this.createMultipleTask_PicCorsec.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind71)));
+            // 
+            // PopulatePicCorsec1
+            // 
+            this.PopulatePicCorsec1.Name = "PopulatePicCorsec1";
+            this.PopulatePicCorsec1.ExecuteCode += new System.EventHandler(this.PopulateDataOriginatorAkta_ExecuteCode);
+            // 
+            // ifElseActivity2
+            // 
+            this.ifElseActivity2.Activities.Add(this.IfPMDN);
+            this.ifElseActivity2.Activities.Add(this.ifElseBranchActivity3);
+            this.ifElseActivity2.Name = "ifElseActivity2";
             // 
             // UpdatePermissionPicCorsec
             // 
             this.UpdatePermissionPicCorsec.Name = "UpdatePermissionPicCorsec";
             this.UpdatePermissionPicCorsec.ExecuteCode += new System.EventHandler(this.UpdatePermissionOriginator_ExecuteCode);
             // 
-            // PopulatePicCorsec
+            // GetPMAPMDN
             // 
-            this.PopulatePicCorsec.Name = "PopulatePicCorsec";
-            this.PopulatePicCorsec.ExecuteCode += new System.EventHandler(this.PopulateDataOriginator_ExecuteCode);
+            this.GetPMAPMDN.Name = "GetPMAPMDN";
+            this.GetPMAPMDN.ExecuteCode += new System.EventHandler(this.GetPMAPMDN_ExecuteCode);
             // 
             // Rejected
             // 
@@ -582,8 +663,10 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             // 
             // Approve
             // 
-            this.Approve.Activities.Add(this.PopulatePicCorsec);
+            this.Approve.Activities.Add(this.GetPMAPMDN);
             this.Approve.Activities.Add(this.UpdatePermissionPicCorsec);
+            this.Approve.Activities.Add(this.ifElseActivity2);
+            this.Approve.Activities.Add(this.PopulatePicCorsec1);
             this.Approve.Activities.Add(this.createMultipleTask_PicCorsec);
             this.Approve.Activities.Add(this.updateAllTasks_PicCorsec);
             this.Approve.Activities.Add(this.GetPerubahanNamaDanModal);
@@ -617,38 +700,38 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             // 
             this.updateAllTasksDivHead.CorrelationToken = correlationtoken1;
             this.updateAllTasksDivHead.Name = "updateAllTasksDivHead";
-            activitybind64.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind64.Path = "updateAllTasksChiefCorsec_TaskProperties1";
+            activitybind72.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind72.Path = "updateAllTasksChiefCorsec_TaskProperties1";
             this.updateAllTasksDivHead.MethodInvoking += new System.EventHandler(this.updateAllTasksChiefCorsec_MethodInvoking);
-            this.updateAllTasksDivHead.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind64)));
+            this.updateAllTasksDivHead.SetBinding(Microsoft.SharePoint.WorkflowActions.UpdateAllTasks.TaskPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind72)));
             // 
             // PerubahanAnggaran
             // 
-            activitybind65.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind65.Path = "createMultipleTask1___Context1";
-            activitybind66.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind66.Path = "createMultipleTask1_AssignedTo1";
-            activitybind67.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind67.Path = "createMultipleTask1_Body1";
-            activitybind68.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind68.Path = "createMultipleTask1_ContentTypeId1";
-            activitybind69.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind69.Path = "createMultipleTask1_ListItemId1";
+            activitybind73.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind73.Path = "createMultipleTask1___Context1";
+            activitybind74.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind74.Path = "createMultipleTask1_AssignedTo1";
+            activitybind75.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind75.Path = "createMultipleTask1_Body1";
+            activitybind76.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind76.Path = "createMultipleTask1_ContentTypeId1";
+            activitybind77.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind77.Path = "createMultipleTask1_ListItemId1";
             this.PerubahanAnggaran.Name = "PerubahanAnggaran";
-            activitybind70.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind70.Path = "createMultipleTask1_Subject1";
-            activitybind71.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind71.Path = "createMultipleTask1_TaskTitle1";
-            activitybind72.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind72.Path = "createMultipleTask1_WFName1";
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind65)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind66)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind67)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind68)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind70)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ListItemIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind69)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind71)));
-            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind72)));
+            activitybind78.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind78.Path = "createMultipleTask1_Subject1";
+            activitybind79.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind79.Path = "createMultipleTask1_TaskTitle1";
+            activitybind80.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind80.Path = "createMultipleTask1_WFName1";
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.@__ContextProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind73)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.AssignedToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind74)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind75)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ContentTypeIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind76)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind78)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.ListItemIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind77)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.TaskTitleProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind79)));
+            this.PerubahanAnggaran.SetBinding(SPVisionet.CorporateSecretary.Workflow.Activity.CreateMultipleTask.WFNameProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind80)));
             // 
             // SetPermissionToDivHead
             // 
@@ -659,19 +742,19 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             // 
             this.PopulatedDivHead.Name = "PopulatedDivHead";
             this.PopulatedDivHead.ExecuteCode += new System.EventHandler(this.CollectedApproval_ExecuteCode);
-            activitybind74.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind74.Path = "workflowId";
+            activitybind82.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind82.Path = "workflowId";
             // 
             // onWorkflowActivated1
             // 
             this.onWorkflowActivated1.CorrelationToken = correlationtoken1;
             this.onWorkflowActivated1.EventName = "OnWorkflowActivated";
             this.onWorkflowActivated1.Name = "onWorkflowActivated1";
-            activitybind73.Name = "PerubahanAnggaranDasarPerusahaan";
-            activitybind73.Path = "workflowProperties";
+            activitybind81.Name = "PerubahanAnggaranDasarPerusahaan";
+            activitybind81.Path = "workflowProperties";
             this.onWorkflowActivated1.Invoked += new System.EventHandler<System.Workflow.Activities.ExternalDataEventArgs>(this.onWorkflowActivated1_Invoked);
-            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind74)));
-            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind73)));
+            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind82)));
+            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind81)));
             // 
             // PerubahanAnggaranDasarPerusahaan
             // 
@@ -689,6 +772,20 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
         }
 
         #endregion
+
+        private Microsoft.SharePoint.WorkflowActions.UpdateAllTasks updateAllTasksPicCorsecPMAPMDN;
+
+        private CorporateSecretary.Workflow.Activity.CreateMultipleTask createMultipleTaskPMAPMDN;
+
+        private IfElseBranchActivity ifElseBranchActivity3;
+
+        private IfElseBranchActivity IfPMDN;
+
+        private IfElseActivity ifElseActivity2;
+
+        private CodeActivity PopulatePicCorsec1;
+
+        private CodeActivity GetPMAPMDN;
 
         private CodeActivity GetPerubahanNamaDanModal;
 
@@ -783,6 +880,25 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
         private CodeActivity PopulatedDivHead;
 
         private Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated onWorkflowActivated1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

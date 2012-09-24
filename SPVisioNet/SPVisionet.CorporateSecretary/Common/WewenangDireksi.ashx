@@ -21,8 +21,8 @@ public class WewenangDireksi : IHttpHandler
                           "</BeginsWith>" +
                        "</Where>";
         query.ViewFields = "<FieldRef Name='Title'/>";
-        
-        using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
+
+        using (SPSite site = new SPSite(SPContext.Current.Web.Url + "/cs", SPContext.Current.Site.SystemAccount.UserToken))
         {
             using (SPWeb web = site.OpenWeb())
             {
@@ -37,8 +37,8 @@ public class WewenangDireksi : IHttpHandler
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     items[i] = dt.Rows[i]["Title"].ToString();
-                }  
-                
+                }
+
                 context.Response.Write(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(items));
             }
         }

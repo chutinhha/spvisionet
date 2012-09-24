@@ -163,35 +163,60 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
 
                 item.Update();
 
-                if (fu.PostedFile != null)
+                if (fu.PostedFile.ContentLength > 0)
                 {
-                    if (fu.PostedFile.ContentLength > 0)
+                    string fileName = fu.FileName.Replace("&", string.Empty);
+
+                    try
                     {
-                        string fileName = fu.FileName.Replace("&", string.Empty);
+                        Stream strm = fu.PostedFile.InputStream;
+                        byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
+                        strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
+                        strm.Close();
 
-                        try
-                        {
-                            Stream strm = fu.PostedFile.InputStream;
-                            byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
-                            strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
-                            strm.Close();
+                        SPFolder document = web.Folders["SIUPDokumen"];
+                        web.AllowUnsafeUpdates = true;
+                        SPFile file = document.Files.Add(fileName, bytes);
+                        SPItem itemDocument = file.Item;
+                        itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
+                        itemDocument["SIUP"] = item.ID;
+                        itemDocument["Original"] = chkOriginal.Checked;
+                        itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        itemDocument.Update();
+                        web.AllowUnsafeUpdates = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("already exist"))
+                            return SR.DataIsExist(fileName);
+                        else
+                            return SR.AttachmentFailed(fileName);
+                    }
+                }
+                else
+                {
+                    if (IDP != 0)
+                    {
+                        SPQuery query = new SPQuery();
+                        query.Query = "<Where>" +
+                                          "<Eq>" +
+                                             "<FieldRef Name='SIUP' LookupId='True' />" +
+                                             "<Value Type='Lookup'>" + IDP + "</Value>" +
+                                          "</Eq>" +
+                                      "</Where>" +
+                                      "<OrderBy>" +
+                                        "<FieldRef Name='Created' Ascending='False' />" +
+                                      "</OrderBy>";
 
-                            SPFolder document = web.Folders["SIUPDokumen"];
-                            web.AllowUnsafeUpdates = true;
-                            SPFile file = document.Files.Add(fileName, bytes);
-                            SPItem itemDocument = file.Item;
-                            itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
-                            itemDocument["SIUP"] = item.ID;
-                            itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                            itemDocument.Update();
-                            web.AllowUnsafeUpdates = false;
-                        }
-                        catch (Exception ex)
+                        SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "SIUPDokumen"));
+                        SPListItemCollection coll = document.GetItems(query);
+                        if (coll.Count > 0)
                         {
-                            if (ex.Message.Contains("already exist"))
-                                return SR.DataIsExist(fileName);
-                            else
-                                return SR.AttachmentFailed(fileName);
+                            SPListItem documentItem = coll[0];
+                            documentItem.Web.AllowUnsafeUpdates = true;
+                            documentItem["Original"] = chkOriginal.Checked;
+                            documentItem.Update();
+                            documentItem.Web.AllowUnsafeUpdates = false;
                         }
                     }
                 }
@@ -299,6 +324,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
             {
                 SPListItem documentItem = coll[0];
                 ltrfu.Text = string.Format("<a href='{0}/SIUPDokumen/{1}'>{1}</a>", web.Url, documentItem["Name"].ToString());
+                if (documentItem["Original"] != null)
+                {
+                    ltrOriginal.Text = Convert.ToBoolean(documentItem["Original"]) == true ? "Original" : "Copy";
+                    chkOriginal.Checked = Convert.ToBoolean(documentItem["Original"]);
+                }
             }
 
             if (item["Status"] != null)
@@ -354,6 +384,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
                 dtTanggalAkhirBerlaku.Visible = false;
                 fu.Visible = false;
                 imgbtnNamaPerusahaan.Visible = false;
+                chkOriginal.Visible = false;
 
                 reqddlAlasanPembuatan.Visible = false;
                 reqfu.Visible = false;
@@ -397,6 +428,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
                 ltrNo.Visible = false;
                 ltrTanggalMulaiBerlaku.Visible = false;
                 ltrTanggalAkhirBerlaku.Visible = false;
+                ltrOriginal.Visible = false;
 
                 if (ltrfu.Text.Trim() == string.Empty)
                     reqfu.Visible = true;
@@ -412,6 +444,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
         protected void Page_Load(object sender, EventArgs e)
         {
             Util.RegisterStartupScript(Page, "Perusahaan", "RegisterDialog('divPerusahaanSearch','divPerusahaanDlgContainer', '630');");
+
+            Perusahaan.btnSelectedData.Click += new EventHandler(btnSelectedData_Click);
 
             using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
@@ -498,10 +532,16 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
 
         #region Search Perusahaan
 
-        private void DisplayPerusahaan(int IDPerusahaan)
+        protected void imgbtnNamaPerusahaan_Click(object sender, ImageClickEventArgs e)
         {
-            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PerusahaanBaru"));
-            SPListItem item = list.GetItemById(IDPerusahaan);
+            //txtSearch.Text = string.Empty;
+            //grv.Visible = false;
+            Perusahaan.SearchClientIDProp = "divPerusahaanSearch";
+        }
+
+        void btnSelectedData_Click(object sender, EventArgs e)
+        {
+            SPListItem item = Perusahaan.itemProp;
             if (item != null)
             {
                 txtKodePerusahaan.Text = item["CompanyCodeAPV"].ToString();
@@ -524,89 +564,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP
             }
 
             upDataPerusahaan.Update();
-        }
-
-        private void BindPerusahaan()
-        {
-            string query = string.Empty;
-            if (txtSearch.Text.Trim() == string.Empty)
-            {
-                query = "<Where>" +
-                            "<And>" +
-                              "<And>" +
-                                 "<IsNotNull>" +
-                                    "<FieldRef Name='NamaPerusahaan' />" +
-                                 "</IsNotNull>" +
-                                 "<IsNotNull>" +
-                                    "<FieldRef Name='CompanyCodeAPV' />" +
-                                 "</IsNotNull>" +
-                              "</And>" +
-                              "<Eq>" +
-                                 "<FieldRef Name='ApprovalStatus' />" +
-                                 "<Value Type='Text'>Approved</Value>" +
-                              "</Eq>" +
-                            "</And>" +
-                        "</Where>";
-            }
-            else
-            {
-                query = "<Where>" +
-                            "<And>" +
-                              "<And>" +
-                                 "<Contains>" +
-                                    "<FieldRef Name='NamaPerusahaan' />" +
-                                    "<Value Type='Text'>" + txtSearch.Text.Trim() + "</Value>" +
-                                 "</Contains>" +
-                                 "<IsNotNull>" +
-                                    "<FieldRef Name='CompanyCodeAPV' />" +
-                                 "</IsNotNull>" +
-                              "</And>" +
-                              "<Eq>" +
-                                 "<FieldRef Name='ApprovalStatus' />" +
-                                 "<Value Type='Text'>Approved</Value>" +
-                              "</Eq>" +
-                           "</And>" +
-                        "</Where>";
-            }
-
-            grv.Visible = true;
-            ods.SelectParameters["ListURL"].DefaultValue = Util.CreateSharePointListStrUrl(web.Url, "PerusahaanBaru");
-            ods.SelectParameters["strQuery"].DefaultValue = query;
-            ods.Page.DataBind();
-        }
-
-        protected void imgbtnNamaPerusahaan_Click(object sender, ImageClickEventArgs e)
-        {
-            txtSearch.Text = string.Empty;
-            grv.Visible = false;
-        }
-
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            BindPerusahaan();
-        }
-
-        protected void grv_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.DataItemIndex < 0)
-                return;
-
-            DataRowView dr = e.Row.DataItem as DataRowView;
-
-            Literal ltrrb = e.Row.FindControl("ltrrb") as Literal;
-            ltrrb.Text = string.Format("<input type='radio' name='rbPerusahaan' id='Row{0}' value='{0}' />", dr["ID"].ToString());
-        }
-
-        protected void btnSelect_Click(object sender, EventArgs e)
-        {
-            if (Request.Form["rbPerusahaan"] != null)
-            {
-                string IDPerusahaan = Request.Form["rbPerusahaan"].ToString();
-                DisplayPerusahaan(Convert.ToInt32(IDPerusahaan));
-                Util.RegisterStartupScript(Page, "closePerusahaan", "closeDialog('divPerusahaanSearch');");
-            }
-            else
-                Util.ShowMessage(Page, "Please choose Perusahaan");
         }
 
         #endregion

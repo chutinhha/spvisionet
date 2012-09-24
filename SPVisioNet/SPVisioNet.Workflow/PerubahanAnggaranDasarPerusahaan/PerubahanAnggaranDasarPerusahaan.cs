@@ -30,7 +30,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
         public SPWorkflowActivationProperties workflowProperties = new SPWorkflowActivationProperties();
         private string CodeName = "ADP"; //PERUBAHAN_ANGGARAN_DASAR_DAN_DATA_PERUSAHAAN
         private string module = string.Empty;
-        private string[] StepWF = { "Entry Perubahan Anggaran Dasar", "Approve oleh Authorized Person", "PIC Update Akta", "PIC Upload SKDP", "PIC Upload NPWP dan SKT", "PIC Upload APV", "PIC Upload Setoran Modal","PIC Upload SK Persetujuan" };
+        private string[] StepWF = { "Entry Perubahan Anggaran Dasar", "Approve oleh Authorized Person", "PIC Upload SP Persetujaun PMA/PMDN", "PIC Update Akta", "PIC Upload SKDP", "PIC Upload NPWP dan SKT", "PIC Upload APV", "PIC Upload Setoran Modal", "PIC Upload SK Persetujuan" };
         private string PicCorsec = string.Empty;
 
         private string PicCorsecEmail = string.Empty;
@@ -61,6 +61,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
         private string BodyMessage = string.Empty;
         private bool IsPerubahanNama = false;
         private bool IsPerubahanModal = false;
+        public bool IsPMAPMDN = false;
 
         private void onWorkflowActivated1_Invoked(object sender, ExternalDataEventArgs e)
         {
@@ -78,7 +79,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             VisitorGroup = Util.GetSettingValue(web, "SharePoint Group", "Visitor");
 
             /*PicCorsec*/
-            PicCorsec =  new SPFieldUserValue(workflowProperties.Web,workflowProperties.Item["Author"].ToString()).User.LoginName; 
+            PicCorsec = new SPFieldUserValue(workflowProperties.Web, workflowProperties.Item["Author"].ToString()).User.LoginName;
             PicCorsecEmail = workflowProperties.OriginatorEmail;
             PicCorsecFullName = workflowProperties.OriginatorUser.Name;
 
@@ -216,13 +217,13 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
 
         private void PopulateDataOriginator_ExecuteCode(object sender, EventArgs e)
         {
-            createMultipleTask_PicCorsec___Context1.Initialize(workflowProperties);
-            createMultipleTask_PicCorsec_AssignedTo1 = PicCorsec;
-            createMultipleTask_PicCorsec_ContentTypeId1 = ToDoTaskContentTypeID;
-            createMultipleTask_PicCorsec_TaskTitle1 = "Need to Upload Document and Update Data for " + workflowProperties.Item.Title;
-            createMultipleTask_PicCorsec_WFName1 = WFNameID;
-            createMultipleTask_PicCorsec_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
-            createMultipleTask_PicCorsec_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
+            createMultipleTaskPMAPMDN___Context1.Initialize(workflowProperties);
+            createMultipleTaskPMAPMDN_AssignedTo1 = PicCorsec;
+            createMultipleTaskPMAPMDN_ContentTypeId1 = ToDoTaskContentTypeID;
+            createMultipleTaskPMAPMDN_TaskTitle1 = "Need to Upload Document and Update Data for " + workflowProperties.Item.Title;
+            createMultipleTaskPMAPMDN_WFName1 = WFNameID;
+            createMultipleTaskPMAPMDN_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
+            createMultipleTaskPMAPMDN_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
 
             UpdateItem(Roles.PIC_CORSEC, string.Empty, StepWF[2], 3);
         }
@@ -266,7 +267,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             createMultipleTask_Tax_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
             createMultipleTask_Tax_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
 
-            UpdateItem(Roles.PIC_CORSEC, string.Empty, StepWF[3], 4);
+            UpdateItem(Roles.PIC_CORSEC, string.Empty, StepWF[4], 5);
         }
 
         private void UpdatePermissionTax_ExecuteCode(object sender, EventArgs e)
@@ -305,7 +306,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             createMultipleTask_PicCorsec1_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
             createMultipleTask_PicCorsec1_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
 
-            UpdateItem(Roles.TAX, string.Empty, StepWF[4], 5);
+            UpdateItem(Roles.TAX, string.Empty, StepWF[5], 6);
         }
 
         private void UpdatePermissionOriginator1_ExecuteCode(object sender, EventArgs e)
@@ -353,7 +354,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             createMultipleTask_PicCorsec3_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
             createMultipleTask_PicCorsec3_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
 
-            UpdateItem(Roles.ACCOUNTING, string.Empty, StepWF[5], 6);
+            UpdateItem(Roles.ACCOUNTING, string.Empty, StepWF[7], 8);
         }
 
         private void SetPermissionPicCorsec3_ExecuteCode(object sender, EventArgs e)
@@ -371,7 +372,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
 
         private void UpdatePermissionCompleted_ExecuteCode(object sender, EventArgs e)
         {
-            UpdateItem(string.Empty,"Approved");
+            UpdateItem(string.Empty, "Approved");
             Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Contribute");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, PicCorsec, "Contribute");
@@ -430,7 +431,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             createMultipleTask_PicFinance_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
             createMultipleTask_PicFinance_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
 
-            UpdateItem(Roles.FINANCE, string.Empty, StepWF[6], 7);
+            UpdateItem(Roles.FINANCE, string.Empty, StepWF[7], 8);
         }
 
         public String createMultipleTask_PicFinance_AssignedTo1 = default(System.String);
@@ -458,7 +459,7 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             createMultipleTask_PicCorsec4_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
             createMultipleTask_PicCorsec4_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
 
-            UpdateItem(Roles.PIC_CORSEC, string.Empty, StepWF[7], 8);
+            UpdateItem(Roles.PIC_CORSEC, string.Empty, StepWF[8], 9);
         }
 
         private void SetPermissionPicCorsecLast_ExecuteCode(object sender, EventArgs e)
@@ -495,5 +496,42 @@ namespace SPVisionet.Workflow.PerubahanAnggaranDasarPerusahaan
             IsPerubahanModal = Convert.ToBoolean(workflowProperties.Item["PerubahanModal"]); ;
         }
 
+        private void GetPMAPMDN_ExecuteCode(object sender, EventArgs e)
+        {
+            SPListItem item = workflowProperties.Item;
+            string s = (item["StatusPerseroan"] != null ? new SPFieldLookupValue(item["StatusPerseroan"].ToString()).LookupValue : string.Empty);
+            if (s.Trim().ToUpper().Equals("PMA") || s.Trim().ToUpper().Equals("PMDN"))
+                IsPMAPMDN = true;
+            else
+                IsPMAPMDN = false;
+        }
+
+        private void PopulateDataOriginatorAkta_ExecuteCode(object sender, EventArgs e)
+        {
+            createMultipleTask_PicCorsec___Context1.Initialize(workflowProperties);
+            createMultipleTask_PicCorsec_AssignedTo1 = PicCorsec;
+            createMultipleTask_PicCorsec_ContentTypeId1 = ToDoTaskContentTypeID;
+            createMultipleTask_PicCorsec_TaskTitle1 = "Need to Upload Document and Update Data for " + workflowProperties.Item.Title;
+            createMultipleTask_PicCorsec_WFName1 = WFNameID;
+            createMultipleTask_PicCorsec_Subject1 = string.Format("{0} [ {1} ] Need to Upload Document and Update Data", CodeName, workflowProperties.Item["Title"].ToString());
+            createMultipleTask_PicCorsec_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", module + " Task", workflowProperties.Item.Title, "need you to upload document and update data", "{1}");
+
+            UpdateItem(Roles.PIC_CORSEC, string.Empty, StepWF[3], 4);
+        }
+
+        public WorkflowContext createMultipleTaskPMAPMDN___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
+        public String createMultipleTaskPMAPMDN_AssignedTo1 = default(System.String);
+        public String createMultipleTaskPMAPMDN_Body1 = default(System.String);
+        public String createMultipleTaskPMAPMDN_ContentTypeId1 = default(System.String);
+        public String createMultipleTaskPMAPMDN_Subject1 = default(System.String);
+        public String createMultipleTaskPMAPMDN_TaskTitle1 = default(System.String);
+        public String createMultipleTaskPMAPMDN_WFName1 = default(System.String);
+        public SPWorkflowTaskProperties updateAllTasksPicCorsecPMAPMDN_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
+
+        private void updateAllTasksPicCorsecPMAPMDN_MethodInvoking(object sender, EventArgs e)
+        {
+            updateAllTasksPicCorsecPMAPMDN_TaskProperties1.PercentComplete = 1;
+            updateAllTasksPicCorsecPMAPMDN_TaskProperties1.ExtendedProperties["Status"] = "Completed";
+        }
     }
 }

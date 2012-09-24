@@ -139,6 +139,42 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtEmailPemohon;
         
         /// <summary>
+        /// upDataPerusahaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upDataPerusahaan;
+        
+        /// <summary>
+        /// ddlStatusPerseroan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlStatusPerseroan;
+        
+        /// <summary>
+        /// ltrStatusPerseroan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrStatusPerseroan;
+        
+        /// <summary>
+        /// reqddlStatusPerseroan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlStatusPerseroan;
+        
+        /// <summary>
         /// txtNamaPerusahaan control.
         /// </summary>
         /// <remarks>
@@ -155,6 +191,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltrNamaPerusahaan;
+        
+        /// <summary>
+        /// imgbtnNamaPerusahaan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnNamaPerusahaan;
         
         /// <summary>
         /// reqtxtNamaPerusahaan control.
@@ -245,33 +290,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlStatusOwnership;
-        
-        /// <summary>
-        /// ddlStatusPerseroan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStatusPerseroan;
-        
-        /// <summary>
-        /// ltrStatusPerseroan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrStatusPerseroan;
-        
-        /// <summary>
-        /// reqddlStatusPerseroan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqddlStatusPerseroan;
         
         /// <summary>
         /// upStrukturPermodalan control.
@@ -562,6 +580,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuAkte;
         
         /// <summary>
+        /// chkOriginalAkte control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalAkte;
+        
+        /// <summary>
+        /// ltrOriginalAkte control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalAkte;
+        
+        /// <summary>
         /// txtNoAkte control.
         /// </summary>
         /// <remarks>
@@ -724,6 +760,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuSKDP;
         
         /// <summary>
+        /// chkOriginalSKDP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalSKDP;
+        
+        /// <summary>
+        /// ltrOriginalSKDP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalSKDP;
+        
+        /// <summary>
         /// txtNoSKDP control.
         /// </summary>
         /// <remarks>
@@ -877,6 +931,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuAPV;
         
         /// <summary>
+        /// chkOriginalAPV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalAPV;
+        
+        /// <summary>
+        /// ltrOriginalAPV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalAPV;
+        
+        /// <summary>
         /// txtKodePerusahaanAPV control.
         /// </summary>
         /// <remarks>
@@ -976,231 +1048,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.Literal ltrKeteranganAPV;
         
         /// <summary>
-        /// pnlFinance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFinance;
-        
-        /// <summary>
-        /// ltrUsernameSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrUsernameSetoran;
-        
-        /// <summary>
-        /// ltrfuSetoranModal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrfuSetoranModal;
-        
-        /// <summary>
-        /// fuSetoranModal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuSetoranModal;
-        
-        /// <summary>
-        /// reqfuSetoranModal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuSetoranModal;
-        
-        /// <summary>
-        /// dtTanggalSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Microsoft.SharePoint.WebControls.DateTimeControl dtTanggalSetoran;
-        
-        /// <summary>
-        /// ltrTanggalSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrTanggalSetoran;
-        
-        /// <summary>
-        /// reqdtTanggalSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalSetoran;
-        
-        /// <summary>
-        /// txtKeteranganSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKeteranganSetoran;
-        
-        /// <summary>
-        /// ltrKeteranganSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrKeteranganSetoran;
-        
-        /// <summary>
-        /// chkStatusSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkStatusSetoran;
-        
-        /// <summary>
-        /// ltrStatusSetoran control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrStatusSetoran;
-        
-        /// <summary>
-        /// pnlPICCorsec3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPICCorsec3;
-        
-        /// <summary>
-        /// ltrUsernameSKPengesahan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrUsernameSKPengesahan;
-        
-        /// <summary>
-        /// ltrfuSKPengesahan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrfuSKPengesahan;
-        
-        /// <summary>
-        /// fuSKPengesahan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuSKPengesahan;
-        
-        /// <summary>
-        /// reqfuSKPengesahan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuSKPengesahan;
-        
-        /// <summary>
-        /// txtNoSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNoSK;
-        
-        /// <summary>
-        /// ltrNoSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrNoSK;
-        
-        /// <summary>
-        /// reqtxtNoSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNoSK;
-        
-        /// <summary>
-        /// dtTanggalDiterbitkanSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Microsoft.SharePoint.WebControls.DateTimeControl dtTanggalDiterbitkanSK;
-        
-        /// <summary>
-        /// ltrTanggalDiterbitkanSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrTanggalDiterbitkanSK;
-        
-        /// <summary>
-        /// reqdtTanggalDiterbitkanSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalDiterbitkanSK;
-        
-        /// <summary>
-        /// txtKeteranganSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKeteranganSK;
-        
-        /// <summary>
-        /// ltrKeteranganSK control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrKeteranganSK;
-        
-        /// <summary>
         /// pnlTax control.
         /// </summary>
         /// <remarks>
@@ -1244,6 +1091,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuNPWP;
+        
+        /// <summary>
+        /// chkOriginalNPWP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalNPWP;
+        
+        /// <summary>
+        /// ltrOriginalNPWP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalNPWP;
         
         /// <summary>
         /// txtNOSKTNPWP control.
@@ -1381,22 +1246,31 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNamaKPP;
         
         /// <summary>
-        /// txtKeteranganNPWP control.
+        /// txtAlamatNPWP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKeteranganNPWP;
+        protected global::System.Web.UI.WebControls.TextBox txtAlamatNPWP;
         
         /// <summary>
-        /// ltrKeteranganNPWP control.
+        /// ltrAlamatNPWP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrKeteranganNPWP;
+        protected global::System.Web.UI.WebControls.Literal ltrAlamatNPWP;
+        
+        /// <summary>
+        /// reqtxtAlamatNPWP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtAlamatNPWP;
         
         /// <summary>
         /// dgNPWPLainnya control.
@@ -1406,6 +1280,276 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataGrid dgNPWPLainnya;
+        
+        /// <summary>
+        /// pnlFinance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFinance;
+        
+        /// <summary>
+        /// ltrUsernameSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrUsernameSetoran;
+        
+        /// <summary>
+        /// ltrfuSetoranModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrfuSetoranModal;
+        
+        /// <summary>
+        /// fuSetoranModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuSetoranModal;
+        
+        /// <summary>
+        /// reqfuSetoranModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuSetoranModal;
+        
+        /// <summary>
+        /// chkOriginalSetoranModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalSetoranModal;
+        
+        /// <summary>
+        /// ltrOriginalSetoranModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalSetoranModal;
+        
+        /// <summary>
+        /// lblTanggalSetoranRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTanggalSetoranRequired;
+        
+        /// <summary>
+        /// dtTanggalSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Microsoft.SharePoint.WebControls.DateTimeControl dtTanggalSetoran;
+        
+        /// <summary>
+        /// ltrTanggalSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrTanggalSetoran;
+        
+        /// <summary>
+        /// reqdtTanggalSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalSetoran;
+        
+        /// <summary>
+        /// txtKeteranganSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKeteranganSetoran;
+        
+        /// <summary>
+        /// ltrKeteranganSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrKeteranganSetoran;
+        
+        /// <summary>
+        /// chkStatusSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkStatusSetoran;
+        
+        /// <summary>
+        /// ltrStatusSetoran control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrStatusSetoran;
+        
+        /// <summary>
+        /// pnlPICCorsec3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPICCorsec3;
+        
+        /// <summary>
+        /// ltrUsernameSKPengesahan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrUsernameSKPengesahan;
+        
+        /// <summary>
+        /// ltrfuSKPengesahan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrfuSKPengesahan;
+        
+        /// <summary>
+        /// fuSKPengesahan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuSKPengesahan;
+        
+        /// <summary>
+        /// reqfuSKPengesahan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuSKPengesahan;
+        
+        /// <summary>
+        /// chkOriginalSKPengesahan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalSKPengesahan;
+        
+        /// <summary>
+        /// ltrOriginalSKPengesahan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalSKPengesahan;
+        
+        /// <summary>
+        /// txtNoSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNoSK;
+        
+        /// <summary>
+        /// ltrNoSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrNoSK;
+        
+        /// <summary>
+        /// reqtxtNoSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNoSK;
+        
+        /// <summary>
+        /// dtTanggalDiterbitkanSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Microsoft.SharePoint.WebControls.DateTimeControl dtTanggalDiterbitkanSK;
+        
+        /// <summary>
+        /// ltrTanggalDiterbitkanSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrTanggalDiterbitkanSK;
+        
+        /// <summary>
+        /// reqdtTanggalDiterbitkanSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalDiterbitkanSK;
+        
+        /// <summary>
+        /// txtKeteranganSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKeteranganSK;
+        
+        /// <summary>
+        /// ltrKeteranganSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrKeteranganSK;
         
         /// <summary>
         /// pnlTax2 control.
@@ -1453,6 +1597,33 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqfuPKP;
         
         /// <summary>
+        /// chkOriginalPKP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalPKP;
+        
+        /// <summary>
+        /// ltrOriginalPKP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalPKP;
+        
+        /// <summary>
+        /// lblNoPKPRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNoPKPRequired;
+        
+        /// <summary>
         /// txtNoPKP control.
         /// </summary>
         /// <remarks>
@@ -1480,6 +1651,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNoPKP;
         
         /// <summary>
+        /// lblTanggalTerdaftarRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTanggalTerdaftarRequired;
+        
+        /// <summary>
         /// dtTanggalTerdaftarPKP control.
         /// </summary>
         /// <remarks>
@@ -1505,6 +1685,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqdtTanggalTerdaftarPKP;
+        
+        /// <summary>
+        /// lblNamaPKPRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNamaPKPRequired;
         
         /// <summary>
         /// txtNamaPKP control.
@@ -1615,6 +1804,24 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.FileUpload fuBNRI;
         
         /// <summary>
+        /// chkOriginalBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOriginalBNRI;
+        
+        /// <summary>
+        /// ltrOriginalBNRI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrOriginalBNRI;
+        
+        /// <summary>
         /// txtNoBNRI control.
         /// </summary>
         /// <remarks>
@@ -1705,210 +1912,66 @@ namespace SPVisionet.CorporateSecretary.WebParts.PendirianPerusahaanBaruIndonesi
         protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
-        /// upPemohon control.
+        /// Pemohon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upPemohon;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.Pemohon Pemohon;
         
         /// <summary>
-        /// pnlPemohon control.
+        /// ucPemegangSaham control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPemohon;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.PemegangSahamKomisarisMasterData ucPemegangSaham;
         
         /// <summary>
-        /// txtSearchPemohon control.
+        /// ucKomisaris control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchPemohon;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.PemegangSahamKomisarisMasterData ucKomisaris;
         
         /// <summary>
-        /// btnSearchPemohon control.
+        /// ucPemegangSahamInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchPemohon;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.PemegangSahamKomisarisInfo ucPemegangSahamInfo;
         
         /// <summary>
-        /// btnAddPemohon control.
+        /// ucKomisarisInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddPemohon;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.PemegangSahamKomisarisInfo ucKomisarisInfo;
         
         /// <summary>
-        /// upProg control.
+        /// SKDPLog control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdateProgress upProg;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.SKDPLog SKDPLog;
         
         /// <summary>
-        /// grvPemohon control.
+        /// Perusahaan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvPemohon;
-        
-        /// <summary>
-        /// odsPemohon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource odsPemohon;
-        
-        /// <summary>
-        /// btnSelectPemohon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSelectPemohon;
-        
-        /// <summary>
-        /// btnCloseSearchPemohon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCloseSearchPemohon;
-        
-        /// <summary>
-        /// pnlPemohonAddEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPemohonAddEdit;
-        
-        /// <summary>
-        /// txtNamaPemohonAddEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNamaPemohonAddEdit;
-        
-        /// <summary>
-        /// reqtxtNamaPemohonAddEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtNamaPemohonAddEdit;
-        
-        /// <summary>
-        /// txtEmailPemohonAddEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmailPemohonAddEdit;
-        
-        /// <summary>
-        /// reqtxtEmailPemohonAddEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqtxtEmailPemohonAddEdit;
-        
-        /// <summary>
-        /// regtxtEmailPemohonAddEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator regtxtEmailPemohonAddEdit;
-        
-        /// <summary>
-        /// btnSavePemohon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSavePemohon;
-        
-        /// <summary>
-        /// btnCancelPemohon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelPemohon;
-        
-        /// <summary>
-        /// upProgAdd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress upProgAdd;
-        
-        /// <summary>
-        /// upSKDPLog control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upSKDPLog;
-        
-        /// <summary>
-        /// grvSKDPLog control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvSKDPLog;
-        
-        /// <summary>
-        /// odsSKDPLog control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource odsSKDPLog;
-        
-        /// <summary>
-        /// btnClose control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClose;
+        protected global::SPVisionet.CorporateSecretary.WebParts._ControlTemplates.Lippo.PerusahaanPMAPMDN Perusahaan;
     }
 }

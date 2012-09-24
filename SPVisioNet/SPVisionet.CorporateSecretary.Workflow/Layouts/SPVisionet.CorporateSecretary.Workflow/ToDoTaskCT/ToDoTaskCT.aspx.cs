@@ -28,7 +28,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
         private const string PIC_CORSEC_UPLOAD_AKTA = Common.Roles.PIC_CORSEC + " Upload Akta";
         private const string PIC_CORSEC_UPLOAD_SKDP = Common.Roles.PIC_CORSEC + " Upload SKDP";
         private const string ACCOUNTING_HEAD_INPUT_COMPANY_CODE = Common.Roles.ACCOUNTING_HEAD + " Input Company Code";
-        private const string ACCOUNTING_UPLOAD_APV = Common.Roles.ACCOUNTING + " Upload APV";
+        private const string ACCOUNTING_UPLOAD_APV = Common.Roles.ACCOUNTING + " Upload JV";
         private const string FINANCE_UPLOAD_SETORAN_MODAL = Common.Roles.FINANCE + " Upload Setoran Modal";
         private const string PIC_CORSEC_UPLOAD_SK_PENGESAHAN = Common.Roles.PIC_CORSEC + " Upload SK Pengesahan";
         private const string TAX_UPLOAD_NPWP = Common.Roles.TAX + " Upload NPWP";
@@ -580,27 +580,20 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                                     "</Eq>" +
                                   "</Where>";
 
-                    SPList pemegangsaham = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PemegangSaham"));
+                    SPList komisarisdireksi = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "KomisarisDireksi"));
                     SPQuery query2 = new SPQuery();
                     query2.Query = qry2;
 
-                    SPListItemCollection coll2 = null;
-                    coll2 = pemegangsaham.GetItems(query2);
+                    SPListItemCollection coll2 = komisarisdireksi.GetItems(query2);
                     foreach (SPListItem i in coll2)
                     {
                         if (i["TanggalMulaiMenjabat"] == null || i["TanggalAkhirMenjabat"] == null)
-                            sb.Append(SR.FieldCanNotEmpty("Tanggal Mulai dan Akhir Menjabat Pemegang Saham for " + i.Title + "") + " \\n");
-                    }
+                        {
+                            string IDMasterData = i["KomisarisDireksi"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                    SPList komisarisdireksi = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "KomisarisDireksi"));
-                    query2 = new SPQuery();
-                    query2.Query = qry2;
-
-                    coll2 = komisarisdireksi.GetItems(query2);
-                    foreach (SPListItem i in coll2)
-                    {
-                        if (i["TanggalMulaiMenjabat"] == null || i["TanggalAkhirMenjabat"] == null)
-                            sb.Append(SR.FieldCanNotEmpty("Tanggal Mulai dan Akhir Menjabat Komisaris and Direksi for " + i.Title + "") + " \\n");
+                            SPListItem itemPSKMasterData = Util.GetPemegangSahamKomisarisMasterData(web, Convert.ToInt32(IDMasterData));
+                            sb.Append(SR.FieldCanNotEmpty("Tanggal Mulai dan Akhir Menjabat Komisaris and Direksi for " + itemPSKMasterData.Title + "") + " \\n");
+                        }
                     }
                 }
                 else if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_SKDP || item["Status"].ToString() == PIC_CORSEC)
@@ -631,32 +624,35 @@ namespace SPVisionet.CorporateSecretary.Workflow.Layouts.SPVisionet.CorporateSec
                 else if (item["Status"].ToString() == ACCOUNTING_UPLOAD_APV)
                 {
                     SPQuery query = new SPQuery();
-                    query.Query = string.Format(qry, "APV");
+                    query.Query = string.Format(qry, "Journal Voucher");
                     query.Folder = web.Folders["PerusahaanBaruDokumen"].SubFolders[item.Title];
 
                     SPListItemCollection coll = null;
                     coll = document.GetItems(query);
                     if (coll.Count == 0)
-                        sb.Append(SR.FieldCanNotEmpty("File Upload APV") + " \\n");
+                        sb.Append(SR.FieldCanNotEmpty("File Upload Journal Voucher") + " \\n");
 
                     if (item["NoAPV"] == null)
-                        sb.Append(SR.FieldCanNotEmpty("No APV") + " \\n");
+                        sb.Append(SR.FieldCanNotEmpty("No Journal Voucher") + " \\n");
                     if (item["TanggalAPV"] == null)
-                        sb.Append(SR.FieldCanNotEmpty("Tanggal APV") + " \\n");
+                        sb.Append(SR.FieldCanNotEmpty("Tanggal Journal Voucher") + " \\n");
                 }
                 else if (item["Status"].ToString() == FINANCE_UPLOAD_SETORAN_MODAL || item["Status"].ToString() == PIC_CORSEC)
                 {
-                    SPQuery query = new SPQuery();
-                    query.Query = string.Format(qry, "Setoran Modal");
-                    query.Folder = web.Folders["PerusahaanBaruDokumen"].SubFolders[item.Title];
+                    if (Convert.ToBoolean(item["StatusSetoran"]))
+                    {
+                        SPQuery query = new SPQuery();
+                        query.Query = string.Format(qry, "Setoran Modal");
+                        query.Folder = web.Folders["PerusahaanBaruDokumen"].SubFolders[item.Title];
 
-                    SPListItemCollection coll = null;
-                    coll = document.GetItems(query);
-                    if (coll.Count == 0)
-                        sb.Append(SR.FieldCanNotEmpty("File Upload Setoran Modal") + " \\n");
+                        SPListItemCollection coll = null;
+                        coll = document.GetItems(query);
+                        if (coll.Count == 0)
+                            sb.Append(SR.FieldCanNotEmpty("File Upload Setoran Modal") + " \\n");
 
-                    if (item["TanggalSetoran"] == null)
-                        sb.Append(SR.FieldCanNotEmpty("Tanggal Setoran") + " \\n");
+                        if (item["TanggalSetoran"] == null)
+                            sb.Append(SR.FieldCanNotEmpty("Tanggal Setoran") + " \\n");
+                    }
                 }
                 else if (item["Status"].ToString() == PIC_CORSEC_UPLOAD_SK_PENGESAHAN || item["Status"].ToString() == PIC_CORSEC)
                 {

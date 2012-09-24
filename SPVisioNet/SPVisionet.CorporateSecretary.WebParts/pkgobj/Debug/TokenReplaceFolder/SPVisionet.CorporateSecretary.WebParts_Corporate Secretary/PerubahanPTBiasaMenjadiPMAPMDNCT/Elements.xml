@@ -12,9 +12,9 @@
     <XmlDocuments>
       <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
         <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
-          <Display>/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=display</Display>
-          <Edit>/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=edit</Edit>
-          <New>/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=new</New>
+          <Display>/cs/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=display</Display>
+          <Edit>/cs/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=edit</Edit>
+          <New>/cs/Lists/PerubahanPTBiasaMenjadiPMAPMDN/PerubahanPTBiasaMenjadiPMAPMDN.aspx?mode=new</New>
         </FormUrls>
       </XmlDocument>
     </XmlDocuments>

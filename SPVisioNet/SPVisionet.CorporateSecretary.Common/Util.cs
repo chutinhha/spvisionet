@@ -619,5 +619,65 @@ namespace SPVisionet.CorporateSecretary.Common
                 return true;
             return false;
         }
+
+        public static SPListItem GetPemegangSahamKomisarisMasterData(SPWeb web, int ID)
+        {
+            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "PemegangSahamKomisarisMasterData"));
+            SPListItem item = list.GetItemById(ID);
+            if (item != null)
+                return item;
+            return null;
+        }
+
+        public static void AddPemegangSahamKomisarisMasterData(SPWeb web, SPListItem itemPerusahaanBaru)
+        {
+            using (SPSite site = new SPSite(web.Url, web.Site.SystemAccount.UserToken))
+            {
+                using (SPWeb webSA = site.OpenWeb())
+                {
+                    SPList list = webSA.GetList(Util.CreateSharePointListStrUrl(webSA.Url, "PemegangSahamKomisarisMasterData"));
+                    webSA.AllowUnsafeUpdates = true;
+
+                    SPListItem itemAdd = list.Items.Add();
+                    itemAdd["Title"] = itemPerusahaanBaru["NamaPerusahaan"];
+                    itemAdd["Tipe"] = "Perusahaan LK";
+                    itemAdd["Alamat"] = itemPerusahaanBaru["AlamatSKDP"] == null ? string.Empty : itemPerusahaanBaru["AlamatSKDP"].ToString();
+                    itemAdd["NoNPWP"] = itemPerusahaanBaru["NoNPWP"] == null ? string.Empty : itemPerusahaanBaru["NoNPWP"].ToString();
+                    itemAdd["NoIdentitas"] = null;
+                    itemAdd["TanggalBerakhirNoIdentitas"] = null;
+                  
+                    SPList document = webSA.GetList(Util.CreateSharePointDocLibStrUrl(webSA.Url, "PerusahaanBaruDokumen"));
+                    SPQuery query = new SPQuery();
+                    query.Query = "<Where>" +
+                                     "<And>" +
+                                         "<Eq>" +
+                                              "<FieldRef Name='PerusahaanBaru' LookupId='True' />" +
+                                              "<Value Type='Lookup'>" + itemPerusahaanBaru.ID + "</Value>" +
+                                          "</Eq>" +
+                                          "<Eq>" +
+                                              "<FieldRef Name='DocumentType' />" +
+                                              "<Value Type='Text'>NPWP</Value>" +
+                                          "</Eq>" +
+                                     "</And>" +
+                                  "</Where>" +
+                                  "<OrderBy>" +
+                                    "<FieldRef Name='Created' Ascending='False' />" +
+                                  "</OrderBy>";
+                    query.Folder = webSA.Folders["PerusahaanBaruDokumen"].SubFolders[itemPerusahaanBaru.Title];
+
+                    SPListItemCollection coll = document.GetItems(query);
+                    if (coll.Count > 0)
+                    {
+                        SPListItem itemDocument = coll[0];
+                        byte[] bytes = itemDocument.File.OpenBinary();
+
+                        itemAdd.Attachments.Add(itemDocument["Name"].ToString(), bytes);
+                    }
+                    itemAdd.Update();
+
+                    webSA.AllowUnsafeUpdates = false;
+                }
+            }
+        }
     }
 }

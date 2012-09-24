@@ -9,6 +9,8 @@
     Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PermohonanPembuatanIzinUsahaUserControl.ascx.cs"
     Inherits="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanIzinUsaha.PermohonanPembuatanIzinUsahaUserControl" %>
+<%@ Register Src="~/_controltemplates/Lippo/Perusahaan.ascx"
+    TagName="Perusahaan" TagPrefix="uc" %>
 <fieldset>
     <legend>
         <h3>
@@ -72,7 +74,7 @@
                             <asp:TextBox ID="txtNamaPerusahaan" runat="server" Width="250px" />
                             <asp:ImageButton ID="imgbtnNamaPerusahaan" ValidationGroup="popup" runat="server"
                                 ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
-                                ToolTip="Search" OnClientClick="openDialog(event, 'Search Company', 'divPerusahaanSearch')"
+                                ToolTip="Search" OnClientClick="openDialog(event, 'Cari Perusahaan', 'divPerusahaanSearch')"
                                 CausesValidation="false" OnClick="imgbtnNamaPerusahaan_Click" />
                             <asp:RequiredFieldValidator ID="reqtxtNamaPerusahaan" ValidationGroup="Save" Display="Dynamic"
                                 runat="server" ControlToValidate="txtNamaPerusahaan" ErrorMessage="Required Field" />
@@ -170,15 +172,10 @@
     <asp:Panel ID="pnlOriginator" runat="server" Visible="false">
         <fieldset>
             <legend><b>Laporan Pembuatan Izin Usaha</b></legend>
-            <table border="0">
+            <table border="0" width="100%">
                 <tr>
-                    <td valign="top" width="315px">
+                    <td valign="top" width="320px">
                         Izin Usaha<span style="color: Red">*</span>
-                        <br />
-                        <br />
-                        <b>Note:
-                            <br />
-                            Penulisan harus ada [ORI]xxxxx / [Soft]xxxxx</b>
                         <br />
                         <br />
                         <asp:Literal ID="ltrfu" runat="server" />
@@ -188,6 +185,11 @@
                         <br />
                         <asp:RequiredFieldValidator ID="reqfu" Display="Dynamic" ValidationGroup="Save" runat="server"
                             ControlToValidate="fu" ErrorMessage="Required Field" />
+                        <br />
+                        <br />
+                        Original/Copy? :
+                        <asp:CheckBox ID="chkOriginal" runat="server" Text="Original di-check. Copy di-uncheck" />
+                        <asp:Literal ID="ltrOriginal" runat="server" />
                     </td>
                     <td>
                         <table border="0">
@@ -243,7 +245,7 @@
                             </tr>
                         </table>
                     </td>
-                    <td valign="top">
+                    <td valign="top" align="right">
                         Dilaporkan Oleh:
                         <br />
                         <br />
@@ -266,78 +268,6 @@
 </fieldset>
 <div id="divPerusahaanDlgContainer">
     <div id="divPerusahaanSearch" style="display: none">
-        <asp:UpdatePanel ID="upPerusahaan" runat="server">
-            <ContentTemplate>
-                <table width="100%" border="0">
-                    <tr>
-                        <td>
-                            <table cellpadding="0" border="0">
-                                <tr>
-                                    <td>
-                                        Search :
-                                        <asp:TextBox ID="txtSearch" runat="server" Width="200px" />
-                                        &nbsp;<asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" />
-                                    </td>
-                                    <td>
-                                        <asp:UpdateProgress ID="upProg" AssociatedUpdatePanelID="upPerusahaan" runat="server"
-                                            DynamicLayout="true">
-                                            <ProgressTemplate>
-                                                <img border="0" src="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/loading.gif"
-                                                    title="Loading" alt="Loading" />
-                                            </ProgressTemplate>
-                                        </asp:UpdateProgress>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:GridView ID="grv" runat="server" AutoGenerateColumns="false" CssClass="table"
-                                Width="100%" EmptyDataText="No Data Available" DataSourceID="ods" AllowPaging="true"
-                                PageSize="10" OnRowDataBound="grv_RowDataBound">
-                                <HeaderStyle CssClass="header" />
-                                <RowStyle CssClass="odd" />
-                                <AlternatingRowStyle CssClass="even" />
-                                <PagerStyle CssClass="pager" />
-                                <Columns>
-                                    <asp:TemplateField HeaderText="">
-                                        <ItemStyle HorizontalAlign="Center" Width="10px" />
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltrrb" runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="CompanyCodeAPV" HeaderText="Kode Perusahaan" />
-                                    <asp:BoundField DataField="NamaPerusahaan" HeaderText="Nama Perusahaan" />
-                                    <asp:BoundField DataField="TempatKedudukan" HeaderText="Tempat Kedudukan" />
-                                    <asp:BoundField DataField="MaksudTujuan" HeaderText="Maksud dan Tujuan" />
-                                </Columns>
-                            </asp:GridView>
-                            <asp:ObjectDataSource ID="ods" runat="server" EnablePaging="True" MaximumRowsParameterName="pageSize"
-                                SelectMethod="GetItemDataTable" SelectCountMethod="ListItemCount" StartRowIndexParameterName="pageIndex"
-                                TypeName="SPVisionet.CorporateSecretary.Common.Util">
-                                <SelectParameters>
-                                    <asp:Parameter Name="ListURL" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="pageSize" Type="Int32" />
-                                    <asp:Parameter Name="pageIndex" Type="Int32" />
-                                    <asp:Parameter Name="strSortFieldName" Type="String" DefaultValue="NamaPerusahaan"
-                                        ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="strDataType" Type="String" DefaultValue="String" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="blAscendingTrueFalse" Type="Boolean" DefaultValue="false" />
-                                    <asp:Parameter Name="strViewFields" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="strQuery" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                </SelectParameters>
-                            </asp:ObjectDataSource>
-                        </td>
-                    </tr>
-                    <tr align="right">
-                        <td>
-                            <asp:Button ID="btnSelect" runat="server" Text="Select" OnClick="btnSelect_Click" />
-                            <asp:Button ID="btnCloseSearch" runat="server" Text="Close" OnClientClick="closeDialog('divPerusahaanSearch')" />
-                        </td>
-                    </tr>
-                </table>
-            </ContentTemplate>
-        </asp:UpdatePanel>
+        <uc:Perusahaan ID="Perusahaan" runat="server" />
     </div>
 </div>

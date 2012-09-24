@@ -7,7 +7,8 @@ using System.Web.Services;
 using Microsoft.SharePoint;
 using SPVisionet.CorporateSecretary.Common;
 
-public class PemegangSahamPerubahanPMAPMDN : IHttpHandler {
+public class PemegangSahamPerubahanPMAPMDN : IHttpHandler
+{
 
     private void Bind(HttpContext context, string search)
     {
@@ -22,7 +23,7 @@ public class PemegangSahamPerubahanPMAPMDN : IHttpHandler {
                        "</Where>";
         query.ViewFields = "<FieldRef Name='Title'/>";
 
-        using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
+        using (SPSite site = new SPSite(SPContext.Current.Web.Url + "/cs", SPContext.Current.Site.SystemAccount.UserToken))
         {
             using (SPWeb web = site.OpenWeb())
             {
@@ -58,9 +59,11 @@ public class PemegangSahamPerubahanPMAPMDN : IHttpHandler {
             return;
         }
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
