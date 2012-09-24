@@ -169,3 +169,8 @@ function Notaris(txt) {
         $("#" + txt).autocomplete({ source: '/Common/Notaris.ashx?Search=' + search + '' });
     });
 }
+function FormatMask(txt, format) {
+    jQuery(function ($) {
+        $("#" + txt).mask(format);
+    });
+}

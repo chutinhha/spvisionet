@@ -26,10 +26,16 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
         private const string PIC_CORSEC = Roles.PIC_CORSEC;
         private const string DIV_HEAD_CORSEC = Roles.DIV_HEAD_CORSEC;
         private const string ACCOUNTING_HEAD_INPUT_COMPANY_CODE = Roles.ACCOUNTING_HEAD + " Input Company Code";
-        private const string ACCOUNTING_UPLOAD_APV = Roles.ACCOUNTING + " Upload APV";
+        private const string ACCOUNTING_UPLOAD_APV = Roles.ACCOUNTING + " Upload JV";
         private const string APPROVED = "Approved";
 
         private const string NPWP_FORMAT = "99.999.999.9-999.999";
+
+        private LinkButton lbNamaPemegangSahamAdd;
+        private Label lblIDPemegangSahamAdd;
+
+        private LinkButton lbNamaKomisarisAdd;
+        private Label lblIDKomisarisAdd;
 
         [Serializable]
         private class WewenangDireksi
@@ -45,10 +51,9 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             public string Nama { get; set; }
             public string Jabatan { get; set; }
             public int IDJabatan { get; set; }
-            public string NoKTP { get; set; }
-            public string NoNPWP { get; set; }
             public DateTime? MulaiMenjabat { get; set; }
             public DateTime? AkhirMenjabat { get; set; }
+            public int IDKomisaris { get; set; }
         }
 
         [Serializable]
@@ -60,8 +65,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             public double JumlahNominal { get; set; }
             public double Percentages { get; set; }
             public bool Partner { get; set; }
-            public DateTime? MulaiMenjabat { get; set; }
-            public DateTime? AkhirMenjabat { get; set; }
+            public int IDPemegangSaham { get; set; }
         }
 
         [Serializable]
@@ -242,7 +246,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             return null;
         }
 
-        private void DisplayDocument(Literal ltr, string RequestCode, string DocumentType)
+        private void DisplayDocument(Literal ltr, string RequestCode, string DocumentType, Literal ltrOriginal, CheckBox chkOriginal)
         {
             SPListItem item = GetLatestDocument(RequestCode, DocumentType);
             if (item != null)
@@ -251,39 +255,57 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     ViewState["SKDPID"] = item.ID;
 
                 ltr.Text = string.Format("<a href='{0}/PerusahaanBaruDokumen/{1}/{2}'>{2}</a>", web.Url, RequestCode, item["Name"].ToString());
+
+                if (item["Original"] != null)
+                {
+                    ltrOriginal.Text = Convert.ToBoolean(item["Original"]) == true ? "Original" : "Copy";
+                    chkOriginal.Checked = Convert.ToBoolean(item["Original"]);
+                }
             }
         }
 
-        private string SaveDocument(FileUpload fu, string RequestCode, string Folder)
+        private string SaveDocument(FileUpload fu, string RequestCode, string Folder, CheckBox chkOriginal)
         {
-            if (fu.PostedFile != null)
+            if (fu.PostedFile.ContentLength > 0)
             {
-                if (fu.PostedFile.ContentLength > 0)
+                string fileName = fu.FileName.Replace("&", string.Empty);
+
+                try
                 {
-                    string fileName = fu.FileName.Replace("&", string.Empty);
+                    Stream strm = fu.PostedFile.InputStream;
+                    byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
+                    strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
+                    strm.Close();
 
-                    try
+                    SPFolder document = web.Folders["PerusahaanBaruDokumen"].SubFolders[RequestCode];
+                    SPFile file = document.Files.Add(fileName, bytes);
+                    SPItem itemDocument = file.Item;
+                    itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
+                    itemDocument["DocumentType"] = Folder;
+                    itemDocument["Original"] = chkOriginal.Checked;
+                    itemDocument["PerusahaanBaru"] = Convert.ToInt32(ViewState["ID"]);
+                    itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                    itemDocument.Update();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("already exist"))
+                        return SR.DataIsExist(fileName);
+                    else
+                        return SR.AttachmentFailed(fileName);
+                }
+            }
+            else
+            {
+                if (IDP != 0)
+                {
+                    SPListItem item = GetLatestDocument(RequestCode, Folder);
+                    if (item != null)
                     {
-                        Stream strm = fu.PostedFile.InputStream;
-                        byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
-                        strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
-                        strm.Close();
-
-                        SPFolder document = web.Folders["PerusahaanBaruDokumen"].SubFolders[RequestCode];
-                        SPFile file = document.Files.Add(fileName, bytes);
-                        SPItem itemDocument = file.Item;
-                        itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
-                        itemDocument["DocumentType"] = Folder;
-                        itemDocument["PerusahaanBaru"] = Convert.ToInt32(ViewState["ID"]);
-                        itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                        itemDocument.Update();
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("already exist"))
-                            return SR.DataIsExist(fileName);
-                        else
-                            return SR.AttachmentFailed(fileName);
+                        item.Web.AllowUnsafeUpdates = true;
+                        item["Original"] = chkOriginal.Checked;
+                        item.Update();
+                        item.Web.AllowUnsafeUpdates = false;
                     }
                 }
             }
@@ -403,20 +425,6 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
                 if (dgPemegangSaham.Items.Count == 0)
                     sb.Append(SR.FieldCanNotEmpty("Pemegang Saham") + " \\n");
-                else
-                {
-                    foreach (DataGridItem item in dgPemegangSaham.Items)
-                    {
-                        Label lblNamaPemegangSaham = item.FindControl("lblNamaPemegangSaham") as Label;
-                        Label lblTanggalMulaiMenjabat = item.FindControl("lblTanggalMulaiMenjabat") as Label;
-                        Label lblTanggalAkhirMenjabat = item.FindControl("lblTanggalAkhirMenjabat") as Label;
-
-                        if (lblTanggalMulaiMenjabat.Text.Trim() == string.Empty)
-                            sb.Append(SR.FieldCanNotEmpty("Tanggal Mulai Menjabat for " + lblNamaPemegangSaham.Text) + " \\n");
-                        if (lblTanggalAkhirMenjabat.Text.Trim() == string.Empty)
-                            sb.Append(SR.FieldCanNotEmpty("Tanggal Akhir Menjabat for " + lblNamaPemegangSaham.Text) + " \\n");
-                    }
-                }
 
                 if (dgKomisaris.Items.Count == 0)
                     sb.Append(SR.FieldCanNotEmpty("Komisaris and Direksi") + " \\n");
@@ -460,14 +468,16 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 if (i > 0)
                     sb.Append("Tanggal Akhir Berlaku SKDP must be greater or equal than Tanggal Mulai Berlaku SKDP\\n");
 
-                if (IDP == 0)
+                if (chkStatusSetoran.Checked)
                 {
-                    if (!fuSetoranModal.HasFile)
-                        sb.Append(SR.FieldCanNotEmpty("File Upload Setoran Modal") + " \\n");
+                    if (IDP == 0)
+                    {
+                        if (!fuSetoranModal.HasFile)
+                            sb.Append(SR.FieldCanNotEmpty("File Upload Setoran Modal") + " \\n");
+                    }
+                    if (dtTanggalSetoran.IsDateEmpty || dtTanggalSetoran.ErrorMessage != null)
+                        sb.Append(SR.FieldCanNotEmpty("Tanggal Setoran") + " \\n");
                 }
-                if (dtTanggalSetoran.IsDateEmpty || dtTanggalSetoran.ErrorMessage != null)
-                    sb.Append(SR.FieldCanNotEmpty("Tanggal Setoran") + " \\n");
-
 
                 if (txtNoSK.Text.Trim() == string.Empty)
                     sb.Append(SR.FieldCanNotEmpty("No SK Pengesahan") + " \\n");
@@ -489,6 +499,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     sb.Append(SR.FieldCanNotEmpty("Tanggal Terdaftar NPWP") + " \\n");
                 if (txtNamaKPP.Text.Trim() == string.Empty)
                     sb.Append(SR.FieldCanNotEmpty("Nama KPP") + " \\n");
+                if (txtAlamatNPWP.Text.Trim() == string.Empty)
+                    sb.Append(SR.FieldCanNotEmpty("Alamat") + " \\n");
 
                 if (chkStatusPKP.Checked)
                 {
@@ -515,12 +527,12 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 if (IDP == 0)
                 {
                     if (!fuAPV.HasFile)
-                        sb.Append(SR.FieldCanNotEmpty("File Upload APV") + " \\n");
+                        sb.Append(SR.FieldCanNotEmpty("File Upload Journal Voucher") + " \\n");
                 }
                 if (txtNoAPV.Text.Trim() == string.Empty)
-                    sb.Append(SR.FieldCanNotEmpty("No APV") + " \\n");
+                    sb.Append(SR.FieldCanNotEmpty("No Journal Voucher") + " \\n");
                 if (dtTanggalAPV.IsDateEmpty || dtTanggalAPV.ErrorMessage != null)
-                    sb.Append(SR.FieldCanNotEmpty("Tanggal APV") + " \\n");
+                    sb.Append(SR.FieldCanNotEmpty("Tanggal Journal Voucher") + " \\n");
             }
 
             return sb.ToString();
@@ -546,15 +558,18 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             {
                 PemegangSaham o = new PemegangSaham();
                 o.ID = i.ID;
-                o.Nama = i["Title"].ToString();
+                if (i["PemegangSaham"] != null)
+                {
+                    string IDMasterData = i["PemegangSaham"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                    SPListItem itemPSKMaster = Util.GetPemegangSahamKomisarisMasterData(web, Convert.ToInt32(IDMasterData));
+
+                    o.IDPemegangSaham = itemPSKMaster.ID;
+                    o.Nama = itemPSKMaster["Title"].ToString();
+                }
                 o.JumlahNominal = Convert.ToDouble(i["JumlahNominal"]);
                 o.JumlahSaham = Convert.ToDouble(i["JumlahSaham"]);
                 o.Partner = Convert.ToBoolean(i["Partner"]);
                 o.Percentages = Convert.ToDouble(i["Percentages"]);
-                if (i["TanggalMulaiMenjabat"] != null)
-                    o.MulaiMenjabat = Convert.ToDateTime(i["TanggalMulaiMenjabat"]);
-                if (i["TanggalAkhirMenjabat"] != null)
-                    o.AkhirMenjabat = Convert.ToDateTime(i["TanggalAkhirMenjabat"]);
                 collPemegangSaham.Add(o);
             }
             ViewState["PemegangSaham"] = collPemegangSaham;
@@ -584,12 +599,17 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             {
                 KomisarisDireksi o = new KomisarisDireksi();
                 o.ID = i.ID;
-                o.Nama = i["Title"].ToString();
+                if (i["KomisarisDireksi"] != null)
+                {
+                    string IDMasterData = i["KomisarisDireksi"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                    SPListItem itemPSKMaster = Util.GetPemegangSahamKomisarisMasterData(web, Convert.ToInt32(IDMasterData));
+
+                    o.IDKomisaris = itemPSKMaster.ID;
+                    o.Nama = itemPSKMaster["Title"].ToString();
+                }
                 String[] split = i["Jabatan"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries);
                 o.IDJabatan = Convert.ToInt32(split[0]);
                 o.Jabatan = split[1];
-                o.NoKTP = i["NoKTP"].ToString();
-                o.NoNPWP = i["NoNPWP"].ToString();
                 if (i["TanggalMulaiMenjabat"] != null)
                     o.MulaiMenjabat = Convert.ToDateTime(i["TanggalMulaiMenjabat"]);
                 if (i["TanggalAkhirMenjabat"] != null)
@@ -663,14 +683,14 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             ViewState["PKPEdit"] = collDokumenPKP;
             BindPKP();
 
-            DisplayDocument(ltrfuSKDP, item.Title, "SKDP");
-            DisplayDocument(ltrfuAkte, item.Title, "Akta");
-            DisplayDocument(ltrfuNPWP, item.Title, "NPWP");
-            DisplayDocument(ltrfuPKP, item.Title, "PKP");
-            DisplayDocument(ltrfuAPV, item.Title, "APV");
-            DisplayDocument(ltrfuSetoranModal, item.Title, "Setoran Modal");
-            DisplayDocument(ltrfuAkte, item.Title, "Akta and SK Pengesahan Pendirian");
-            DisplayDocument(ltrfuBNRI, item.Title, "BNRI");
+            DisplayDocument(ltrfuSKDP, item.Title, "SKDP", ltrOriginalSKDP, chkOriginalSKDP);
+            DisplayDocument(ltrfuAkte, item.Title, "Akta", ltrOriginalAkte, chkOriginalAkte);
+            DisplayDocument(ltrfuNPWP, item.Title, "NPWP", ltrOriginalNPWP, chkOriginalNPWP);
+            DisplayDocument(ltrfuPKP, item.Title, "PKP", ltrOriginalPKP, chkOriginalPKP);
+            DisplayDocument(ltrfuAPV, item.Title, "Journal Voucher", ltrOriginalAPV, chkOriginalAPV);
+            DisplayDocument(ltrfuSetoranModal, item.Title, "Setoran Modal", ltrOriginalSetoranModal, chkOriginalSetoranModal);
+            DisplayDocument(ltrfuAkte, item.Title, "Akta and SK Pengesahan Pendirian", ltrOriginalAkte, chkOriginalAkte);
+            DisplayDocument(ltrfuBNRI, item.Title, "BNRI", ltrOriginalBNRI, chkOriginalBNRI);
         }
 
         private void Display(string mode)
@@ -725,6 +745,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             txtKeterangan.Text = item["Keterangan"] == null ? string.Empty : item["Keterangan"].ToString();
             if (item["StatusPKP"] != null)
                 chkStatusPKP.Checked = Convert.ToBoolean(item["StatusPKP"]);
+            if (item["StatusSetoran"] != null)
+                chkStatusSetoran.Checked = Convert.ToBoolean(item["StatusSetoran"]);
 
             if (item["Pemohon"] != null)
             {
@@ -764,7 +786,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 txtNoNPWP.Text = item["NoNPWP"].ToString();
                 dtTanggalTerdaftarNPWP.SelectedDate = Convert.ToDateTime(item["TanggalTerdaftarNPWP"]);
                 txtNamaKPP.Text = item["NamaKPPNPWP"].ToString();
-                txtKeteranganNPWP.Text = item["KeteranganNPWP"] == null ? string.Empty : item["KeteranganNPWP"].ToString();
+                txtAlamatNPWP.Text = item["KeteranganNPWP"] == null ? string.Empty : item["KeteranganNPWP"].ToString();
                 ltrUsernameNPWP.Text = item["PembuatNPWP"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
             }
 
@@ -779,7 +801,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 if (item["StatusPKP"] == null)
                     ltrStatusPKP.Text = "No";
                 else
-                    ltrStatusPKP.Text = Convert.ToBoolean(item["StatusPKP"]) == true ? "Yes" : "No";
+                    ltrStatusPKP.Text = Convert.ToBoolean(item["StatusPKP"]) == true ? "Ya" : "Tida";
                 ltrUsernamePKP.Text = item["PembuatPKP"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
             }
 
@@ -799,9 +821,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             /* Setoran Modal */
             if (item["PembuatSetoran"] != null)
             {
-                dtTanggalSetoran.SelectedDate = Convert.ToDateTime(item["TanggalSetoran"]);
+                if (item["TanggalSetoran"] != null)
+                    dtTanggalSetoran.SelectedDate = Convert.ToDateTime(item["TanggalSetoran"]);
                 txtKeteranganSetoran.Text = item["KeteranganSetoran"] == null ? string.Empty : item["KeteranganSetoran"].ToString();
-                chkStatusSetoran.Checked = Convert.ToBoolean(item["StatusSetoran"]);
+                if (item["StatusSetoran"] != null)
+                    chkStatusSetoran.Checked = Convert.ToBoolean(item["StatusSetoran"]);
                 ltrUsernameSetoran.Text = item["PembuatSetoran"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
             }
 
@@ -880,7 +904,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 ltrNoNPWP.Text = item["NoNPWP"].ToString();
                 ltrTanggalTerdaftarNPWP.Text = Convert.ToDateTime(item["TanggalTerdaftarNPWP"]).ToString("dd-MMM-yyyy");
                 ltrNamaKPP.Text = item["NamaKPPNPWP"].ToString();
-                ltrKeteranganNPWP.Text = item["KeteranganNPWP"] == null ? string.Empty : item["KeteranganNPWP"].ToString();
+                ltrAlamatNPWP.Text = item["KeteranganNPWP"] == null ? string.Empty : item["KeteranganNPWP"].ToString();
                 ltrUsernameNPWP.Text = item["PembuatNPWP"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
             }
 
@@ -911,9 +935,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             /* Setoran Modal */
             if (item["PembuatSetoran"] != null)
             {
-                ltrTanggalSetoran.Text = Convert.ToDateTime(item["TanggalSetoran"]).ToString("dd-MMM-yyyy");
+                if (item["TanggalSetoran"] != null)
+                    ltrTanggalSetoran.Text = Convert.ToDateTime(item["TanggalSetoran"]).ToString("dd-MMM-yyyy");
                 ltrKeteranganSetoran.Text = item["KeteranganSetoran"] == null ? string.Empty : item["KeteranganSetoran"].ToString();
-                ltrStatusSetoran.Text = Convert.ToBoolean(item["StatusSetoran"]) == true ? "Yes" : "No";
+                if (item["StatusSetoran"] != null)
+                    ltrStatusSetoran.Text = Convert.ToBoolean(item["StatusSetoran"]) == true ? "Ya" : "Tidak";
                 ltrUsernameSetoran.Text = item["PembuatSetoran"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
             }
 
@@ -956,10 +982,10 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 }
             }
 
-            HiddenControls(mode, ViewState["Status"].ToString());
+            HiddenControls(item, mode, ViewState["Status"].ToString());
         }
 
-        private void HiddenControls(string mode, string status)
+        private void HiddenControls(SPListItem item, string mode, string status)
         {
             if (mode == "display")
             {
@@ -980,18 +1006,21 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 txtNominalSaham.Visible = false;
                 txtKeterangan.Visible = false;
                 chkStatusPKP.Visible = false;
+                imgbtnNamaPerusahaan.Visible = false;
 
                 fuSKDP.Visible = false;
                 txtNoSKDP.Visible = false;
                 dtTanggalBerlakuSKDP.Visible = false;
                 dtTanggalAkhirBerlakuSKDP.Visible = false;
                 txtAlamatSKDP.Visible = false;
+                chkOriginalSKDP.Visible = false;
 
                 fuAkte.Visible = false;
                 txtNoAkte.Visible = false;
                 dtTanggalAkte.Visible = false;
                 txtNotarisAkte.Visible = false;
                 txtKeteranganAkte.Visible = false;
+                chkOriginalAkte.Visible = false;
 
                 fuNPWP.Visible = false;
                 txtNOSKTNPWP.Visible = false;
@@ -999,44 +1028,48 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 txtNoNPWP.Visible = false;
                 dtTanggalTerdaftarNPWP.Visible = false;
                 txtNamaKPP.Visible = false;
-                txtKeteranganNPWP.Visible = false;
+                txtAlamatNPWP.Visible = false;
+                chkOriginalNPWP.Visible = false;
 
                 fuPKP.Visible = false;
                 txtNoPKP.Visible = false;
                 dtTanggalTerdaftarPKP.Visible = false;
                 txtNamaPKP.Visible = false;
                 txtKeteranganPKP.Visible = false;
+                chkOriginalPKP.Visible = false;
 
                 fuAPV.Visible = false;
                 txtKodePerusahaanAPV.Visible = false;
                 txtNoAPV.Visible = false;
                 dtTanggalAPV.Visible = false;
                 txtKeteranganAPV.Visible = false;
+                chkOriginalAPV.Visible = false;
 
                 fuSetoranModal.Visible = false;
                 dtTanggalSetoran.Visible = false;
                 txtKeteranganSetoran.Visible = false;
                 chkStatusSetoran.Visible = false;
+                chkOriginalSetoranModal.Visible = false;
 
                 //fuSKPengesahan.Visible = false;
                 txtNoSK.Visible = false;
                 dtTanggalDiterbitkanSK.Visible = false;
                 txtKeteranganSK.Visible = false;
+                chkOriginalSKPengesahan.Visible = false;
 
                 fuBNRI.Visible = false;
                 txtNoBNRI.Visible = false;
                 dtTanggalBNRI.Visible = false;
                 txtTambahanNoBNRI.Visible = false;
+                chkOriginalBNRI.Visible = false;
 
                 dgPemegangSaham.ShowFooter = false;
-                dgPemegangSaham.Columns[6].Visible = true;
-                dgPemegangSaham.Columns[7].Visible = true;
-                dgPemegangSaham.Columns[8].Visible = false;
+                dgPemegangSaham.Columns[6].Visible = false;
 
                 dgKomisaris.ShowFooter = false;
-                dgKomisaris.Columns[5].Visible = true;
-                dgKomisaris.Columns[6].Visible = true;
-                dgKomisaris.Columns[7].Visible = false;
+                dgKomisaris.Columns[3].Visible = true;
+                dgKomisaris.Columns[4].Visible = true;
+                dgKomisaris.Columns[5].Visible = false;
 
                 dgWewenangDireksi.ShowFooter = false;
                 dgWewenangDireksi.Columns[2].Visible = false;
@@ -1050,7 +1083,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 dgDokumenLainnya.ShowFooter = false;
                 dgDokumenLainnya.Columns[4].Visible = false;
 
-                if (Convert.ToBoolean(ViewState["Admin"]) == false && status == APPROVED)
+                if (status == APPROVED)
                     upSKDP.Visible = true;
             }
             else if (mode == "edit")
@@ -1075,12 +1108,12 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         txtNominalModalSetor.Visible = false;
                         txtNominalSaham.Visible = false;
                         txtKeterangan.Visible = false;
+                        imgbtnNamaPerusahaan.Visible = false;
 
                         dgPemegangSaham.Columns[6].Visible = true;
-                        dgPemegangSaham.Columns[7].Visible = true;
 
-                        dgKomisaris.Columns[5].Visible = true;
-                        dgKomisaris.Columns[6].Visible = true;
+                        dgKomisaris.Columns[3].Visible = true;
+                        dgKomisaris.Columns[4].Visible = true;
 
                         if (status == PIC_CORSEC)
                         {
@@ -1088,46 +1121,54 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                             ltrTanggalAkte.Visible = false;
                             ltrNotarisAkte.Visible = false;
                             ltrKeteranganAkte.Visible = false;
+                            ltrOriginalAkte.Visible = false;
 
                             ltrNoSKDP.Visible = false;
                             ltrTanggalBerlakuSKDP.Visible = false;
                             ltrTanggalAkhirBerlakuSKDP.Visible = false;
                             ltrAlamatSKDP.Visible = false;
+                            ltrOriginalSKDP.Visible = false;
 
                             ltrNOSKTNPWP.Visible = false;
                             ltrTanggalSKTNPWP.Visible = false;
                             ltrNoNPWP.Visible = false;
                             ltrTanggalTerdaftarNPWP.Visible = false;
                             ltrNamaKPP.Visible = false;
-                            ltrKeteranganNPWP.Visible = false;
+                            ltrAlamatNPWP.Visible = false;
+                            ltrOriginalNPWP.Visible = false;
 
                             ltrNoPKP.Visible = false;
                             ltrTanggalTerdaftarPKP.Visible = false;
                             ltrNamaPKP.Visible = false;
                             ltrKeteranganPKP.Visible = false;
+                            ltrOriginalPKP.Visible = false;
 
                             ltrKodePerusahaanAPV.Visible = false;
                             ltrNoAPV.Visible = false;
                             ltrTanggalAPV.Visible = false;
                             ltrKeteranganAPV.Visible = false;
+                            ltrOriginalAPV.Visible = false;
 
                             ltrTanggalSetoran.Visible = false;
                             ltrKeteranganSetoran.Visible = false;
                             ltrStatusSetoran.Visible = false;
+                            ltrOriginalSetoranModal.Visible = false;
 
                             ltrNoSK.Visible = false;
                             ltrTanggalDiterbitkanSK.Visible = false;
                             ltrKeteranganSK.Visible = false;
+                            ltrOriginalSKPengesahan.Visible = false;
 
                             ltrNoBNRI.Visible = false;
                             ltrTanggalBNRI.Visible = false;
                             ltrTambahanNoBNRI.Visible = false;
+                            ltrOriginalBNRI.Visible = false;
 
                             dgPemegangSaham.ShowFooter = true;
-                            dgPemegangSaham.Columns[8].Visible = true;
+                            dgPemegangSaham.Columns[6].Visible = true;
 
                             dgKomisaris.ShowFooter = true;
-                            dgKomisaris.Columns[7].Visible = true;
+                            dgKomisaris.Columns[5].Visible = true;
                         }
                         else
                         {
@@ -1139,6 +1180,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                                 dtTanggalAkhirBerlakuSKDP.Visible = false;
                                 txtAlamatSKDP.Visible = false;
                                 reqdtTanggalBerlakuSKDP.Visible = false;
+                                chkOriginalSKDP.Visible = false;
                             }
                             else
                             {
@@ -1146,6 +1188,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                                 ltrTanggalBerlakuSKDP.Visible = false;
                                 ltrTanggalAkhirBerlakuSKDP.Visible = false;
                                 ltrAlamatSKDP.Visible = false;
+                                ltrOriginalSKDP.Visible = false;
                             }
 
                             fuAkte.Visible = false;
@@ -1154,6 +1197,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                             txtNotarisAkte.Visible = false;
                             txtKeteranganAkte.Visible = false;
                             reqdtTanggalAkte.Visible = false;
+                            chkOriginalAkte.Visible = false;
 
                             fuNPWP.Visible = false;
                             txtNOSKTNPWP.Visible = false;
@@ -1161,9 +1205,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                             txtNoNPWP.Visible = false;
                             dtTanggalTerdaftarNPWP.Visible = false;
                             txtNamaKPP.Visible = false;
-                            txtKeteranganNPWP.Visible = false;
+                            txtAlamatNPWP.Visible = false;
                             reqdtTanggalSKTNPWP.Visible = false;
                             reqdtTanggalTerdaftarNPWP.Visible = false;
+                            reqtxtAlamatNPWP.Visible = false;
+                            chkOriginalNPWP.Visible = false;
 
                             fuPKP.Visible = false;
                             txtNoPKP.Visible = false;
@@ -1172,29 +1218,33 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                             txtKeteranganPKP.Visible = false;
                             chkStatusPKP.Visible = false;
                             reqdtTanggalTerdaftarPKP.Visible = false;
+                            chkOriginalPKP.Visible = false;
 
                             fuSetoranModal.Visible = false;
                             dtTanggalSetoran.Visible = false;
                             txtKeteranganSetoran.Visible = false;
                             chkStatusSetoran.Visible = false;
                             reqdtTanggalSetoran.Visible = false;
+                            chkOriginalSetoranModal.Visible = false;
 
                             fuSKPengesahan.Visible = false;
                             txtNoSK.Visible = false;
                             dtTanggalDiterbitkanSK.Visible = false;
                             txtKeteranganSK.Visible = false;
                             reqdtTanggalDiterbitkanSK.Visible = false;
+                            chkOriginalSKPengesahan.Visible = false;
 
                             fuBNRI.Visible = false;
                             txtNoBNRI.Visible = false;
                             dtTanggalBNRI.Visible = false;
                             txtTambahanNoBNRI.Visible = false;
+                            chkOriginalBNRI.Visible = false;
 
                             dgPemegangSaham.ShowFooter = false;
-                            dgPemegangSaham.Columns[8].Visible = false;
+                            dgPemegangSaham.Columns[6].Visible = false;
 
                             dgKomisaris.ShowFooter = false;
-                            dgKomisaris.Columns[7].Visible = false;
+                            dgKomisaris.Columns[5].Visible = false;
                         }
 
                         dgWewenangDireksi.ShowFooter = false;
@@ -1236,6 +1286,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         ltrNoAPV.Visible = false;
                         ltrTanggalAPV.Visible = false;
                         ltrKeteranganAPV.Visible = false;
+                        ltrOriginalAPV.Visible = false;
 
                         if (status == ACCOUNTING_HEAD_INPUT_COMPANY_CODE)
                         {
@@ -1243,6 +1294,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                             dtTanggalAPV.Enabled = false;
                             txtKeteranganAPV.Enabled = false;
                             fuAPV.Visible = false;
+                            chkOriginalAPV.Visible = false;
 
                             reqtxtNoAPV.Enabled = false;
                             reqdtTanggalAPV.Enabled = false;
@@ -1257,6 +1309,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         dtTanggalAPV.Visible = false;
                         txtKeteranganAPV.Visible = false;
                         fuAPV.Visible = false;
+                        chkOriginalAPV.Visible = false;
 
                         reqtxtKodePerusahaanAPV.Visible = false;
                         reqtxtNoAPV.Visible = false;
@@ -1287,40 +1340,48 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     ltrTanggalAkte.Visible = false;
                     ltrNotarisAkte.Visible = false;
                     ltrKeteranganAkte.Visible = false;
+                    ltrOriginalAkte.Visible = false;
 
                     ltrNoSKDP.Visible = false;
                     ltrTanggalBerlakuSKDP.Visible = false;
                     ltrTanggalAkhirBerlakuSKDP.Visible = false;
                     ltrAlamatSKDP.Visible = false;
+                    ltrOriginalSKDP.Visible = false;
 
                     ltrNOSKTNPWP.Visible = false;
                     ltrTanggalSKTNPWP.Visible = false;
                     ltrNoNPWP.Visible = false;
                     ltrTanggalTerdaftarNPWP.Visible = false;
                     ltrNamaKPP.Visible = false;
-                    ltrKeteranganNPWP.Visible = false;
+                    ltrAlamatNPWP.Visible = false;
+                    ltrOriginalNPWP.Visible = false;
 
                     ltrNoPKP.Visible = false;
                     ltrTanggalTerdaftarPKP.Visible = false;
                     ltrNamaPKP.Visible = false;
                     ltrKeteranganPKP.Visible = false;
+                    ltrOriginalPKP.Visible = false;
 
                     ltrKodePerusahaanAPV.Visible = false;
                     ltrNoAPV.Visible = false;
                     ltrTanggalAPV.Visible = false;
                     ltrKeteranganAPV.Visible = false;
+                    ltrOriginalAPV.Visible = false;
 
                     ltrTanggalSetoran.Visible = false;
                     ltrKeteranganSetoran.Visible = false;
                     ltrStatusSetoran.Visible = false;
+                    ltrOriginalSetoranModal.Visible = false;
 
                     ltrNoSK.Visible = false;
                     ltrTanggalDiterbitkanSK.Visible = false;
                     ltrKeteranganSK.Visible = false;
+                    ltrOriginalSKPengesahan.Visible = false;
 
                     ltrNoBNRI.Visible = false;
                     ltrTanggalBNRI.Visible = false;
                     ltrTambahanNoBNRI.Visible = false;
+                    ltrOriginalBNRI.Visible = false;
                 }
 
                 if (ltrfuSKDP.Text.Trim() == string.Empty)
@@ -1379,6 +1440,52 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     dgDokumenLainnya.ShowFooter = true;
                     dgDokumenLainnya.Columns[4].Visible = true;
                 }
+
+                if (Convert.ToBoolean(ViewState["Admin"]) == true && status == APPROVED)
+                    upSKDP.Visible = true;
+
+                if (item["StatusSetoran"] != null)
+                {
+                    if (Convert.ToBoolean(item["StatusSetoran"]))
+                        lblTanggalSetoranRequired.Visible = true;
+                    else
+                    {
+                        reqdtTanggalSetoran.Visible = false;
+                        reqfuSetoranModal.Visible = false;
+
+                        lblTanggalSetoranRequired.Visible = false;
+                    }
+                }
+
+                if (status != ACCOUNTING_UPLOAD_APV && status != ACCOUNTING_HEAD_INPUT_COMPANY_CODE)
+                {
+                    if (item["StatusPKP"] != null)
+                    {
+                        if (Convert.ToBoolean(item["StatusPKP"]))
+                        {
+                            lblNamaPKPRequired.Visible = true;
+                            lblNoPKPRequired.Visible = true;
+                            lblTanggalTerdaftarRequired.Visible = true;
+
+                            dgPKPLainnya.ShowFooter = true;
+                            dgPKPLainnya.Columns[4].Visible = true;
+                        }
+                        else
+                        {
+                            reqtxtNamaPKP.Visible = false;
+                            reqtxtNoPKP.Visible = false;
+                            reqdtTanggalTerdaftarPKP.Visible = false;
+                            reqfuPKP.Visible = false;
+
+                            lblNamaPKPRequired.Visible = false;
+                            lblNoPKPRequired.Visible = false;
+                            lblTanggalTerdaftarRequired.Visible = false;
+
+                            dgPKPLainnya.ShowFooter = false;
+                            dgPKPLainnya.Columns[4].Visible = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -1426,6 +1533,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
                 }
                 item["StatusPKP"] = chkStatusPKP.Checked;
+                item["StatusSetoran"] = chkStatusSetoran.Checked;
 
                 if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
                 {
@@ -1444,9 +1552,13 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     item["PembuatSKDP"] = SPContext.Current.Web.CurrentUser.ID.ToString();
 
                     /* Setoran Modal */
-                    item["TanggalSetoran"] = dtTanggalSetoran.SelectedDate;
-                    item["KeteranganSetoran"] = txtKeteranganSetoran.Text.Trim();
-                    item["StatusSetoran"] = chkStatusSetoran.Checked;
+                    if (chkStatusSetoran.Checked)
+                    {
+                        if (!dtTanggalSetoran.IsDateEmpty)
+                            item["TanggalSetoran"] = dtTanggalSetoran.SelectedDate;
+                        item["KeteranganSetoran"] = txtKeteranganSetoran.Text.Trim();
+                        item["StatusSetoran"] = chkStatusSetoran.Checked;
+                    }
                     item["PembuatSetoran"] = SPContext.Current.Web.CurrentUser.ID.ToString();
 
                     /* SK Pengesahan */
@@ -1461,7 +1573,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     item["NoNPWP"] = txtNoNPWP.Text.Trim();
                     item["TanggalTerdaftarNPWP"] = dtTanggalTerdaftarNPWP.SelectedDate;
                     item["NamaKPPNPWP"] = txtNamaKPP.Text.Trim();
-                    item["KeteranganNPWP"] = txtKeteranganNPWP.Text.Trim();
+                    item["KeteranganNPWP"] = txtAlamatNPWP.Text.Trim();
                     item["PembuatNPWP"] = SPContext.Current.Web.CurrentUser.ID.ToString();
 
                     /* PKP */
@@ -1471,8 +1583,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         item["TanggalTerdaftarPKP"] = dtTanggalTerdaftarPKP.SelectedDate;
                         item["NamaPKP"] = txtNamaPKP.Text.Trim();
                         item["KeteranganPKP"] = txtKeteranganPKP.Text.Trim();
-                        item["PembuatPKP"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                     }
+                    item["PembuatPKP"] = SPContext.Current.Web.CurrentUser.ID.ToString();
 
                     /* BNRI */
                     item["NoBNRI"] = txtNoBNRI.Text.Trim();
@@ -1533,34 +1645,40 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     string Type = string.Empty;
                     Type = "Akta and SK Pengesahan Pendirian";
 
-                    message = SaveDocument(fuAkte, item.Title, Type);
+                    message = SaveDocument(fuAkte, item.Title, Type, chkOriginalAkte);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuSKDP, item.Title, "SKDP");
+                    message = SaveDocument(fuSKDP, item.Title, "SKDP", chkOriginalSKDP);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuSetoranModal, item.Title, "Setoran Modal");
+                    if (chkStatusSetoran.Checked)
+                    {
+                        message = SaveDocument(fuSetoranModal, item.Title, "Setoran Modal", chkOriginalSetoranModal);
+                        if (message != string.Empty)
+                            return message;
+                    }
+
+                    message = SaveDocument(fuNPWP, item.Title, "NPWP", chkOriginalNPWP);
                     if (message != string.Empty)
                         return message;
 
-                    message = SaveDocument(fuNPWP, item.Title, "NPWP");
-                    if (message != string.Empty)
-                        return message;
+                    if (chkStatusPKP.Checked)
+                    {
+                        message = SaveDocument(fuPKP, item.Title, "PKP", chkOriginalPKP);
+                        if (message != string.Empty)
+                            return message;
+                    }
 
-                    message = SaveDocument(fuPKP, item.Title, "PKP");
-                    if (message != string.Empty)
-                        return message;
-
-                    message = SaveDocument(fuBNRI, item.Title, "BNRI");
+                    message = SaveDocument(fuBNRI, item.Title, "BNRI", chkOriginalBNRI);
                     if (message != string.Empty)
                         return message;
                 }
 
                 if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == ACCOUNTING_UPLOAD_APV)
                 {
-                    message = SaveDocument(fuAPV, item.Title, "APV");
+                    message = SaveDocument(fuAPV, item.Title, "Journal Voucher", chkOriginalAPV);
                     if (message != string.Empty)
                         return message;
                 }
@@ -1622,20 +1740,17 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
                 currentWeb.AllowUnsafeUpdates = false;
 
-                if (fuSKDP.PostedFile != null)
+                if (fuSKDP.PostedFile.ContentLength > 0)
                 {
-                    if (fuSKDP.PostedFile.ContentLength > 0)
-                    {
-                        web.AllowUnsafeUpdates = true;
+                    web.AllowUnsafeUpdates = true;
 
-                        message = SaveDocument(fuSKDP, item.Title, "SKDP");
-                        if (message != string.Empty)
-                            return message;
+                    message = SaveDocument(fuSKDP, item.Title, "SKDP", chkOriginalSKDP);
+                    if (message != string.Empty)
+                        return message;
 
-                        SaveSKDPLog(itemOld);
+                    SaveSKDPLog(itemOld);
 
-                        web.AllowUnsafeUpdates = false;
-                    }
+                    web.AllowUnsafeUpdates = false;
                 }
 
                 web.AllowUnsafeUpdates = true;
@@ -1698,16 +1813,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         }
 
                         itemPemegangSaham["PerusahaanBaru"] = ViewState["ID"].ToString();
-                        itemPemegangSaham["Title"] = i.Nama;
+                        itemPemegangSaham["PemegangSaham"] = i.IDPemegangSaham;
                         itemPemegangSaham["JumlahSaham"] = i.JumlahSaham;
                         itemPemegangSaham["JumlahNominal"] = i.JumlahNominal;
                         itemPemegangSaham["Percentages"] = i.Percentages;
                         itemPemegangSaham["Partner"] = i.Partner;
-                        if (Convert.ToBoolean(ViewState["Admin"]) == true)
-                        {
-                            itemPemegangSaham["TanggalMulaiMenjabat"] = i.MulaiMenjabat;
-                            itemPemegangSaham["TanggalAkhirMenjabat"] = i.AkhirMenjabat;
-                        }
                         itemPemegangSaham["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                         itemPemegangSaham.Update();
 
@@ -1733,10 +1843,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         }
 
                         itemKomisarisDireksi["PerusahaanBaru"] = ViewState["ID"].ToString();
-                        itemKomisarisDireksi["Title"] = i.Nama;
+                        itemKomisarisDireksi["KomisarisDireksi"] = i.IDKomisaris;
                         itemKomisarisDireksi["Jabatan"] = i.IDJabatan;
-                        itemKomisarisDireksi["NoKTP"] = i.NoKTP;
-                        itemKomisarisDireksi["NoNPWP"] = i.NoNPWP;
                         if (Convert.ToBoolean(ViewState["Admin"]) == true)
                         {
                             itemKomisarisDireksi["TanggalMulaiMenjabat"] = i.MulaiMenjabat;
@@ -1826,28 +1934,31 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                         }
                     }
 
-                    j = 0;
-                    if (ViewState["PKP"] != null)
+                    if (chkStatusPKP.Checked)
                     {
-                        List<PKP> collDokumen = ViewState["PKP"] as List<PKP>;
-                        foreach (PKP i in collDokumen)
+                        j = 0;
+                        if (ViewState["PKP"] != null)
                         {
-                            if (i.ID == 0)
+                            List<PKP> collDokumen = ViewState["PKP"] as List<PKP>;
+                            foreach (PKP i in collDokumen)
                             {
-                                SPFolder document = web.Folders["PKPLainnya"];
-                                SPFile file = document.Files.Add(i.NamaFile, i.Attachment);
-                                SPItem itemDocument = file.Item;
-                                itemDocument["Title"] = Path.GetFileNameWithoutExtension(i.NamaFile);
-                                itemDocument["PerusahaanBaru"] = Convert.ToInt32(ViewState["ID"]);
-                                itemDocument["NoPKP"] = i.NoPKP;
-                                itemDocument["Keterangan"] = i.Keterangan;
-                                itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                                itemDocument.Update();
+                                if (i.ID == 0)
+                                {
+                                    SPFolder document = web.Folders["PKPLainnya"];
+                                    SPFile file = document.Files.Add(i.NamaFile, i.Attachment);
+                                    SPItem itemDocument = file.Item;
+                                    itemDocument["Title"] = Path.GetFileNameWithoutExtension(i.NamaFile);
+                                    itemDocument["PerusahaanBaru"] = Convert.ToInt32(ViewState["ID"]);
+                                    itemDocument["NoPKP"] = i.NoPKP;
+                                    itemDocument["Keterangan"] = i.Keterangan;
+                                    itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                                    itemDocument.Update();
 
-                                collDokumen[j].ID = itemDocument.ID;
+                                    collDokumen[j].ID = itemDocument.ID;
+                                }
+
+                                j += 1;
                             }
-
-                            j += 1;
                         }
                     }
                 }
@@ -1874,16 +1985,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                                 }
 
                                 itemPemegangSaham["PerusahaanBaru"] = ViewState["ID"].ToString();
-                                itemPemegangSaham["Title"] = i.Nama;
+                                itemPemegangSaham["PemegangSaham"] = i.IDPemegangSaham;
                                 itemPemegangSaham["JumlahSaham"] = i.JumlahSaham;
                                 itemPemegangSaham["JumlahNominal"] = i.JumlahNominal;
                                 itemPemegangSaham["Percentages"] = i.Percentages;
                                 itemPemegangSaham["Partner"] = i.Partner;
-                                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
-                                {
-                                    itemPemegangSaham["TanggalMulaiMenjabat"] = Convert.ToDateTime(i.MulaiMenjabat);
-                                    itemPemegangSaham["TanggalAkhirMenjabat"] = Convert.ToDateTime(i.AkhirMenjabat);
-                                }
                                 itemPemegangSaham.Update();
 
                                 coll[j].ID = itemPemegangSaham.ID;
@@ -1934,10 +2040,8 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                                     itemKomisarisDireksi["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                                 }
 
-                                itemKomisarisDireksi["NoKTP"] = i.NoKTP;
-                                itemKomisarisDireksi["NoNPWP"] = i.NoNPWP;
                                 itemKomisarisDireksi["PerusahaanBaru"] = ViewState["ID"].ToString();
-                                itemKomisarisDireksi["Title"] = i.Nama;
+                                itemKomisarisDireksi["KomisarisDireksi"] = i.IDKomisaris;
                                 itemKomisarisDireksi["Jabatan"] = i.IDJabatan;
                                 if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
                                 {
@@ -2170,67 +2274,70 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
                     if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC || ViewState["Status"].ToString() == APPROVED)
                     {
-                        if (dgPKP.Items.Count > 0)
+                        if (chkStatusPKP.Checked)
                         {
-                            j = 0;
-                            List<PKP> collDokumen = ViewState["PKP"] as List<PKP>;
-                            foreach (PKP i in collDokumen)
+                            if (dgPKP.Items.Count > 0)
                             {
-                                SPListItem itemDocument;
-                                if (i.ID != 0)
+                                j = 0;
+                                List<PKP> collDokumen = ViewState["PKP"] as List<PKP>;
+                                foreach (PKP i in collDokumen)
                                 {
-                                    itemDocument = listPKP.GetItemById(i.ID);
-                                    itemDocument["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-
-                                    if (i.Attachment.Length != i.AttachmentOld.Length)
+                                    SPListItem itemDocument;
+                                    if (i.ID != 0)
                                     {
-                                        itemDocument.File.SaveBinary(i.Attachment);
-                                        itemDocument.File.Update();
-                                        itemDocument = itemDocument.File.Item;
-                                        itemDocument["FileLeafRef"] = i.NamaFile;
+                                        itemDocument = listPKP.GetItemById(i.ID);
+                                        itemDocument["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+
+                                        if (i.Attachment.Length != i.AttachmentOld.Length)
+                                        {
+                                            itemDocument.File.SaveBinary(i.Attachment);
+                                            itemDocument.File.Update();
+                                            itemDocument = itemDocument.File.Item;
+                                            itemDocument["FileLeafRef"] = i.NamaFile;
+                                            itemDocument["Title"] = Path.GetFileNameWithoutExtension(i.NamaFile);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SPFolder document = web.Folders["PKPLainnya"];
+                                        SPFile file = document.Files.Add(i.NamaFile, i.Attachment);
+                                        itemDocument = file.Item;
                                         itemDocument["Title"] = Path.GetFileNameWithoutExtension(i.NamaFile);
+                                        itemDocument["PerusahaanBaru"] = Convert.ToInt32(ViewState["ID"]);
+                                        itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
                                     }
+
+                                    itemDocument["Keterangan"] = i.Keterangan;
+                                    itemDocument["NoPKP"] = i.NoPKP;
+                                    itemDocument.Update();
+
+                                    collDokumen[j].ID = itemDocument.ID;
+
+                                    j += 1;
                                 }
-                                else
-                                {
-                                    SPFolder document = web.Folders["PKPLainnya"];
-                                    SPFile file = document.Files.Add(i.NamaFile, i.Attachment);
-                                    itemDocument = file.Item;
-                                    itemDocument["Title"] = Path.GetFileNameWithoutExtension(i.NamaFile);
-                                    itemDocument["PerusahaanBaru"] = Convert.ToInt32(ViewState["ID"]);
-                                    itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                                }
-
-                                itemDocument["Keterangan"] = i.Keterangan;
-                                itemDocument["NoPKP"] = i.NoPKP;
-                                itemDocument.Update();
-
-                                collDokumen[j].ID = itemDocument.ID;
-
-                                j += 1;
                             }
-                        }
 
-                        if (ViewState["PKPEdit"] != null)
-                        {
-                            List<PKP> collDokumenEdit = ViewState["PKPEdit"] as List<PKP>;
-                            foreach (PKP itemEdit in collDokumenEdit)
+                            if (ViewState["PKPEdit"] != null)
                             {
-                                bool isExist = false;
-                                foreach (DataGridItem dgItem in dgPKP.Items)
+                                List<PKP> collDokumenEdit = ViewState["PKPEdit"] as List<PKP>;
+                                foreach (PKP itemEdit in collDokumenEdit)
                                 {
-                                    Label lblID = dgItem.FindControl("lblID") as Label;
-                                    if (Convert.ToInt32(lblID.Text) == itemEdit.ID)
+                                    bool isExist = false;
+                                    foreach (DataGridItem dgItem in dgPKP.Items)
                                     {
-                                        isExist = true;
-                                        break;
+                                        Label lblID = dgItem.FindControl("lblID") as Label;
+                                        if (Convert.ToInt32(lblID.Text) == itemEdit.ID)
+                                        {
+                                            isExist = true;
+                                            break;
+                                        }
                                     }
-                                }
-                                if (!isExist)
-                                {
-                                    SPListItem itemDokument = listPKP.GetItemById(itemEdit.ID);
-                                    if (itemDokument != null)
-                                        itemDokument.Delete();
+                                    if (!isExist)
+                                    {
+                                        SPListItem itemDokument = listPKP.GetItemById(itemEdit.ID);
+                                        if (itemDokument != null)
+                                            itemDokument.Delete();
+                                    }
                                 }
                             }
                         }
@@ -2247,6 +2354,18 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             return string.Empty;
         }
 
+        private void BindAllGrid(bool rebindPemegangSaham, bool rebindKomisaris)
+        {
+            if (rebindPemegangSaham)
+                BindPemegangSaham();
+            if (rebindKomisaris)
+                BindKomisarisDireksi();
+            BindWewenangDireksi();
+            BindDokumen();
+            BindNPWP();
+            BindPKP();
+        }
+
         #endregion
 
         #region Event Handlers
@@ -2254,7 +2373,20 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
         protected void Page_Load(object sender, EventArgs e)
         {
             Util.RegisterStartupScript(Page, "Pemohon", "RegisterDialog('divPemohonSearch','divPemohonDlgContainer', '480');");
+            Util.RegisterStartupScript(Page, "PemegangSaham", "RegisterDialog('divPemegangSahamSearch','divPemegangSahamDlgContainer', '800');");
+            Util.RegisterStartupScript(Page, "Komisaris", "RegisterDialog('divKomisarisSearch','divKomisarisDlgContainer', '800');");
             Util.RegisterStartupScript(Page, "SKDPLog", "RegisterDialog('divSKDPLog','divSKDPLogDlgContainer', '600');");
+            Util.RegisterStartupScript(Page, "PemegangSahamInfo", "RegisterDialog('divPemegangSahamInfoSearch','divPemegangSahamInfoDlgContainer', '500');");
+            Util.RegisterStartupScript(Page, "KomisarisInfo", "RegisterDialog('divKomisarisInfoSearch','divKomisarisInfoDlgContainer', '500');");
+            Util.RegisterStartupScript(Page, "Perusahaan", "RegisterDialog('divPerusahaanSearch','divPerusahaanDlgContainer', '500');");
+
+            Pemohon.btnSelectedData.Click += new EventHandler(btnSelectedData_Click);
+
+            ucPemegangSaham.btnSelectedData.Click += new EventHandler(btnSelectedDataPemegangSaham_Click);
+
+            ucKomisaris.btnSelectedData.Click += new EventHandler(btnSelectedDataKomisaris_Click);
+
+            Perusahaan.btnSelectedData.Click += new EventHandler(btnSelectedDataPerusahaan_Click);
 
             using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
@@ -2287,19 +2419,13 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                             pnlAccounting.Visible = true;
                             pnlAssign.Visible = true;
 
-                            dgPemegangSaham.Columns[6].Visible = true;
-                            dgPemegangSaham.Columns[7].Visible = true;
-
-                            dgKomisaris.Columns[5].Visible = true;
-                            dgKomisaris.Columns[6].Visible = true;
+                            dgKomisaris.Columns[3].Visible = true;
+                            dgKomisaris.Columns[4].Visible = true;
                         }
                         else
                         {
-                            dgPemegangSaham.Columns[6].Visible = false;
-                            dgPemegangSaham.Columns[7].Visible = false;
-
-                            dgKomisaris.Columns[5].Visible = false;
-                            dgKomisaris.Columns[6].Visible = false;
+                            dgKomisaris.Columns[3].Visible = false;
+                            dgKomisaris.Columns[4].Visible = false;
                         }
 
                         txtNotarisAkte.Attributes.Add("onkeyup", "Notaris('" + txtNotarisAkte.ClientID + "');");
@@ -2349,21 +2475,50 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             upStrukturPermodalan.Update();
         }
 
+        protected void ddlStatusPerseroan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtNamaPerusahaan.Text = string.Empty;
+
+            if (ddlStatusPerseroan.SelectedItem.Text.ToUpper() == "PMA" || ddlStatusPerseroan.SelectedItem.Text.ToUpper() == "PMDN")
+            {
+                txtNamaPerusahaan.Enabled = false;
+                imgbtnNamaPerusahaan.Visible = true;
+            }
+            else
+            {
+                txtNamaPerusahaan.Enabled = true;
+                imgbtnNamaPerusahaan.Visible = false;
+            }
+            upDataPerusahaan.Update();
+        }
+
         protected void chkStatusPKP_CheckedChanged(object sender, EventArgs e)
         {
             if (chkStatusPKP.Checked == true)
             {
+                lblNamaPKPRequired.Visible = true;
+                lblNoPKPRequired.Visible = true;
+                lblTanggalTerdaftarRequired.Visible = true;
+
                 reqfuPKP.Visible = true;
                 reqtxtNoPKP.Visible = true;
                 reqdtTanggalTerdaftarPKP.Visible = true;
                 reqtxtNamaPKP.Visible = true;
+
+                dgPKPLainnya.ShowFooter = true;
             }
             else
             {
+                lblNamaPKPRequired.Visible = false;
+                lblNoPKPRequired.Visible = false;
+                lblTanggalTerdaftarRequired.Visible = false;
+
                 reqfuPKP.Visible = false;
                 reqtxtNoPKP.Visible = false;
                 reqdtTanggalTerdaftarPKP.Visible = false;
                 reqtxtNamaPKP.Visible = false;
+
+                dgPKPLainnya.ShowFooter = false;
             }
         }
 
@@ -2371,11 +2526,15 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
         {
             if (chkStatusSetoran.Checked == true)
             {
+                lblTanggalSetoranRequired.Visible = true;
+
                 reqfuSetoranModal.Visible = true;
                 reqdtTanggalSetoran.Visible = true;
             }
             else
             {
+                lblTanggalSetoranRequired.Visible = false;
+
                 reqfuSetoranModal.Visible = false;
                 reqdtTanggalSetoran.Visible = false;
             }
@@ -2465,11 +2624,10 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 TextBox txtPercentagesAdd = e.Item.FindControl("txtPercentagesAdd") as TextBox;
 
                 txtJumlahSahamAdd.Attributes.Add("onblur", " FormatNumber('" + txtJumlahSahamAdd.ClientID + "')");
-
                 txtJumlahSahamAdd.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamAdd.ClientID + "'); Total('" + txtJumlahSahamAdd.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtJumlahNominalAdd.ClientID + "'); Percentages('" + txtJumlahSahamAdd.ClientID + "','" + txtModalSetor.ClientID + "','" + txtPercentagesAdd.ClientID + "');");
 
-                TextBox txtNamaPemegangSahamAdd = e.Item.FindControl("txtNamaPemegangSahamAdd") as TextBox;
-                txtNamaPemegangSahamAdd.Attributes.Add("onkeyup", "PemegangSaham('" + txtNamaPemegangSahamAdd.ClientID + "');");
+                lbNamaPemegangSahamAdd = e.Item.FindControl("lbNamaPemegangSahamAdd") as LinkButton;
+                lblIDPemegangSahamAdd = e.Item.FindControl("lblIDPemegangSahamAdd") as Label;
             }
             else if (e.Item.ItemType == ListItemType.EditItem)
             {
@@ -2478,44 +2636,39 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                 TextBox txtPercentagesEdit = e.Item.FindControl("txtPercentagesEdit") as TextBox;
 
                 txtJumlahSahamEdit.Attributes.Add("onblur", " FormatNumber('" + txtJumlahSahamEdit.ClientID + "')");
-
                 txtJumlahSahamEdit.Attributes.Add("onkeyup", "FormatNumber('" + txtJumlahSahamEdit.ClientID + "'); Total('" + txtJumlahSahamEdit.ClientID + "','" + txtNominalSaham.ClientID + "','" + txtJumlahNominalEdit.ClientID + "'); Percentages('" + txtJumlahSahamEdit.ClientID + "','" + txtModalSetor.ClientID + "','" + txtPercentagesEdit.ClientID + "');");
-
-                TextBox txtNamaPemegangSahamEdit = e.Item.FindControl("txtNamaPemegangSahamEdit") as TextBox;
-                txtNamaPemegangSahamEdit.Attributes.Add("onkeyup", "PemegangSaham('" + txtNamaPemegangSahamEdit.ClientID + "');");
-
-                if (o.MulaiMenjabat != null)
-                {
-                    DateTimeControl dtTanggalMulaiMenjabatEdit = e.Item.FindControl("dtTanggalMulaiMenjabatEdit") as DateTimeControl;
-                    dtTanggalMulaiMenjabatEdit.SelectedDate = Convert.ToDateTime(o.MulaiMenjabat);
-                }
-                if (o.AkhirMenjabat != null)
-                {
-                    DateTimeControl dtTanggalAkhirMenjabatEdit = e.Item.FindControl("dtTanggalAkhirMenjabatEdit") as DateTimeControl;
-                    dtTanggalAkhirMenjabatEdit.SelectedDate = Convert.ToDateTime(o.AkhirMenjabat);
-                }
             }
             else if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 Label lblPartner = e.Item.FindControl("lblPartner") as Label;
-                lblPartner.Text = o.Partner == true ? "Yes" : "No";
-
-                if (o.MulaiMenjabat != null)
-                {
-                    Label lblTanggalMulaiMenjabat = e.Item.FindControl("lblTanggalMulaiMenjabat") as Label;
-                    lblTanggalMulaiMenjabat.Text = Convert.ToDateTime(o.MulaiMenjabat).ToString("dd-MMM-yyyy");
-                }
-
-                if (o.AkhirMenjabat != null)
-                {
-                    Label lblTanggalAkhirMenjabat = e.Item.FindControl("lblTanggalAkhirMenjabat") as Label;
-                    lblTanggalAkhirMenjabat.Text = Convert.ToDateTime(o.AkhirMenjabat).ToString("dd-MMM-yyyy");
-                }
+                lblPartner.Text = o.Partner == true ? "Ya" : "Tidak";
             }
         }
 
         protected void dgPemegangSaham_ItemCommand(object source, DataGridCommandEventArgs e)
         {
+            if (e.CommandName == "popup")
+            {
+                ViewState["Index"] = e.Item.ItemIndex;
+                return;
+            }
+            if (e.CommandName == "pemegangsaham")
+            {
+                int PemegangSahamID = 0;
+                Label lblIDPemegangSaham = e.Item.FindControl("lblIDPemegangSaham") as Label;
+                if (lblIDPemegangSaham != null)
+                    PemegangSahamID = Convert.ToInt32(lblIDPemegangSaham.Text);
+                Label lblIDPemegangSahamAdd = e.Item.FindControl("lblIDPemegangSahamAdd") as Label;
+                if (lblIDPemegangSahamAdd != null)
+                    PemegangSahamID = Convert.ToInt32(lblIDPemegangSahamAdd.Text);
+                Label lblIDPemegangSahamEdit = e.Item.FindControl("lblIDPemegangSahamEdit") as Label;
+                if (lblIDPemegangSahamEdit != null)
+                    PemegangSahamID = Convert.ToInt32(lblIDPemegangSahamEdit.Text);
+
+                ucPemegangSahamInfo.IDProp = PemegangSahamID.ToString();
+                return;
+            }
+
             if (txtNominalModalSetor.Text.Trim() == string.Empty || txtNominalSaham.Text.Trim() == string.Empty)
             {
                 Util.ShowMessage(Page, SR.FieldCanNotEmpty("Nominal Modal Setor and Nominal Saham"));
@@ -2535,19 +2688,18 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
             if (e.CommandName == "add")
             {
-                TextBox txtNamaPemegangSahamAdd = e.Item.FindControl("txtNamaPemegangSahamAdd") as TextBox;
+                LinkButton lbNamaPemegangSahamAdd = e.Item.FindControl("lbNamaPemegangSahamAdd") as LinkButton;
                 TextBox txtJumlahSahamAdd = e.Item.FindControl("txtJumlahSahamAdd") as TextBox;
                 TextBox txtJumlahNominalAdd = e.Item.FindControl("txtJumlahNominalAdd") as TextBox;
                 TextBox txtPercentagesAdd = e.Item.FindControl("txtPercentagesAdd") as TextBox;
                 CheckBox cboPartnerAdd = e.Item.FindControl("cboPartnerAdd") as CheckBox;
-                DateTimeControl dtTanggalMulaiMenjabatAdd = null;
-                DateTimeControl dtTanggalAkhirMenjabatAdd = null;
+                Label lblIDPemegangSahamAdd = e.Item.FindControl("lblIDPemegangSahamAdd") as Label;
 
                 PemegangSaham o = new PemegangSaham();
 
-                if (isExistInPemegangSahamGrid(txtNamaPemegangSahamAdd.Text))
+                if (isExistInPemegangSahamGrid(lbNamaPemegangSahamAdd.Text))
                 {
-                    Util.ShowMessage(Page, SR.DataIsExist(txtNamaPemegangSahamAdd.Text.Trim()));
+                    Util.ShowMessage(Page, SR.DataIsExist(lbNamaPemegangSahamAdd.Text.Trim()));
                     return;
                 }
 
@@ -2558,46 +2710,31 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     return;
                 }
 
-                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
-                {
-                    dtTanggalMulaiMenjabatAdd = e.Item.FindControl("dtTanggalMulaiMenjabatAdd") as DateTimeControl;
-                    dtTanggalAkhirMenjabatAdd = e.Item.FindControl("dtTanggalAkhirMenjabatAdd") as DateTimeControl;
-                    o.MulaiMenjabat = dtTanggalMulaiMenjabatAdd.SelectedDate;
-                    o.AkhirMenjabat = dtTanggalAkhirMenjabatAdd.SelectedDate;
-
-                    int i = DateTime.Compare(dtTanggalMulaiMenjabatAdd.SelectedDate, dtTanggalAkhirMenjabatAdd.SelectedDate);
-                    if (i > 0)
-                    {
-                        Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
-                        return;
-                    }
-                }
-
-                o.Nama = txtNamaPemegangSahamAdd.Text.Trim();
+                o.Nama = lbNamaPemegangSahamAdd.Text.Trim();
                 o.JumlahNominal = Convert.ToDouble(txtJumlahNominalAdd.Text);
                 o.JumlahSaham = Convert.ToDouble(txtJumlahSahamAdd.Text);
                 o.Partner = cboPartnerAdd.Checked;
                 o.Percentages = Convert.ToDouble(txtPercentagesAdd.Text);
                 o.ID = 0;
+                o.IDPemegangSaham = Convert.ToInt32(lblIDPemegangSahamAdd.Text);
                 coll.Add(o);
 
                 ViewState["PemegangSaham"] = coll;
             }
             if (e.CommandName == "save")
             {
-                TextBox txtNamaPemegangSahamEdit = e.Item.FindControl("txtNamaPemegangSahamEdit") as TextBox;
+                LinkButton lbNamaPemegangSahamEdit = e.Item.FindControl("lbNamaPemegangSahamEdit") as LinkButton;
                 TextBox txtJumlahSahamEdit = e.Item.FindControl("txtJumlahSahamEdit") as TextBox;
                 TextBox txtJumlahNominalEdit = e.Item.FindControl("txtJumlahNominalEdit") as TextBox;
                 TextBox txtPercentagesEdit = e.Item.FindControl("txtPercentagesEdit") as TextBox;
                 CheckBox cboPartnerEdit = e.Item.FindControl("cboPartnerEdit") as CheckBox;
-                DateTimeControl dtTanggalMulaiMenjabatEdit = null;
-                DateTimeControl dtTanggalAkhirMenjabatEdit = null;
+                Label lblIDPemegangSahamEdit = e.Item.FindControl("lblIDPemegangSahamEdit") as Label;
 
                 PemegangSaham o = new PemegangSaham();
 
-                if (isExistInPemegangSahamGrid(txtNamaPemegangSahamEdit.Text))
+                if (isExistInPemegangSahamGrid(lbNamaPemegangSahamEdit.Text))
                 {
-                    Util.ShowMessage(Page, SR.DataIsExist(txtNamaPemegangSahamEdit.Text.Trim()));
+                    Util.ShowMessage(Page, SR.DataIsExist(lbNamaPemegangSahamEdit.Text.Trim()));
                     return;
                 }
 
@@ -2608,26 +2745,12 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
                     return;
                 }
 
-                if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
-                {
-                    dtTanggalMulaiMenjabatEdit = e.Item.FindControl("dtTanggalMulaiMenjabatEdit") as DateTimeControl;
-                    dtTanggalAkhirMenjabatEdit = e.Item.FindControl("dtTanggalAkhirMenjabatEdit") as DateTimeControl;
-                    o.MulaiMenjabat = dtTanggalMulaiMenjabatEdit.SelectedDate;
-                    o.AkhirMenjabat = dtTanggalAkhirMenjabatEdit.SelectedDate;
-
-                    int i = DateTime.Compare(dtTanggalMulaiMenjabatEdit.SelectedDate, dtTanggalAkhirMenjabatEdit.SelectedDate);
-                    if (i > 0)
-                    {
-                        Util.ShowMessage(Page, "Tanggal Akhir Menjabat must be greater or equal than Tanggal Mulai Menjabat");
-                        return;
-                    }
-                }
-
-                o.Nama = txtNamaPemegangSahamEdit.Text.Trim();
+                o.Nama = lbNamaPemegangSahamEdit.Text.Trim();
                 o.JumlahNominal = Convert.ToDouble(txtJumlahNominalEdit.Text);
                 o.JumlahSaham = Convert.ToDouble(txtJumlahSahamEdit.Text);
                 o.Partner = cboPartnerEdit.Checked;
                 o.Percentages = Convert.ToDouble(txtPercentagesEdit.Text);
+                o.IDPemegangSaham = Convert.ToInt32(lblIDPemegangSahamEdit.Text);
 
                 coll[e.Item.ItemIndex] = o;
                 ViewState["PemegangSaham"] = coll;
@@ -2689,26 +2812,17 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
             if (e.Item.ItemType == ListItemType.Footer)
             {
-                TextBox txtNoNPWPAdd = e.Item.FindControl("txtNoNPWPAdd") as TextBox;
-                txtNoNPWPAdd.Attributes.Add("onfocus", "FormatMask('" + txtNoNPWPAdd.ClientID + "','" + NPWP_FORMAT + "');");
-
                 DropDownList ddlJabatanAdd = e.Item.FindControl("ddlJabatanAdd") as DropDownList;
                 BindKomisarisDireksiJabatan(ddlJabatanAdd);
 
-                TextBox txtNamaAdd = e.Item.FindControl("txtNamaAdd") as TextBox;
-                txtNamaAdd.Attributes.Add("onkeyup", "KomisarisDireksi('" + txtNamaAdd.ClientID + "');");
+                lbNamaKomisarisAdd = e.Item.FindControl("lbNamaKomisarisAdd") as LinkButton;
+                lblIDKomisarisAdd = e.Item.FindControl("lblIDKomisarisAdd") as Label;
             }
             else if (e.Item.ItemType == ListItemType.EditItem)
             {
-                TextBox txtNoNPWPEdit = e.Item.FindControl("txtNoNPWPEdit") as TextBox;
-                txtNoNPWPEdit.Attributes.Add("onfocus", "FormatMask('" + txtNoNPWPEdit.ClientID + "','" + NPWP_FORMAT + "');");
-
                 DropDownList ddlJabatanEdit = e.Item.FindControl("ddlJabatanEdit") as DropDownList;
                 BindKomisarisDireksiJabatan(ddlJabatanEdit);
                 ddlJabatanEdit.SelectedValue = o.IDJabatan.ToString();
-
-                TextBox txtNamaEdit = e.Item.FindControl("txtNamaEdit") as TextBox;
-                txtNamaEdit.Attributes.Add("onkeyup", "KomisarisDireksi('" + txtNamaEdit.ClientID + "');");
 
                 if (o.MulaiMenjabat != null)
                 {
@@ -2739,6 +2853,28 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
         protected void dgKomisaris_ItemCommand(object source, DataGridCommandEventArgs e)
         {
+            if (e.CommandName == "popup")
+            {
+                ViewState["Index"] = e.Item.ItemIndex;
+                return;
+            }
+            if (e.CommandName == "komisaris")
+            {
+                int KomisarisID = 0;
+                Label lblIDKomisaris = e.Item.FindControl("lblIDKomisaris") as Label;
+                if (lblIDKomisaris != null)
+                    KomisarisID = Convert.ToInt32(lblIDKomisaris.Text);
+                Label lblIDKomisarisAdd = e.Item.FindControl("lblIDKomisarisAdd") as Label;
+                if (lblIDKomisarisAdd != null)
+                    KomisarisID = Convert.ToInt32(lblIDKomisarisAdd.Text);
+                Label lblIDKomisarisEdit = e.Item.FindControl("lblIDKomisarisEdit") as Label;
+                if (lblIDKomisarisEdit != null)
+                    KomisarisID = Convert.ToInt32(lblIDKomisarisEdit.Text);
+
+                ucKomisarisInfo.IDProp = KomisarisID.ToString();
+                return;
+            }
+
             DataGrid dg = source as DataGrid;
             List<KomisarisDireksi> coll = new List<KomisarisDireksi>();
             if (ViewState["KomisarisDireksi"] != null)
@@ -2746,25 +2882,25 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
             if (e.CommandName == "add")
             {
-                TextBox txtNamaAdd = e.Item.FindControl("txtNamaAdd") as TextBox;
+                LinkButton lbNamaKomisarisAdd = e.Item.FindControl("lbNamaKomisarisAdd") as LinkButton;
                 DropDownList ddlJabatanAdd = e.Item.FindControl("ddlJabatanAdd") as DropDownList;
                 DateTimeControl dtTanggalMulaiMenjabatAdd = null;
                 DateTimeControl dtTanggalAkhirMenjabatAdd = null;
                 TextBox txtNoKTPAdd = e.Item.FindControl("txtNoKTPAdd") as TextBox;
                 TextBox txtNoNPWPAdd = e.Item.FindControl("txtNoNPWPAdd") as TextBox;
+                Label lblIDKomisarisAdd = e.Item.FindControl("lblIDKomisarisAdd") as Label;
 
-                if (isExistInKomisarisDireksiGrid(txtNamaAdd.Text))
+                if (isExistInKomisarisDireksiGrid(lbNamaKomisarisAdd.Text))
                 {
-                    Util.ShowMessage(Page, SR.DataIsExist(txtNamaAdd.Text.Trim()));
+                    Util.ShowMessage(Page, SR.DataIsExist(lbNamaKomisarisAdd.Text.Trim()));
                     return;
                 }
 
                 KomisarisDireksi o = new KomisarisDireksi();
-                o.Nama = txtNamaAdd.Text.Trim();
+                o.Nama = lbNamaKomisarisAdd.Text.Trim();
                 o.IDJabatan = Convert.ToInt32(ddlJabatanAdd.SelectedValue);
                 o.Jabatan = ddlJabatanAdd.SelectedItem.Text;
-                o.NoKTP = txtNoKTPAdd.Text;
-                o.NoNPWP = txtNoNPWPAdd.Text;
+                o.IDKomisaris = Convert.ToInt32(lblIDKomisarisAdd.Text);
 
                 if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
                 {
@@ -2789,25 +2925,25 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
             }
             if (e.CommandName == "save")
             {
-                TextBox txtNamaEdit = e.Item.FindControl("txtNamaEdit") as TextBox;
+                LinkButton lbNamaKomisarisEdit = e.Item.FindControl("lbNamaKomisarisEdit") as LinkButton;
                 DropDownList ddlJabatanEdit = e.Item.FindControl("ddlJabatanEdit") as DropDownList;
                 TextBox txtNoKTPEdit = e.Item.FindControl("txtNoKTPEdit") as TextBox;
                 TextBox txtNoNPWPEdit = e.Item.FindControl("txtNoNPWPEdit") as TextBox;
                 DateTimeControl dtTanggalMulaiMenjabatEdit = null;
                 DateTimeControl dtTanggalAkhirMenjabatEdit = null;
+                Label lblIDKomisarisEdit = e.Item.FindControl("lblIDKomisarisEdit") as Label;
 
-                if (isExistInKomisarisDireksiGrid(txtNamaEdit.Text))
+                if (isExistInKomisarisDireksiGrid(lbNamaKomisarisEdit.Text))
                 {
-                    Util.ShowMessage(Page, SR.DataIsExist(txtNamaEdit.Text.Trim()));
+                    Util.ShowMessage(Page, SR.DataIsExist(lbNamaKomisarisEdit.Text.Trim()));
                     return;
                 }
 
                 KomisarisDireksi o = new KomisarisDireksi();
-                o.Nama = txtNamaEdit.Text.Trim();
+                o.Nama = lbNamaKomisarisEdit.Text.Trim();
                 o.IDJabatan = Convert.ToInt32(ddlJabatanEdit.SelectedValue);
                 o.Jabatan = ddlJabatanEdit.SelectedItem.Text;
-                o.NoKTP = txtNoKTPEdit.Text;
-                o.NoNPWP = txtNoNPWPEdit.Text;
+                o.IDKomisaris = Convert.ToInt32(lblIDKomisarisEdit.Text);
 
                 if (Convert.ToBoolean(ViewState["Admin"]) == true || ViewState["Status"].ToString() == PIC_CORSEC)
                 {
@@ -3400,192 +3536,21 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
         #region Search Pemohon
 
-        private void VisiblePanel(bool isVisible)
-        {
-            pnlPemohon.Visible = !isVisible;
-            pnlPemohonAddEdit.Visible = isVisible;
-        }
-
-        private void ClearPemohon()
-        {
-            txtNamaPemohonAddEdit.Text = string.Empty;
-            txtEmailPemohonAddEdit.Text = string.Empty;
-        }
-
-        private void DisplayPemohon(bool isGrid, int IDPemohon)
-        {
-            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
-            SPListItem item = list.GetItemById(IDPemohon);
-            if (item != null)
-            {
-                if (isGrid)
-                {
-                    txtNamaPemohonAddEdit.Text = item.Title;
-                    txtEmailPemohonAddEdit.Text = item["EmailPemohon"].ToString();
-                }
-                else
-                {
-                    hfIDPemohon.Value = IDPemohon.ToString();
-                    txtNamaPemohon.Text = item.Title;
-                    txtEmailPemohon.Text = item["EmailPemohon"].ToString();
-                }
-            }
-
-            BindKomisarisDireksi();
-            BindPemegangSaham();
-            BindWewenangDireksi();
-            BindDokumen();
-            BindNPWP();
-            BindPKP();
-
-            upMain.Update();
-        }
-
-        private void BindPemohon()
-        {
-            string query = string.Empty;
-            if (txtSearchPemohon.Text.Trim() == string.Empty)
-            {
-                query = "<Where>" +
-                             "<IsNotNull>" +
-                                "<FieldRef Name='Title' />" +
-                             "</IsNotNull>" +
-                        "</Where>";
-            }
-            else
-            {
-                query = "<Where>" +
-                          "<Contains>" +
-                            "<FieldRef Name='Title' />" +
-                            "<Value Type='Text'>" + txtSearchPemohon.Text.Trim() + "</Value>" +
-                          "</Contains>" +
-                        "</Where>";
-            }
-
-            grvPemohon.Visible = true;
-            odsPemohon.SelectParameters["ListURL"].DefaultValue = Util.CreateSharePointListStrUrl(web.Url, "Pemohon");
-            odsPemohon.SelectParameters["strQuery"].DefaultValue = query;
-            odsPemohon.Page.DataBind();
-        }
-
-        private string SaveUpdatePemohon()
-        {
-            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
-            web.AllowUnsafeUpdates = true;
-            SPListItem item;
-
-            try
-            {
-                if (ViewState["IDPemohon"] == null)
-                {
-                    item = list.Items.Add();
-                    item["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                }
-                else
-                {
-                    item = list.GetItemById(Convert.ToInt32(ViewState["IDPemohon"].ToString()));
-                    item["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                }
-
-                item["Title"] = txtNamaPemohonAddEdit.Text.Trim();
-                item["EmailPemohon"] = txtEmailPemohonAddEdit.Text.Trim();
-                item.Update();
-
-                web.AllowUnsafeUpdates = false;
-            }
-            catch
-            {
-                if (ViewState["IDPemohon"] == null)
-                    return SR.SaveFail;
-                else
-                    return SR.UpdateFail;
-            }
-            return string.Empty;
-        }
-
         protected void imgbtnNamaPemohon_Click(object sender, ImageClickEventArgs e)
         {
-            grvPemohon.Visible = false;
+            Pemohon.SearchClientIDProp = "divPemohonSearch";
         }
 
-        protected void btnSearchPemohon_Click(object sender, EventArgs e)
+        void btnSelectedData_Click(object sender, EventArgs e)
         {
-            BindPemohon();
-        }
-
-        protected void btnAddPemohon_Click(object sender, EventArgs e)
-        {
-            ViewState["IDPemohon"] = null;
-            btnSavePemohon.Text = "Save";
-
-            VisiblePanel(true);
-            ClearPemohon();
-        }
-
-        protected void grvPemohon_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.DataItemIndex < 0)
-                return;
-
-            DataRowView dr = e.Row.DataItem as DataRowView;
-
-            Literal ltrrb = e.Row.FindControl("ltrrb") as Literal;
-            ltrrb.Text = string.Format("<input type='radio' name='rbPemohon' id='Row{0}' value='{0}' />", dr["ID"].ToString());
-        }
-
-        protected void grvPemohon_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            int IDPemohon;
-            if (e.CommandName == "ubah")
+            SPListItem item = Pemohon.itemProp;
+            if (item != null)
             {
-                VisiblePanel(true);
-                ClearPemohon();
-
-                IDPemohon = Convert.ToInt32(e.CommandArgument.ToString());
-                btnSavePemohon.Text = "Update";
-                ViewState["IDPemohon"] = IDPemohon;
-
-                DisplayPemohon(true, IDPemohon);
+                hfIDPemohon.Value = item.ID.ToString();
+                txtNamaPemohon.Text = item.Title;
+                txtEmailPemohon.Text = item["EmailPemohon"].ToString();
             }
-        }
-
-        protected void btnSelectPemohon_Click(object sender, EventArgs e)
-        {
-            if (Request.Form["rbPemohon"] != null)
-            {
-                string IDPemohon = Request.Form["rbPemohon"].ToString();
-                DisplayPemohon(false, Convert.ToInt32(IDPemohon));
-                Util.RegisterStartupScript(Page, "closePemohon", "closeDialog('divPemohonSearch');");
-            }
-            else
-                Util.ShowMessage(Page, "Please choose Pemohon");
-        }
-
-        protected void btnSavePemohon_Click(object sender, EventArgs e)
-        {
-            string result = SaveUpdatePemohon();
-            if (result == string.Empty)
-            {
-                VisiblePanel(false);
-                BindPemohon();
-            }
-            else
-                Util.ShowMessage(Page, result);
-        }
-
-        protected void btnCancelPemohon_Click(object sender, EventArgs e)
-        {
-            VisiblePanel(false);
-        }
-
-        protected void btnCloseSearchPemohon_Click(object sender, EventArgs e)
-        {
-            BindKomisarisDireksi();
-            BindPemegangSaham();
-            BindWewenangDireksi();
-            BindDokumen();
-            BindNPWP();
-            BindPKP();
+            BindAllGrid(true, true);
 
             upMain.Update();
         }
@@ -3594,46 +3559,104 @@ namespace SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesi
 
         #region SKDP Log
 
-        private void BindSKDPLog()
-        {
-            string query = string.Empty;
-            query = "<Where>" +
-                       "<Eq>" +
-                           "<FieldRef Name='PerusahaanBaru' LookupId='True' />" +
-                           "<Value Type='Lookup'>" + IDP + "</Value>" +
-                       "</Eq>" +
-                    "</Where>" +
-                    "<OrderBy>" +
-                       "<FieldRef Name='Created' Ascending='False' />" +
-                    "</OrderBy>";
-
-            grvSKDPLog.Visible = true;
-            odsSKDPLog.SelectParameters["ListURL"].DefaultValue = Util.CreateSharePointListStrUrl(web.Url, "SKDPLog");
-            odsSKDPLog.SelectParameters["strQuery"].DefaultValue = query;
-            odsSKDPLog.Page.DataBind();
-        }
-
         protected void lnbSKDPLog_Click(object sender, EventArgs e)
         {
-            BindSKDPLog();
+            SKDPLog.IDProp = IDP.ToString();
         }
 
-        protected void grvSKDPLog_RowDataBound(object sender, GridViewRowEventArgs e)
+        #endregion
+
+        #region Search Pemegang Saham
+
+        protected void imgbtnPemegangSaham_Click(object sender, ImageClickEventArgs e)
         {
-            if (e.Row.DataItemIndex < 0)
-                return;
+            ucPemegangSaham.SearchClientIDProp = "divPemegangSahamSearch";
+            ucPemegangSaham.VisibleTipePemegangSahamProp = true;
+        }
 
-            DataRowView dr = e.Row.DataItem as DataRowView;
+        void btnSelectedDataPemegangSaham_Click(object sender, EventArgs e)
+        {
+            BindPemegangSaham();
 
-            HyperLink hypDocument = e.Row.FindControl("hypDocument") as HyperLink;
-            SPList documentPendirianPerusahaanBaru = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "PerusahaanBaruDokumen"));
-            SPListItem item = documentPendirianPerusahaanBaru.GetItemById(Convert.ToInt32(dr["PerusahaanBaruDokumen"]));
+            SPListItem item = ucPemegangSaham.itemProp;
             if (item != null)
             {
-                hypDocument.Target = "_blank";
-                hypDocument.Text = item["Name"].ToString();
-                hypDocument.NavigateUrl = string.Format("/PerusahaanBaruDokumen/{0}/{1}", dr["PerusahaanBaru"].ToString(), item["Name"].ToString());
+                if (ViewState["Index"] != null)
+                {
+                    int Index = Convert.ToInt32(ViewState["Index"]);
+                    if (Index != -1)
+                    {
+                        if (dgPemegangSaham.Items.Count > 0)
+                        {
+                            LinkButton lbNamaPemegangSahamEdit = dgPemegangSaham.Items[Index].FindControl("lbNamaPemegangSahamEdit") as LinkButton;
+                            lbNamaPemegangSahamEdit.Text = item.Title;
+
+                            Label lblIDPemegangSahamEdit = dgPemegangSaham.Items[Index].FindControl("lblIDPemegangSahamEdit") as Label;
+                            lblIDPemegangSahamEdit.Text = item.ID.ToString();
+                        }
+                    }
+                    else
+                    {
+                        lbNamaPemegangSahamAdd.Text = item.Title;
+                        lblIDPemegangSahamAdd.Text = item.ID.ToString();
+                    }
+                }
             }
+            BindAllGrid(false, true);
+        }
+
+        #endregion
+
+        #region Search Komisaris
+
+        protected void imgbtnKomisaris_Click(object sender, ImageClickEventArgs e)
+        {
+            ucKomisaris.SearchClientIDProp = "divKomisarisSearch";
+        }
+
+        void btnSelectedDataKomisaris_Click(object sender, EventArgs e)
+        {
+            BindKomisarisDireksi();
+
+            SPListItem item = ucKomisaris.itemProp;
+            if (item != null)
+            {
+                if (ViewState["Index"] != null)
+                {
+                    int Index = Convert.ToInt32(ViewState["Index"]);
+                    if (Index != -1)
+                    {
+                        if (dgKomisaris.Items.Count > 0)
+                        {
+                            LinkButton lbNamaKomisarisEdit = dgKomisaris.Items[Index].FindControl("lbNamaKomisarisEdit") as LinkButton;
+                            lbNamaKomisarisEdit.Text = item.Title;
+
+                            Label lblIDKomisarisEdit = dgKomisaris.Items[Index].FindControl("lblIDKomisarisEdit") as Label;
+                            lblIDKomisarisEdit.Text = item.ID.ToString();
+                        }
+                    }
+                    else
+                    {
+                        lbNamaKomisarisAdd.Text = item.Title;
+                        lblIDKomisarisAdd.Text = item.ID.ToString();
+                    }
+                }
+            }
+            BindAllGrid(true, false);
+        }
+
+        #endregion
+
+        #region Search Perusahaan
+
+        void btnSelectedDataPerusahaan_Click(object sender, EventArgs e)
+        {
+            SPListItem item = Perusahaan.itemProp;
+            if (item != null)
+            {
+                txtNamaPerusahaan.Text = item["NamaPerusahaan"].ToString();
+            }
+            BindAllGrid(true, true);
         }
 
         #endregion

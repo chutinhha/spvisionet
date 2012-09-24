@@ -398,6 +398,11 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
             {
                 SPListItem documentItem = coll[0];
                 ltrfu.Text = string.Format("<a href='{0}/PendaftaranPMAPMDNDokumen/{1}'>{1}</a>", web.Url, documentItem["Name"].ToString());
+                if (documentItem["Original"] != null)
+                {
+                    ltrOriginal.Text = Convert.ToBoolean(documentItem["Original"]) == true ? "Original" : "Copy";
+                    chkOriginal.Checked = Convert.ToBoolean(documentItem["Original"]);
+                }
             }
 
             if (item["Status"] != null)
@@ -451,8 +456,9 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                 txtModalSendiri.Visible = false;
                 txtModalDitanamKembali.Visible = false;
                 txtModalPinjaman.Visible = false;
-                fu.Visible = false;
 
+                fu.Visible = false;
+                chkOriginal.Visible = false;
                 txtNo.Visible = false;
                 dtTanggalMulaiBerlaku.Visible = false;
                 dtTanggalAkhirBerlaku.Visible = false;
@@ -513,6 +519,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                     ltrModalPinjaman.Visible = false;
                 }
 
+                ltrOriginal.Visible = false;
                 ltrNo.Visible = false;
                 ltrTanggalMulaiBerlaku.Visible = false;
                 ltrTanggalAkhirBerlaku.Visible = false;
@@ -670,35 +677,60 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
                 }
                 web.AllowUnsafeUpdates = false;
 
-                if (fu.PostedFile != null)
+                if (fu.PostedFile.ContentLength > 0)
                 {
-                    if (fu.PostedFile.ContentLength > 0)
+                    string fileName = fu.FileName.Replace("&", string.Empty);
+
+                    try
                     {
-                        string fileName = fu.FileName.Replace("&", string.Empty);
+                        Stream strm = fu.PostedFile.InputStream;
+                        byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
+                        strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
+                        strm.Close();
 
-                        try
-                        {
-                            Stream strm = fu.PostedFile.InputStream;
-                            byte[] bytes = new byte[Convert.ToInt32(fu.PostedFile.ContentLength)];
-                            strm.Read(bytes, 0, Convert.ToInt32(fu.PostedFile.ContentLength));
-                            strm.Close();
+                        SPFolder document = web.Folders["PendaftaranPMAPMDNDokumen"];
+                        web.AllowUnsafeUpdates = true;
+                        SPFile file = document.Files.Add(fileName, bytes);
+                        SPItem itemDocument = file.Item;
+                        itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
+                        itemDocument["PendaftaranPMAPMDN"] = item.ID;
+                        itemDocument["Original"] = chkOriginal.Checked;
+                        itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
+                        itemDocument.Update();
+                        web.AllowUnsafeUpdates = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("already exist"))
+                            return SR.DataIsExist(fileName);
+                        else
+                            return SR.AttachmentFailed(fileName);
+                    }
+                }
+                else
+                {
+                    if (IDP != 0)
+                    {
+                        SPQuery query = new SPQuery();
+                        query.Query = "<Where>" +
+                                         "<Eq>" +
+                                            "<FieldRef Name='PendaftaranPMAPMDN' LookupId='True' />" +
+                                            "<Value Type='Lookup'>" + IDP + "</Value>" +
+                                         "</Eq>" +
+                                      "</Where>" +
+                                      "<OrderBy>" +
+                                        "<FieldRef Name='Created' Ascending='False' />" +
+                                      "</OrderBy>";
 
-                            SPFolder document = web.Folders["PendaftaranPMAPMDNDokumen"];
-                            web.AllowUnsafeUpdates = true;
-                            SPFile file = document.Files.Add(fileName, bytes);
-                            SPItem itemDocument = file.Item;
-                            itemDocument["Title"] = Path.GetFileNameWithoutExtension(fileName);
-                            itemDocument["PendaftaranPMAPMDN"] = item.ID;
-                            itemDocument["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                            itemDocument.Update();
-                            web.AllowUnsafeUpdates = false;
-                        }
-                        catch (Exception ex)
+                        SPList document = web.GetList(Util.CreateSharePointDocLibStrUrl(web.Url, "PendaftaranPMAPMDNDokumen"));
+                        SPListItemCollection coll = document.GetItems(query);
+                        if (coll.Count > 0)
                         {
-                            if (ex.Message.Contains("already exist"))
-                                return SR.DataIsExist(fileName);
-                            else
-                                return SR.AttachmentFailed(fileName);
+                            SPListItem documentItem = coll[0];
+                            documentItem.Web.AllowUnsafeUpdates = true;
+                            documentItem["Original"] = chkOriginal.Checked;
+                            documentItem.Update();
+                            documentItem.Web.AllowUnsafeUpdates = false;
                         }
                     }
                 }
@@ -734,6 +766,9 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
         protected void Page_Load(object sender, EventArgs e)
         {
             Util.RegisterStartupScript(Page, "Pemohon", "RegisterDialog('divPemohonSearch','divPemohonDlgContainer', '480');");
+
+            Pemohon.btnSelectedData.Click += new EventHandler(btnSelectedData_Click);
+            //Pemohon.btnClosedData.Click += new EventHandler(btnClosedData_Click);
 
             using (SPSite site = new SPSite(SPContext.Current.Web.Url, SPContext.Current.Site.SystemAccount.UserToken))
             {
@@ -1007,185 +1042,32 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN
 
         #region Search Pemohon
 
-        private void VisiblePanel(bool isVisible)
-        {
-            pnlPemohon.Visible = !isVisible;
-            pnlPemohonAddEdit.Visible = isVisible;
-        }
-
-        private void ClearPemohon()
-        {
-            txtNamaPemohonAddEdit.Text = string.Empty;
-            txtEmailPemohonAddEdit.Text = string.Empty;
-        }
-
-        private void DisplayPemohon(bool isGrid, int IDPemohon)
-        {
-            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
-            SPListItem item = list.GetItemById(IDPemohon);
-            if (item != null)
-            {
-                if (isGrid)
-                {
-                    txtNamaPemohonAddEdit.Text = item.Title;
-                    txtEmailPemohonAddEdit.Text = item["EmailPemohon"].ToString();
-                }
-                else
-                {
-                    hfIDPemohon.Value = IDPemohon.ToString();
-                    txtNamaPemohon.Text = item.Title;
-                    txtEmailPemohon.Text = item["EmailPemohon"].ToString();
-                }
-            }
-
-            BindPemegangSaham();
-
-            upMain.Update();
-        }
-
-        private void BindPemohon()
-        {
-            string query = string.Empty;
-            if (txtSearchPemohon.Text.Trim() == string.Empty)
-            {
-                query = "<Where>" +
-                             "<IsNotNull>" +
-                                "<FieldRef Name='Title' />" +
-                             "</IsNotNull>" +
-                        "</Where>";
-            }
-            else
-            {
-                query = "<Where>" +
-                          "<Contains>" +
-                            "<FieldRef Name='Title' />" +
-                            "<Value Type='Text'>" + txtSearchPemohon.Text.Trim() + "</Value>" +
-                          "</Contains>" +
-                        "</Where>";
-            }
-
-            grvPemohon.Visible = true;
-            odsPemohon.SelectParameters["ListURL"].DefaultValue = Util.CreateSharePointListStrUrl(web.Url, "Pemohon");
-            odsPemohon.SelectParameters["strQuery"].DefaultValue = query;
-            odsPemohon.Page.DataBind();
-        }
-
-        private string SaveUpdatePemohon()
-        {
-            SPList list = web.GetList(Util.CreateSharePointListStrUrl(web.Url, "Pemohon"));
-            web.AllowUnsafeUpdates = true;
-            SPListItem item;
-
-            try
-            {
-                if (ViewState["IDPemohon"] == null)
-                {
-                    item = list.Items.Add();
-                    item["Created By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                }
-                else
-                {
-                    item = list.GetItemById(Convert.ToInt32(ViewState["IDPemohon"].ToString()));
-                    item["Modified By"] = SPContext.Current.Web.CurrentUser.ID.ToString();
-                }
-
-                item["Title"] = txtNamaPemohonAddEdit.Text.Trim();
-                item["EmailPemohon"] = txtEmailPemohonAddEdit.Text.Trim();
-                item.Update();
-
-                web.AllowUnsafeUpdates = false;
-            }
-            catch
-            {
-                if (ViewState["IDPemohon"] == null)
-                    return SR.SaveFail;
-                else
-                    return SR.UpdateFail;
-            }
-            return string.Empty;
-        }
-
         protected void imgbtnNamaPemohon_Click(object sender, ImageClickEventArgs e)
         {
-            grvPemohon.Visible = false;
+            Pemohon.SearchClientIDProp = "divPemohonSearch";
         }
 
-        protected void btnSearchPemohon_Click(object sender, EventArgs e)
+        void btnSelectedData_Click(object sender, EventArgs e)
         {
-            BindPemohon();
-        }
-
-        protected void btnAddPemohon_Click(object sender, EventArgs e)
-        {
-            ViewState["IDPemohon"] = null;
-            btnSavePemohon.Text = "Save";
-
-            VisiblePanel(true);
-            ClearPemohon();
-        }
-
-        protected void grvPemohon_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.DataItemIndex < 0)
-                return;
-
-            DataRowView dr = e.Row.DataItem as DataRowView;
-
-            Literal ltrrb = e.Row.FindControl("ltrrb") as Literal;
-            ltrrb.Text = string.Format("<input type='radio' name='rbPemohon' id='Row{0}' value='{0}' />", dr["ID"].ToString());
-        }
-
-        protected void grvPemohon_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            int IDPemohon;
-            if (e.CommandName == "ubah")
+            SPListItem item = Pemohon.itemProp;
+            if (item != null)
             {
-                VisiblePanel(true);
-                ClearPemohon();
+                hfIDPemohon.Value = item.ID.ToString();
+                txtNamaPemohon.Text = item.Title;
+                txtEmailPemohon.Text = item["EmailPemohon"].ToString();
 
-                IDPemohon = Convert.ToInt32(e.CommandArgument.ToString());
-                btnSavePemohon.Text = "Update";
-                ViewState["IDPemohon"] = IDPemohon;
+                BindPemegangSaham();
 
-                DisplayPemohon(true, IDPemohon);
+                upMain.Update();
             }
         }
 
-        protected void btnSelectPemohon_Click(object sender, EventArgs e)
-        {
-            if (Request.Form["rbPemohon"] != null)
-            {
-                string IDPemohon = Request.Form["rbPemohon"].ToString();
-                DisplayPemohon(false, Convert.ToInt32(IDPemohon));
-                Util.RegisterStartupScript(Page, "closePemohon", "closeDialog('divPemohonSearch');");
-            }
-            else
-                Util.ShowMessage(Page, "Please choose Pemohon");
-        }
+        //void btnClosedData_Click(object sender, EventArgs e)
+        //{
+        //    BindPemegangSaham();
 
-        protected void btnSavePemohon_Click(object sender, EventArgs e)
-        {
-            string result = SaveUpdatePemohon();
-            if (result == string.Empty)
-            {
-                VisiblePanel(false);
-                BindPemohon();
-            }
-            else
-                Util.ShowMessage(Page, result);
-        }
-
-        protected void btnCancelPemohon_Click(object sender, EventArgs e)
-        {
-            VisiblePanel(false);
-        }
-
-        protected void btnCloseSearchPemohon_Click(object sender, EventArgs e)
-        {
-            BindPemegangSaham();
-
-            upMain.Update();
-        }
+        //    upMain.Update();
+        //}
 
         #endregion
 

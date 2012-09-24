@@ -9,6 +9,9 @@
     Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PerubahanAnggaranDasarDanDataPerseroanUserControl.ascx.cs"
     Inherits="SPVisioNet.WebParts.PerubahanAnggaranDasarDanDataPerseroan.PerubahanAnggaranDasarDanDataPerseroanUserControl" %>
+<%@ Register Src="~/_controltemplates/Lippo1/Pemohon.ascx" TagName="Pemohon" TagPrefix="uc" %>
+<%@ Register Src="~/_controltemplates/Lippo1/Perusahaan.ascx" TagName="Perusahaan"
+    TagPrefix="uc" %>
 <fieldset>
     <legend>
         <h3>
@@ -16,8 +19,8 @@
     </legend>
     <div style="text-align: right">
         <span style="color: Red">*</span> indicates a required field</div>
-    <asp:UpdatePanel ID="upMain" runat="server" UpdateMode="Always">
-        <contenttemplate>
+    <asp:UpdatePanel ID="upMain" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
             <asp:Label ID="ltrWorkflow" runat="server" Visible="false"></asp:Label>
             <table border="0">
                 <tr>
@@ -39,7 +42,7 @@
                         :
                     </td>
                     <td>
-                        <asp:Literal ID="ltrRequestCode" runat="server"  />
+                        <asp:Literal ID="ltrRequestCode" runat="server" />
                     </td>
                 </tr>
                 <tr>
@@ -153,13 +156,13 @@
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </fieldset>
 <fieldset>
     <legend><b>Data Perusahaan</b></legend>
-    <asp:UpdatePanel ID="upDataPerusahaan" runat="server">
-        <contenttemplate>
+    <asp:UpdatePanel ID="upDataPerusahaan" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
             <table border="0">
                 <tr>
                     <td width="200px">
@@ -170,6 +173,7 @@
                     </td>
                     <td>
                         <asp:HiddenField ID="hfIDCompany" runat="server" />
+                        <asp:HiddenField ID="hfIDItem" runat="server" />
                         <asp:TextBox ID="txtCompanyCode" runat="server" Width="300px" Enabled="false" />
                         <asp:Literal ID="ltrCompanyCode" runat="server" />
                         <asp:RequiredFieldValidator ID="reqtxtCompanyCode" Display="Dynamic" ValidationGroup="Save"
@@ -184,7 +188,7 @@
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtCompanyName" runat="server" Width="300px"  />
+                        <asp:TextBox ID="txtCompanyName" runat="server" Width="300px" />
                         <asp:ImageButton ID="imgbtnNamaCompany" ValidationGroup="popup" runat="server" ImageUrl="/_layouts/images/SPVisioNet.WebParts/popup.gif"
                             ToolTip="Search" OnClientClick="openDialog(event,'Cari Nama Company', 'divCompanySearch')"
                             CausesValidation="false" OnClick="imgbtnNamaCompany_Click" />
@@ -192,17 +196,30 @@
                             runat="server" ControlToValidate="txtCompanyName" ErrorMessage="Required Field" />
                     </td>
                 </tr>
-                
+                <tr>
+                    <td>
+                        Status Perseroan <span style="color: Red">*</span>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlStatusPerseroan" runat="server" Enabled="false" />
+                        <asp:Literal ID="ltrStatusPerseroan" runat="server" />
+                        <asp:RequiredFieldValidator ID="reqddlStatusPerseroan" ValidationGroup="Save" runat="server"
+                            ControlToValidate="ddlStatusPerseroan" ErrorMessage="Required Field" Display="Dynamic" />
+                    </td>
+                </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </fieldset>
 <fieldset>
     <legend><b>Perubahan Anggaran Dasar</b></legend>
-    <asp:UpdatePanel ID="upPerubahanAnggaranDasar" runat="server">
-        <contenttemplate>
-         <table border="0">
-                 <tr>
+    <asp:UpdatePanel ID="upPerubahanAnggaranDasar" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <table border="0">
+                <tr>
                     <td width="200px">
                         Tempat Kedudukan
                     </td>
@@ -227,25 +244,27 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="200px">
-                        Status Ownership
+                    <td>
+                        Status Ownership <span style="color: Red">*</span>
                     </td>
                     <td>
                         :
                     </td>
                     <td>
-                        <asp:TextBox ID="txtStatusOwnerShip" runat="server" ></asp:TextBox>
-                        <asp:Literal ID="ltrtxtStatusOwnerShip" runat="server" />
+                        <asp:DropDownList ID="ddlStatusOwnership" runat="server" Enabled="false" />
+                        <asp:Literal ID="ltrStatusOwnership" runat="server" />
+                        <asp:RequiredFieldValidator ID="reqddlStatusOwnership" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="ddlStatusOwnership" ErrorMessage="Required Field" />
                     </td>
                 </tr>
             </table>
-</contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </fieldset>
 <fieldset>
     <legend><b>Perubahan Anggaran Dasar</b></legend>
-    <asp:UpdatePanel ID="upAnggaranDasar" runat="server">
-        <contenttemplate>
+    <asp:UpdatePanel ID="upAnggaranDasar" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
             <table>
                 <tr>
                     <td width="200px">
@@ -286,9 +305,8 @@
                     <td>
                         <asp:TextBox ID="txtModalDasar" runat="server"></asp:TextBox>
                         <asp:Label ID="ltrtxtModalDasar" runat="server"></asp:Label>
-                        <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic"
-                            ValidationGroup="Save" runat="server" ControlToValidate="txtModalDasar"
-                            ErrorMessage="Required Field" />
+                        <asp:RequiredFieldValidator ID="reqtxtModalDasar" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="txtModalDasar" ErrorMessage="Required Field" />
                     </td>
                     <td>
                         <asp:TextBox ID="txtNominalModalDasar" runat="server" ReadOnly="true"></asp:TextBox>
@@ -305,9 +323,8 @@
                     <td>
                         <asp:TextBox ID="txtModalSetor" runat="server"></asp:TextBox>
                         <asp:Label ID="ltrtxtModalSetor" runat="server"></asp:Label>
-                        <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic"
-                            ValidationGroup="Save" runat="server" ControlToValidate="txtModalSetor"
-                            ErrorMessage="Required Field" />
+                        <asp:RequiredFieldValidator ID="reqtxtModalSetor" Display="Dynamic" ValidationGroup="Save"
+                            runat="server" ControlToValidate="txtModalSetor" ErrorMessage="Required Field" />
                     </td>
                     <td>
                         <asp:TextBox ID="txtNominalModalSetor" runat="server" ReadOnly="true"></asp:TextBox>
@@ -331,7 +348,7 @@
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </fieldset>
 <br />
@@ -343,7 +360,7 @@
         <br />
         <b>Semula</b>
         <asp:UpdatePanel ID="upKomisarisSemula" runat="server" UpdateMode="Conditional">
-            <contenttemplate>
+            <ContentTemplate>
                 <asp:DataGrid ID="dgKomisarisSemula" runat="server" AutoGenerateColumns="false" CssClass="table"
                     ShowFooter="false" Width="100%" OnItemDataBound="dgKomisarisSemula_ItemDataBound">
                     <HeaderStyle CssClass="header" />
@@ -357,23 +374,14 @@
                         </asp:TemplateColumn>
                         <asp:TemplateColumn HeaderText="Nama">
                             <ItemTemplate>
-                                <asp:Label ID="lblNama" runat="server" Text='<%# Eval("Nama") %>' />
+                                <asp:LinkButton ID="lbNamaKomisaris" runat="server" CommandName="komisaris" Text='<%# Eval("Nama") %>'
+                                    CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Komisaris dan Direksi Info', 'divKomisarisInfoSearch')" />
                             </ItemTemplate>
                         </asp:TemplateColumn>
                         <asp:TemplateColumn HeaderText="Jabatan">
                             <ItemTemplate>
                                 <asp:Label ID="lblJabatan" runat="server" Text='<%# Eval("Jabatan") %>' />
                                 <asp:Label ID="lblJabatanID" runat="server" Text='<%# Eval("IDJabatan") %>' Visible="false" />
-                            </ItemTemplate>
-                        </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="No. KTP">
-                            <ItemTemplate>
-                                <asp:Label ID="lblNoKTP" runat="server" Text='<%# Eval("NoKTP") %>' />
-                            </ItemTemplate>
-                        </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="No. NPWP">
-                            <ItemTemplate>
-                                <asp:Label ID="lblNoNPWP" runat="server" Text='<%# Eval("NoNPWP") %>' />
                             </ItemTemplate>
                         </asp:TemplateColumn>
                         <asp:TemplateColumn HeaderText="Mulai Menjabat" Visible="false">
@@ -386,14 +394,19 @@
                                 <asp:Label ID="lblTanggalAkhirMenjabat" runat="server" />
                             </ItemTemplate>
                         </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="IDKomisaris" Visible="false">
+                            <ItemTemplate>
+                                <asp:Label ID="lblIDKomisaris" runat="server" Text='<%# Eval("IDKomisaris") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateColumn>
                     </Columns>
                 </asp:DataGrid>
-            </contenttemplate>
+            </ContentTemplate>
         </asp:UpdatePanel>
         <br />
         <b>Menjadi</b>
         <asp:UpdatePanel ID="upKomisarisMenjadi" runat="server" UpdateMode="Conditional">
-            <contenttemplate>
+            <ContentTemplate>
                 <asp:DataGrid ID="dgKomisaris" runat="server" AutoGenerateColumns="false" CssClass="table"
                     ShowFooter="true" Width="100%" OnItemCommand="dgKomisaris_ItemCommand" OnItemDataBound="dgKomisaris_ItemDataBound">
                     <HeaderStyle CssClass="header" />
@@ -410,17 +423,24 @@
                         </asp:TemplateColumn>
                         <asp:TemplateColumn HeaderText="Nama">
                             <ItemTemplate>
-                                <asp:Label ID="lblNama" runat="server" Text='<%# Eval("Nama") %>' />
+                                <asp:LinkButton ID="lbNamaKomisaris" runat="server" CommandName="komisaris" Text='<%# Eval("Nama") %>'
+                                    CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Komisaris dan Direksi Info', 'divKomisarisInfoSearch')" />
                             </ItemTemplate>
                             <FooterTemplate>
-                                <asp:TextBox ID="txtNamaAdd" runat="server" Width="200px" />
-                                <asp:RequiredFieldValidator ID="reqtxtNamaAdd" runat="server" ControlToValidate="txtNamaAdd"
-                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
+                                <asp:LinkButton ID="lbNamaKomisarisAdd" runat="server" CommandName="komisaris" CausesValidation="false"
+                                    ValidationGroup="popup" OnClientClick="openDialog(event, 'Komisaris dan Direksi Info', 'divKomisarisInfoSearch')" />
+                                <asp:ImageButton ID="imgbtnNamaKomisarisAdd" ValidationGroup="popup" runat="server"
+                                    CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                                    ToolTip="Search" OnClientClick="openDialog(event, 'Cari Komisaris dan Direksi', 'divKomisarisSearch')"
+                                    OnClick="imgbtnKomisaris_Click" />
                             </FooterTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox ID="txtNamaEdit" runat="server" Width="200px" Text='<%# Eval("Nama") %>' />
-                                <asp:RequiredFieldValidator ID="reqtxtNamaEdit" runat="server" ControlToValidate="txtNamaEdit"
-                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
+                                <asp:LinkButton ID="lbNamaKomisarisEdit" runat="server" CommandName="komisaris" Text='<%# Eval("Nama") %>'
+                                    CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Komisaris dan Direksi Info', 'divKomisarisInfoSearch')" />
+                                <asp:ImageButton ID="imgbtnNamaKomisarisAdd" ValidationGroup="popup" runat="server"
+                                    CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                                    ToolTip="Search" OnClientClick="openDialog(event, 'Cari Komisaris dan Direksi', 'divKomisarisSearch')"
+                                    OnClick="imgbtnKomisaris_Click" />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
                         <asp:TemplateColumn HeaderText="Jabatan">
@@ -436,36 +456,6 @@
                             <EditItemTemplate>
                                 <asp:DropDownList ID="ddlJabatanEdit" runat="server" />
                                 <asp:RequiredFieldValidator ID="reqddlJabatanEdit" runat="server" ControlToValidate="ddlJabatanEdit"
-                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
-                            </EditItemTemplate>
-                        </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="No. KTP">
-                            <ItemTemplate>
-                                <asp:Label ID="lblNoKTP" runat="server" Text='<%# Eval("NoKTP") %>' />
-                            </ItemTemplate>
-                            <FooterTemplate>
-                                <asp:TextBox ID="txtNoKTPAdd" runat="server" />
-                                <asp:RequiredFieldValidator ID="reqtxtNoKTPAdd" runat="server" ControlToValidate="txtNoKTPAdd"
-                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
-                            </FooterTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtNoKTPEdit" runat="server" Text='<%# Eval("NoKTP") %>' />
-                                <asp:RequiredFieldValidator ID="reqtxtNoKTPEdit" runat="server" ControlToValidate="txtNoKTPEdit"
-                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
-                            </EditItemTemplate>
-                        </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="No. NPWP">
-                            <ItemTemplate>
-                                <asp:Label ID="lblNoNPWP" runat="server" Text='<%# Eval("NoNPWP") %>' />
-                            </ItemTemplate>
-                            <FooterTemplate>
-                                <asp:TextBox ID="txtNoNPWPAdd" runat="server" />
-                                <asp:RequiredFieldValidator ID="reqtxtNoNPWPAdd" runat="server" ControlToValidate="txtNoNPWPAdd"
-                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
-                            </FooterTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtNoNPWPEdit" runat="server" Text='<%# Eval("NoNPWP") %>' />
-                                <asp:RequiredFieldValidator ID="reqtxtNoNPWPEdit" runat="server" ControlToValidate="txtNoNPWPEdit"
                                     Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgKomisaris" />
                             </EditItemTemplate>
                         </asp:TemplateColumn>
@@ -560,9 +550,20 @@
                                 <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
                             </EditItemTemplate>
                         </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="IDKomisaris" Visible="false">
+                            <ItemTemplate>
+                                <asp:Label ID="lblIDKomisaris" runat="server" Text='<%# Eval("IDKomisaris") %>' />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:Label ID="lblIDKomisarisEdit" runat="server" Text='<%# Eval("IDKomisaris") %>' />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:Label ID="lblIDKomisarisAdd" runat="server" />
+                            </FooterTemplate>
+                        </asp:TemplateColumn>
                     </Columns>
                 </asp:DataGrid>
-            </contenttemplate>
+            </ContentTemplate>
         </asp:UpdatePanel>
     </fieldset>
 </div>
@@ -571,61 +572,125 @@
     <br />
     <b>Semula</b>
     <asp:UpdatePanel ID="upPemegangSahamSemula" runat="server" UpdateMode="Conditional">
-        <contenttemplate>
+        <ContentTemplate>
             <asp:DataGrid ID="dgPemegangSahamSemula" runat="server" AutoGenerateColumns="false"
                 CssClass="table" Width="100%" OnItemDataBound="dgPemegangSahamSemula_ItemDataBound">
                 <HeaderStyle CssClass="header" />
                 <ItemStyle CssClass="odd" />
                 <AlternatingItemStyle CssClass="white" />
                 <Columns>
-                    <asp:TemplateColumn HeaderText="ID" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("ID") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Nama Pemegang Saham">
-                        <ItemTemplate>
-                            <asp:Label ID="lblNamaPemegangSaham" runat="server" Text='<%# Eval("Nama") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Jumlah Saham" ItemStyle-HorizontalAlign="Right">
-                        <ItemTemplate>
-                            <asp:Label ID="lblJumlahSaham" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "JumlahSaham", "{0:#,##0}") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Jumlah Nominal" ItemStyle-HorizontalAlign="Right">
-                        <ItemTemplate>
-                            <asp:Label ID="lblJumlahNominal" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "JumlahNominal", "{0:#,##0}") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Percentages" ItemStyle-HorizontalAlign="Right">
-                        <ItemTemplate>
-                            <asp:Label ID="lblPercentages" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Percentages", "{0:#,##0.00}") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Partner" ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
-                        <ItemTemplate>
-                            <asp:Label ID="lblPartner" runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Mulai Menjabat" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblTanggalMulaiMenjabat" runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Akhir Menjabat" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblTanggalAkhirMenjabat" runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateColumn>
-                </Columns>
+                        <asp:TemplateColumn HeaderText="ID" Visible="false">
+                            <ItemTemplate>
+                                <asp:Label ID="lblID" runat="server" Text='<%# Eval("ID") %>' />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:Label ID="lblIDEdit" runat="server" Text='<%# Eval("ID") %>' />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Nama Pemegang Saham">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="lbNamaPemegangSaham" runat="server" CommandName="pemegangsaham"
+                                    Text='<%# Eval("Nama") %>' CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Pemegang Saham Info', 'divPemegangSahamInfoSearch')" />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:LinkButton ID="lbNamaPemegangSahamAdd" runat="server" CommandName="pemegangsaham"
+                                    CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Pemegang Saham Info', 'divPemegangSahamInfoSearch')" />
+                                <asp:ImageButton ID="imgbtnNamaPemegangSahamAdd" ValidationGroup="popup" runat="server"
+                                    CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                                    ToolTip="Search" OnClientClick="openDialog(event, 'Cari Pemegang Saham', 'divPemegangSahamSearch')"
+                                    OnClick="imgbtnPemegangSaham_Click" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:LinkButton ID="lbNamaPemegangSahamEdit" runat="server" CommandName="pemegangsaham"
+                                    Text='<%# Eval("Nama") %>' CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Pemegang Saham Info', 'divPemegangSahamInfoSearch')" />
+                                <asp:ImageButton ID="imgbtnNamaPemegangSahamEdit" ValidationGroup="popup" runat="server"
+                                    CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                                    ToolTip="Search" OnClientClick="openDialog(event, 'Cari Pemegang Saham', 'divPemegangSahamSearch')"
+                                    OnClick="imgbtnPemegangSaham_Click" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Jumlah Saham" ItemStyle-HorizontalAlign="Right">
+                            <ItemTemplate>
+                                <asp:Label ID="lblJumlahSaham" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "JumlahSaham", "{0:#,##0}") %>' />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="txtJumlahSahamAdd" runat="server" CssClass="textRight" />
+                                <asp:RequiredFieldValidator ID="reqtxtJumlahSahamAdd" runat="server" ControlToValidate="txtJumlahSahamAdd"
+                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgPemegangSaham" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtJumlahSahamEdit" runat="server" CssClass="textRight" Text='<%# DataBinder.Eval(Container.DataItem, "JumlahSaham", "{0:#,##0}") %>' />
+                                <asp:RequiredFieldValidator ID="reqtxtJumlahSahamEdit" runat="server" ControlToValidate="txtJumlahSahamEdit"
+                                    Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgPemegangSaham" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Jumlah Nominal" ItemStyle-HorizontalAlign="Right">
+                            <ItemTemplate>
+                                <asp:Label ID="lblJumlahNominal" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "JumlahNominal", "{0:#,##0}") %>' />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="txtJumlahNominalAdd" CssClass="textRight" runat="server" Enabled="false" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtJumlahNominalEdit" CssClass="textRight" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "JumlahNominal", "{0:#,##0}") %>'
+                                    Enabled="false" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Percentages" ItemStyle-HorizontalAlign="Right">
+                            <ItemTemplate>
+                                <asp:Label ID="lblPercentages" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Percentages", "{0:#,##0.00}") %>' />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="txtPercentagesAdd" runat="server" CssClass="textRight" Enabled="false" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtPercentagesEdit" runat="server" CssClass="textRight" Text='<%# DataBinder.Eval(Container.DataItem, "Percentages", "{0:#,##0.00}") %>'
+                                    Enabled="false" />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="Partner" ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblPartner" runat="server" />
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:CheckBox ID="cboPartnerAdd" runat="server" />
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:CheckBox ID="cboPartnerEdit" runat="server" Checked='<%# Eval("Partner") %>' />
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
+                                <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="delete">Delete</asp:LinkButton>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="dgPemegangSaham" CommandName="add">Add</asp:LinkButton>
+                            </FooterTemplate>
+                            <EditItemTemplate>
+                                <asp:LinkButton ID="btnSave" runat="server" ValidationGroup="dgPemegangSaham" CommandName="save">Save</asp:LinkButton>
+                                <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
+                            </EditItemTemplate>
+                        </asp:TemplateColumn>
+                        <asp:TemplateColumn HeaderText="IDPemegangSaham" Visible="false">
+                            <ItemTemplate>
+                                <asp:Label ID="lblIDPemegangSaham" runat="server" Text='<%# Eval("IDPemegangSaham") %>' />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:Label ID="lblIDPemegangSahamEdit" runat="server" Text='<%# Eval("IDPemegangSaham") %>' />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:Label ID="lblIDPemegangSahamAdd" runat="server" />
+                            </FooterTemplate>
+                        </asp:TemplateColumn>
+                    </Columns>
             </asp:DataGrid>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
     <br />
     <b>Menjadi</b>
     <asp:UpdatePanel ID="upPemegangSahamMenjadi" runat="server" UpdateMode="Conditional">
-        <contenttemplate>
+        <ContentTemplate>
             <asp:DataGrid ID="dgPemegangSaham" runat="server" AutoGenerateColumns="false" CssClass="table"
                 ShowFooter="true" Width="100%" OnItemCommand="dgPemegangSaham_ItemCommand" OnItemDataBound="dgPemegangSaham_ItemDataBound">
                 <HeaderStyle CssClass="header" />
@@ -642,17 +707,24 @@
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Nama Pemegang Saham">
                         <ItemTemplate>
-                            <asp:Label ID="lblNamaPemegangSaham" runat="server" Text='<%# Eval("Nama") %>' />
+                            <asp:LinkButton ID="lbNamaPemegangSaham" runat="server" CommandName="pemegangsaham"
+                                Text='<%# Eval("Nama") %>' CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Pemegang Saham Info', 'divPemegangSahamInfoSearch')" />
                         </ItemTemplate>
                         <FooterTemplate>
-                            <asp:TextBox ID="txtNamaPemegangSahamAdd" Width="200px" runat="server" />
-                            <asp:RequiredFieldValidator ID="reqtxtNamaPemegangSahamAdd" runat="server" ControlToValidate="txtNamaPemegangSahamAdd"
-                                Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgPemegangSaham" />
+                            <asp:LinkButton ID="lbNamaPemegangSahamAdd" runat="server" CommandName="pemegangsaham"
+                                CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Pemegang Saham Info', 'divPemegangSahamInfoSearch')" />
+                            <asp:ImageButton ID="imgbtnNamaPemegangSahamAdd" ValidationGroup="popup" runat="server"
+                                CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                                ToolTip="Search" OnClientClick="openDialog(event, 'Cari Pemegang Saham', 'divPemegangSahamSearch')"
+                                OnClick="imgbtnPemegangSaham_Click" />
                         </FooterTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtNamaPemegangSahamEdit" Width="200px" runat="server" Text='<%# Eval("Nama") %>' />
-                            <asp:RequiredFieldValidator ID="reqtxtNamaPemegangSahamEdit" runat="server" ControlToValidate="txtNamaPemegangSahamEdit"
-                                Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgPemegangSaham" />
+                            <asp:LinkButton ID="lbNamaPemegangSahamEdit" runat="server" CommandName="pemegangsaham"
+                                Text='<%# Eval("Nama") %>' CausesValidation="false" ValidationGroup="popup" OnClientClick="openDialog(event, 'Pemegang Saham Info', 'divPemegangSahamInfoSearch')" />
+                            <asp:ImageButton ID="imgbtnNamaPemegangSahamEdit" ValidationGroup="popup" runat="server"
+                                CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
+                                ToolTip="Search" OnClientClick="openDialog(event, 'Cari Pemegang Saham', 'divPemegangSahamSearch')"
+                                OnClick="imgbtnPemegangSaham_Click" />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Jumlah Saham" ItemStyle-HorizontalAlign="Right">
@@ -705,84 +777,6 @@
                             <asp:CheckBox ID="cboPartnerEdit" runat="server" Checked='<%# Eval("Partner") %>' />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Mulai Menjabat" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblTanggalMulaiMenjabat" runat="server" />
-                        </ItemTemplate>
-                        <FooterTemplate>
-                            <div id="spdtinput">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <SharePoint:DateTimeControl ID="dtTanggalMulaiMenjabatAdd" DateOnly="true" runat="server">
-                                            </SharePoint:DateTimeControl>
-                                        </td>
-                                        <td>
-                                            <asp:RequiredFieldValidator ID="reqdtTanggalMulaiMenjabatAdd" ValidationGroup="dgPemegangSaham"
-                                                runat="server" ControlToValidate="dtTanggalMulaiMenjabatAdd$dtTanggalMulaiMenjabatAddDate"
-                                                ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </FooterTemplate>
-                        <EditItemTemplate>
-                            <div id="spdtinput">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <SharePoint:DateTimeControl ID="dtTanggalMulaiMenjabatEdit" DateOnly="true" runat="server">
-                                            </SharePoint:DateTimeControl>
-                                        </td>
-                                        <td>
-                                            <asp:RequiredFieldValidator ID="reqdtTanggalMulaiMenjabatEdit" ValidationGroup="dgPemegangSaham"
-                                                runat="server" ControlToValidate="dtTanggalMulaiMenjabatEdit$dtTanggalMulaiMenjabatEditDate"
-                                                ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </EditItemTemplate>
-                    </asp:TemplateColumn>
-                    <asp:TemplateColumn HeaderText="Akhir Menjabat" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblTanggalAkhirMenjabat" runat="server" />
-                        </ItemTemplate>
-                        <FooterTemplate>
-                            <div id="spdtinput">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <SharePoint:DateTimeControl ID="dtTanggalAkhirMenjabatAdd" DateOnly="true" runat="server">
-                                            </SharePoint:DateTimeControl>
-                                        </td>
-                                        <td>
-                                            <asp:RequiredFieldValidator ID="reqdtTanggalAkhirMenjabatAdd" ValidationGroup="dgPemegangSaham"
-                                                runat="server" ControlToValidate="dtTanggalAkhirMenjabatAdd$dtTanggalAkhirMenjabatAddDate"
-                                                ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </FooterTemplate>
-                        <EditItemTemplate>
-                            <div id="spdtinput">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <SharePoint:DateTimeControl ID="dtTanggalAkhirMenjabatEdit" DateOnly="true" runat="server">
-                                            </SharePoint:DateTimeControl>
-                                        </td>
-                                        <td>
-                                            <asp:RequiredFieldValidator ID="reqdtTanggalAkhirMenjabatEdit" ValidationGroup="dgPemegangSaham"
-                                                runat="server" ControlToValidate="dtTanggalAkhirMenjabatEdit$dtTanggalAkhirMenjabatEditDate"
-                                                ErrorMessage="*" Display="Dynamic" ToolTip="Required Field" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </EditItemTemplate>
-                    </asp:TemplateColumn>
                     <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
@@ -796,15 +790,26 @@
                             <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="IDPemegangSaham" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIDPemegangSaham" runat="server" Text='<%# Eval("IDPemegangSaham") %>' />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblIDPemegangSahamEdit" runat="server" Text='<%# Eval("IDPemegangSaham") %>' />
+                        </EditItemTemplate>
+                        <FooterTemplate>
+                            <asp:Label ID="lblIDPemegangSahamAdd" runat="server" />
+                        </FooterTemplate>
+                    </asp:TemplateColumn>
                 </Columns>
             </asp:DataGrid>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </fieldset>
 <br />
 <fieldset>
-    <asp:UpdatePanel ID="upRemarks" runat="server">
-        <contenttemplate>
+    <asp:UpdatePanel ID="upRemarks" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
             <table border="0">
                 <tr>
                     <td valign="top" width="200px">
@@ -841,7 +846,7 @@
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </fieldset>
 <br />
@@ -849,6 +854,74 @@
     <fieldset>
         <legend><b>Perubahan Anggaran Dasar & Data Perseroan (<asp:Label ID="lblPerusahaanName"
             runat="server"></asp:Label>)</b></legend>
+        <div id="divPersetujuanPMA" runat="server" visible="false">
+            <fieldset>
+                <legend><b>Persetujuan PMA/PMDN (<asp:Literal ID="ltrUsernamePMAPMDN" runat="server" />)
+                    ]</b></legend>
+                <table border="0">
+                    <tr>
+                        <td valign="top" width="315px">
+                            <br />
+                            <b>Note:
+                                <br />
+                                Penulisan harus ada [ORI]xxxxx / [Soft]xxxxx</b>
+                            <br />
+                            <br />
+                            <asp:Literal ID="ltrfuPMAPMDN" runat="server" />
+                            <br />
+                            <br />
+                            <asp:FileUpload ID="fuPMAPMDN" runat="server" />
+                            <br />
+                            <asp:CheckBox ID="chkOriginalfuPMAPMDN" runat="server" Text="Original Dokumen" />
+                            <asp:RequiredFieldValidator ID="reqfuPMAPMDN" Display="Dynamic" ValidationGroup="Save"
+                                runat="server" ControlToValidate="fuPMAPMDN" ErrorMessage="Required Field" />
+                        </td>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td width="150px">
+                                        No <span style="color: Red">*</span>
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtNoPMAPMDN" runat="server" />
+                                        <asp:Literal ID="ltrNoPMAPMDN" runat="server" />
+                                        <asp:RequiredFieldValidator ID="reqtxtNoPMAPMDN" Display="Dynamic" ValidationGroup="Save"
+                                            runat="server" ControlToValidate="txtNoAkte" ErrorMessage="Required Field" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tanggal<span style="color: Red">*</span>
+                                    </td>
+                                    <td>
+                                        :
+                                    </td>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td>
+                                                    <SharePoint:DateTimeControl ID="dtTanggalPMAPMDN" DateOnly="true" runat="server">
+                                                    </SharePoint:DateTimeControl>
+                                                    <asp:Literal ID="ltrTanggalPMAPMDN" runat="server" />
+                                                </td>
+                                                <td>
+                                                    <asp:RequiredFieldValidator ID="reqdtTanggalPMAPMDN" ValidationGroup="Save" runat="server"
+                                                        ControlToValidate="dtTanggalPMAPMDN$dtTanggalPMAPMDN" ErrorMessage="Required Field"
+                                                        Display="Dynamic" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
         <div id="divAkta" runat="server" visible="false">
             <fieldset>
                 <legend><b>Akta [ dilaporkan oleh Corporate Secretary (<asp:Literal ID="ltrUsernameAkte"
@@ -898,7 +971,7 @@
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td>
-                                                    <sharepoint:datetimecontrol id="dtTanggalAkte" dateonly="true" runat="server"></sharepoint:datetimecontrol>
+                                                    <SharePoint:DateTimeControl ID="dtTanggalAkte" DateOnly="true" runat="server"></SharePoint:DateTimeControl>
                                                     <asp:Literal ID="ltrTanggalAkte" runat="server" />
                                                 </td>
                                                 <td>
@@ -991,8 +1064,8 @@
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td>
-                                                    <sharepoint:datetimecontrol id="dtSKDPTanggalMulai" dateonly="true" runat="server">
-                                                    </sharepoint:datetimecontrol>
+                                                    <SharePoint:DateTimeControl ID="dtSKDPTanggalMulai" DateOnly="true" runat="server">
+                                                    </SharePoint:DateTimeControl>
                                                     <asp:Literal ID="ltrSKDPTanggalMulai" runat="server" />
                                                 </td>
                                                 <td>
@@ -1015,8 +1088,8 @@
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td>
-                                                    <sharepoint:datetimecontrol id="dtSKDPTanggalAkhir" dateonly="true" runat="server">
-                                                    </sharepoint:datetimecontrol>
+                                                    <SharePoint:DateTimeControl ID="dtSKDPTanggalAkhir" DateOnly="true" runat="server">
+                                                    </SharePoint:DateTimeControl>
                                                     <asp:Literal ID="ltrSKDPTanggalAkhir" runat="server" />
                                                 </td>
                                                 <td>
@@ -1154,8 +1227,8 @@
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td>
-                                                    <sharepoint:datetimecontrol id="dtTanggalTerdaftarNPWP" dateonly="true" runat="server">
-                                                    </sharepoint:datetimecontrol>
+                                                    <SharePoint:DateTimeControl ID="dtTanggalTerdaftarNPWP" DateOnly="true" runat="server">
+                                                    </SharePoint:DateTimeControl>
                                                     <asp:Literal ID="ltrTanggalTerdaftarNPWP" runat="server" />
                                                 </td>
                                                 <td>
@@ -1338,7 +1411,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td>
-                                                <sharepoint:datetimecontrol id="dtTanggalAPV" dateonly="true" runat="server"></sharepoint:datetimecontrol>
+                                                <SharePoint:DateTimeControl ID="dtTanggalAPV" DateOnly="true" runat="server"></SharePoint:DateTimeControl>
                                                 <asp:Literal ID="ltrTanggalAPV" runat="server" />
                                             </td>
                                             <td>
@@ -1403,8 +1476,8 @@
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td>
-                                                <sharepoint:datetimecontrol id="dtTanggalSetoran" dateonly="true" runat="server">
-                                                </sharepoint:datetimecontrol>
+                                                <SharePoint:DateTimeControl ID="dtTanggalSetoran" DateOnly="true" runat="server">
+                                                </SharePoint:DateTimeControl>
                                                 <asp:Literal ID="ltrTanggalSetoran" runat="server" />
                                             </td>
                                             <td>
@@ -1496,8 +1569,8 @@
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td>
-                                                <sharepoint:datetimecontrol id="dtSKMulaiBerlaku" dateonly="true" runat="server">
-                                                </sharepoint:datetimecontrol>
+                                                <SharePoint:DateTimeControl ID="dtSKMulaiBerlaku" DateOnly="true" runat="server">
+                                                </SharePoint:DateTimeControl>
                                                 <asp:Literal ID="ltrSKMulaiBerlaku" runat="server" />
                                             </td>
                                             <td>
@@ -1564,8 +1637,8 @@
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td>
-                                                <sharepoint:datetimecontrol id="dtBNRIMulaiBerlaku" dateonly="true" runat="server">
-                                                    </sharepoint:datetimecontrol>
+                                                <SharePoint:DateTimeControl ID="dtBNRIMulaiBerlaku" DateOnly="true" runat="server">
+                                                </SharePoint:DateTimeControl>
                                                 <asp:Literal ID="ltrBNRIMulaiBerlaku" runat="server" />
                                             </td>
                                             <td>
@@ -1596,6 +1669,84 @@
             </table>
         </fieldset>
     </div>
+    <div id="divSKPersetujuan" runat="server" visible="false">
+        <fieldset>
+            <legend><b>Upload SK Persetujuan Department Hukum dan HAM [ dilaporkan oleh Corporate
+                Secretary (<asp:Label ID="lblUserNamePersetujuan" runat="server"></asp:Label>) ]</b></legend>
+            <br />
+            <asp:DataGrid ID="dgSKPersetujuan" runat="server" AutoGenerateColumns="false" CssClass="table"
+                ShowFooter="true" Width="100%" OnItemCommand="dgSKPersetujuan_ItemCommand" OnItemDataBound="dgSKPersetujuan_ItemDataBound">
+                <HeaderStyle CssClass="header" />
+                <ItemStyle CssClass="odd" />
+                <AlternatingItemStyle CssClass="white" />
+                <Columns>
+                    <asp:TemplateColumn HeaderText="ID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("ID") %>' />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblIDEdit" runat="server" Text='<%# Eval("ID") %>' />
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="Attachment" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top">
+                        <ItemTemplate>
+                            <asp:Label ID="lblAtttachmentHidden" runat="server" Text='<%# Eval("NamaFile") %>'
+                                Visible="false" />
+                            <asp:Label ID="lblAtttachment" runat="server" Text='<%# Eval("NamaFile") %>' />
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            <asp:FileUpload ID="fuAdd" runat="server" />
+                            <asp:RequiredFieldValidator ID="reqfuAdd" runat="server" ControlToValidate="fuAdd"
+                                Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgSKPersetujuan" />
+                        </FooterTemplate>
+                        <EditItemTemplate>
+                            <asp:FileUpload ID="fuEdit" runat="server" />
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="No" ItemStyle-VerticalAlign="Top" FooterStyle-VerticalAlign="Top">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNo" runat="server" Text='<%# Eval("No") %>' />
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            <asp:TextBox ID="txtNoAdd" runat="server" Width="200px" />
+                            <asp:RequiredFieldValidator ID="reqtxtNoAdd" runat="server" ControlToValidate="txtNoAdd"
+                                Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgSKPersetujuan" />
+                        </FooterTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtNoEdit" runat="server" Width="200px" Text='<%# Eval("No") %>' />
+                            <asp:RequiredFieldValidator ID="reqtxtNoEdit" runat="server" ControlToValidate="txtNoEdit"
+                                Display="Dynamic" ErrorMessage="*" ToolTip="Required Field" ValidationGroup="dgSKPersetujuan" />
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="Keterangan">
+                        <ItemTemplate>
+                            <asp:Label ID="lblKeterangan" runat="server" Text='<%# Eval("Keterangan") %>' />
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            <asp:TextBox ID="txtKeteranganAdd" runat="server" Rows="3" TextMode="MultiLine" Width="350px" />
+                        </FooterTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtKeteranganEdit" runat="server" Rows="3" TextMode="MultiLine"
+                                Width="350px" Text='<%# Eval("Keterangan") %>' />
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>
+                    <asp:TemplateColumn ItemStyle-HorizontalAlign="Center" FooterStyle-HorizontalAlign="Center">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="edit">Edit</asp:LinkButton>&nbsp;
+                            <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="False" CommandName="delete">Delete</asp:LinkButton>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            <asp:LinkButton ID="btnAdd" runat="server" ValidationGroup="dgSKPersetujuan" CommandName="add">Add</asp:LinkButton>
+                        </FooterTemplate>
+                        <EditItemTemplate>
+                            <asp:LinkButton ID="btnSave" runat="server" ValidationGroup="dgSKPersetujuan" CommandName="save">Save</asp:LinkButton>
+                            <asp:LinkButton ID="btnCancel" CausesValidation="False" CommandName="cancel" runat="server">Cancel</asp:LinkButton>
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>
+                </Columns>
+            </asp:DataGrid>
+        </fieldset>
+    </div>
 </div>
 <div style="text-align: right">
     <asp:Button ID="btnSaveUpdate" runat="server" ValidationGroup="Save" Text="Save"
@@ -1607,177 +1758,11 @@
 </div>
 <div id="divPemohonDlgContainer">
     <div id="divPemohonSearch" style="display: none">
-        <asp:UpdatePanel ID="upPemohon" runat="server">
-            <contenttemplate>
-                <asp:Panel ID="pnlPemohon" runat="server">
-                    <table width="100%" border="0">
-                        <tr>
-                            <td>
-                                Search :
-                                <asp:TextBox ID="txtSearchPemohon" runat="server" Width="200px" />
-                                &nbsp;<asp:Button ID="btnSearchPemohon" runat="server" Text="Search" OnClick="btnSearchPemohon_Click" />
-                                &nbsp;<asp:Button ID="btnAddPemohon" runat="server" Text="Add New" OnClick="btnAddPemohon_Click" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:GridView ID="grvPemohon" runat="server" AutoGenerateColumns="false" CssClass="table"
-                                    Width="100%" EmptyDataText="No Data Available" DataSourceID="odsPemohon" AllowPaging="true"
-                                    PageSize="10" OnRowCommand="grvPemohon_RowCommand" OnRowDataBound="grvPemohon_RowDataBound">
-                                    <HeaderStyle CssClass="header" />
-                                    <RowStyle CssClass="odd" />
-                                    <AlternatingRowStyle CssClass="even" />
-                                    <PagerStyle CssClass="pager" />
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="">
-                                            <ItemStyle HorizontalAlign="Center" Width="10px" />
-                                            <ItemTemplate>
-                                                <asp:Literal ID="ltrrb" runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:BoundField DataField="Title" HeaderText="Nama Pemohon" />
-                                        <asp:BoundField DataField="EmailPemohon" HeaderText="Email Pemohon" />
-                                        <asp:TemplateField HeaderText="">
-                                            <ItemStyle HorizontalAlign="Center" Width="25px" />
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="False" CommandName="ubah"
-                                                    CommandArgument='<%# Eval("ID") %>'>Edit</asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                </asp:GridView>
-                                <asp:ObjectDataSource ID="odsPemohon" runat="server" EnablePaging="True" MaximumRowsParameterName="pageSize"
-                                    SelectMethod="GetItemDataTable" SelectCountMethod="ListItemCount" StartRowIndexParameterName="pageIndex"
-                                    TypeName="SPVisionet.CorporateSecretary.Common.Util">
-                                    <SelectParameters>
-                                        <asp:Parameter Name="ListURL" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                        <asp:Parameter Name="pageSize" Type="Int32" />
-                                        <asp:Parameter Name="pageIndex" Type="Int32" />
-                                        <asp:Parameter Name="strSortFieldName" Type="String" DefaultValue="Title" ConvertEmptyStringToNull="false" />
-                                        <asp:Parameter Name="strDataType" Type="String" DefaultValue="String" ConvertEmptyStringToNull="false" />
-                                        <asp:Parameter Name="blAscendingTrueFalse" Type="Boolean" DefaultValue="false" />
-                                        <asp:Parameter Name="strViewFields" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                        <asp:Parameter Name="strQuery" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                    </SelectParameters>
-                                </asp:ObjectDataSource>
-                            </td>
-                        </tr>
-                        <tr align="right">
-                            <td>
-                                <asp:Button ID="btnSelectPemohon" runat="server" Text="Select" OnClick="btnSelectPemohon_Click" />
-                                <asp:Button ID="btnCloseSearchPemohon" runat="server" Text="Close" OnClientClick="closeDialog('divPemohonSearch')" />
-                            </td>
-                        </tr>
-                    </table>
-                </asp:Panel>
-                <asp:Panel ID="pnlPemohonAddEdit" runat="server" Visible="false">
-                    <table width="100%" border="0">
-                        <tr>
-                            <td width="100px">
-                                Nama Pemohon
-                            </td>
-                            <td width="5px">
-                                :
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtNamaPemohonAddEdit" runat="server" Width="250px" />
-                                <asp:RequiredFieldValidator ID="reqtxtNamaPemohonAddEdit" Display="Dynamic" ValidationGroup="SavePemohon"
-                                    runat="server" ControlToValidate="txtNamaPemohonAddEdit" ErrorMessage="Required Field" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Email Pemohon
-                            </td>
-                            <td>
-                                :
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmailPemohonAddEdit" runat="server" Width="250px" />
-                                <asp:RequiredFieldValidator ID="reqtxtEmailPemohonAddEdit" Display="Dynamic" ValidationGroup="SavePemohon"
-                                    runat="server" ControlToValidate="txtEmailPemohonAddEdit" ErrorMessage="Required Field" />
-                                <asp:RegularExpressionValidator ID="regtxtEmailPemohonAddEdit" runat="server" ErrorMessage="Invalid Email"
-                                    ControlToValidate="txtEmailPemohonAddEdit" Display="Dynamic" ValidationGroup="SavePemohon"
-                                    ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="right">
-                                <asp:Button ID="btnSavePemohon" runat="server" Text="Save" ValidationGroup="SavePemohon"
-                                    OnClick="btnSavePemohon_Click" />&nbsp;
-                                <asp:Button ID="btnCancelPemohon" runat="server" Text="Cancel" OnClick="btnCancelPemohon_Click" />
-                            </td>
-                        </tr>
-                    </table>
-                </asp:Panel>
-            </contenttemplate>
-        </asp:UpdatePanel>
+        <uc:Pemohon ID="Pemohon" runat="server" />
     </div>
 </div>
 <div id="divCompanyDlgContainer">
     <div id="divCompanySearch" style="display: none">
-        <asp:UpdatePanel ID="upCompanySearch" runat="server">
-            <contenttemplate>
-                <table width="100%" border="0">
-                    <tr>
-                        <td>
-                            Search :
-                            <asp:TextBox ID="txtSearchCompany" runat="server" />
-                            &nbsp;<asp:Button ID="btnSearchCompany" runat="server" Text="Search" OnClick="btnSearchCompany_Click" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            <asp:Button ID="Button1" runat="server" Text="Cancel" OnClientClick="closeDialog('divCompanySearch')" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:GridView ID="grvCompanySearch" runat="server" AutoGenerateColumns="false" CssClass="table"
-                                Width="100%" EmptyDataText="No Data Available" DataSourceID="odsCompany" AllowPaging="true"
-                                PageSize="10" OnRowDataBound="grvCompanySearch_RowDataBound">
-                                <HeaderStyle CssClass="header" />
-                                <RowStyle CssClass="odd" />
-                                <AlternatingRowStyle CssClass="even" />
-                                <PagerStyle CssClass="pager" />
-                                <Columns>
-                                    <asp:TemplateField HeaderText="">
-                                        <ItemStyle HorizontalAlign="Center" Width="10px" />
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltrrb" runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="CompanyCodeAPV" HeaderText="Company Name" />
-                                    <asp:BoundField DataField="NamaPerusahaan" HeaderText="Nama Perusahaan" />
-                                    <asp:BoundField DataField="MataUang" HeaderText="Mata Uang" />
-                                    <asp:BoundField DataField="TempatKedudukan" HeaderText="Tempat Kedudukan" />
-                                    <asp:BoundField DataField="MaksudTujuan" HeaderText="Maksud dan Tujuan" />
-                                </Columns>
-                            </asp:GridView>
-                            <asp:ObjectDataSource ID="odsCompany" runat="server" EnablePaging="True" MaximumRowsParameterName="pageSize"
-                                SelectMethod="GetItemDataTable" SelectCountMethod="ListItemCount" StartRowIndexParameterName="pageIndex"
-                                TypeName="SPVisionet.CorporateSecretary.Common.Util">
-                                <SelectParameters>
-                                    <asp:Parameter Name="ListURL" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="pageSize" Type="Int32" />
-                                    <asp:Parameter Name="pageIndex" Type="Int32" />
-                                    <asp:Parameter Name="strSortFieldName" Type="String" DefaultValue="Title" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="strDataType" Type="String" DefaultValue="String" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="blAscendingTrueFalse" Type="Boolean" DefaultValue="false" />
-                                    <asp:Parameter Name="strViewFields" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                    <asp:Parameter Name="strQuery" Type="String" DefaultValue="" ConvertEmptyStringToNull="false" />
-                                </SelectParameters>
-                            </asp:ObjectDataSource>
-                        </td>
-                    </tr>
-                    <tr align="right">
-                        <td>
-                            <asp:Button ID="btnSelectCompany" runat="server" Text="Select" OnClick="btnSelectCompany_Click" />
-                            <asp:Button ID="btnSelectCompanyClose" runat="server" Text="Close" OnClientClick="closeDialog('divCompanySearch')" />
-                        </td>
-                    </tr>
-                </table>
-            </contenttemplate>
-        </asp:UpdatePanel>
+        <uc:Perusahaan ID="Perusahaan" runat="server" />
     </div>
 </div>

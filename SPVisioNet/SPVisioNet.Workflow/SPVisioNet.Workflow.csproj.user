@@ -9,14 +9,14 @@
         <ProjectItemStore Id="{9f9db283-2fe0-49df-a315-a3e6775a1e3e}">
           <DisplayName>WFPerubahanAnggaranDasarPerusahaan</DisplayName>
           <HistoryList>Workflow History</HistoryList>
-          <HistoryListGuid>{e7358023-ff4c-4bcf-a06d-bc281463b842}</HistoryListGuid>
+          <HistoryListGuid>{4ef6f41a-e097-474d-a213-c5a3ef5797fc}</HistoryListGuid>
           <TaskList>Tasks</TaskList>
-          <TaskListGuid>{d68952e2-a073-4338-b66e-dc0134ae60f2}</TaskListGuid>
+          <TaskListGuid>{d0adb01e-eb25-4df1-b76c-05ac4aa9aedb}</TaskListGuid>
           <AutoAssociate>true</AutoAssociate>
           <ManualStart>true</ManualStart>
-          <ListURL>http://my2008:2300/Lists/PerubahanAnggaranDasarDanDataPerseroan/AllItems.aspx</ListURL>
-          <TargetList>PerubahanAnggaranDasarDanDataPerseroan</TargetList>
-          <TargetListGuid>{4393742a-34af-43a4-ac0d-bf70bc6edf00}</TargetListGuid>
+          <ListURL>http://lk-sp-app-dev:81/cs/Lists/PerubahanAnggaranDasarDanDataPerseroan/AllItems.aspx</ListURL>
+          <TargetList>Perubahan Anggaran Dasar &amp; Data Perseroan</TargetList>
+          <TargetListGuid>{807a0418-bf54-4f76-b44f-d3f0bf0571dd}</TargetListGuid>
           <StartOnCreate>false</StartOnCreate>
           <StartOnChange>false</StartOnChange>
         </ProjectItemStore>

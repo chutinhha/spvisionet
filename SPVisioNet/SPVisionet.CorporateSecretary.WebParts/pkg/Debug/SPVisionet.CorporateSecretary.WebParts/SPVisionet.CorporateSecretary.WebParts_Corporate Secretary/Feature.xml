@@ -26,5 +26,7 @@
     <ElementManifest Location="PermohonanPerdaftaranPMAPMDNCT\Elements.xml" />
     <ElementManifest Location="PerubahanPTBiasaMenjadiPMAPMDNCT\Elements.xml" />
     <ElementManifest Location="PembelianPerusahaanBaruIndonesiaCT\Elements.xml" />
+    <ElementManifest Location="PembelianPerusahaanBaruIndonesia\Elements.xml" />
+    <ElementFile Location="PembelianPerusahaanBaruIndonesia\PembelianPerusahaanBaruIndonesia.webpart" />
   </ElementManifests>
 </Feature>

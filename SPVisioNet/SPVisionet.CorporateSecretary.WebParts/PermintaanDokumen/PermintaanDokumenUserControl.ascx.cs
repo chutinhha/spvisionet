@@ -858,7 +858,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen
         {
             SPQuery query;
             string Type = ddlTipeDokumen.SelectedItem.Text.ToLower();
-            if (Type == "akta and sk pengesahan pendirian" || Type == "apv" || Type == "bnri" || Type == "npwp" || Type == "pkp" || Type == "setoran modal" || Type == "skdp" || Type == "apv")
+            if (Type == "akta and sk pengesahan pendirian" || Type == "journal voucher" || Type == "bnri" || Type == "npwp" || Type == "pkp" || Type == "setoran modal" || Type == "skdp" || Type == "apv")
             {
                 query = new SPQuery();
                 query.Query = "<Where>" +
@@ -984,7 +984,7 @@ namespace SPVisionet.CorporateSecretary.WebParts.PermintaanDokumen
             SPQuery query;
 
             string Type = ddlTipeDokumen.SelectedItem.Text.ToLower();
-            if (Type == "akta and sk pengesahan pendirian" || Type == "apv" || Type == "bnri" || Type == "npwp" || Type == "pkp" || Type == "setoran modal" || Type == "skdp" || Type == "apv")
+            if (Type == "akta and sk pengesahan pendirian" || Type == "journal voucher" || Type == "bnri" || Type == "npwp" || Type == "pkp" || Type == "setoran modal" || Type == "skdp" || Type == "apv")
             {
                 query = new SPQuery();
                 query.Query = "<Where>" +

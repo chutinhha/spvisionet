@@ -11,6 +11,7 @@
         <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanSIUP" TypeName="*" />
         <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPembuatanTDP" TypeName="*" />
         <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PermohonanPerdaftaranPMAPMDN" TypeName="*" />
+        <SafeControl Assembly="SPVisionet.CorporateSecretary.WebParts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ab65cbe4901d02" Namespace="SPVisionet.CorporateSecretary.WebParts.PembelianPerusahaanBaruIndonesia" TypeName="*" />
       </SafeControls>
     </Assembly>
   </Assemblies>
@@ -23,6 +24,7 @@
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanSIUP\PermohonanPembuatanSIUPUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPembuatanTDP\PermohonanPembuatanTDPUserControl.ascx" />
     <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PermohonanPerdaftaranPMAPMDN\PermohonanPerdaftaranPMAPMDNUserControl.ascx" />
+    <TemplateFile Location="CONTROLTEMPLATES\SPVisionet.CorporateSecretary.WebParts\PembelianPerusahaanBaruIndonesia\PembelianPerusahaanBaruIndonesiaUserControl.ascx" />
     <TemplateFile Location="Images\SPVisionet.CorporateSecretary.WebParts\loading.gif" />
     <TemplateFile Location="Images\SPVisionet.CorporateSecretary.WebParts\popup.gif" />
   </TemplateFiles>

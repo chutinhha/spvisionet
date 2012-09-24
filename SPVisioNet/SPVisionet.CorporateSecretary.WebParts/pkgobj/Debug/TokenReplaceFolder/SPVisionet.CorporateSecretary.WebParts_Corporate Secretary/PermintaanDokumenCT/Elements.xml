@@ -12,9 +12,9 @@
     <XmlDocuments>
       <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
         <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
-          <Display>/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=display</Display>
-          <Edit>/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=edit</Edit>
-          <New>/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=new</New>
+          <Display>/cs/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=display</Display>
+          <Edit>/cs/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=edit</Edit>
+          <New>/cs/Lists/PermintaanDokumen/PermintaanDokumen.aspx?mode=new</New>
         </FormUrls>
       </XmlDocument>
     </XmlDocuments>

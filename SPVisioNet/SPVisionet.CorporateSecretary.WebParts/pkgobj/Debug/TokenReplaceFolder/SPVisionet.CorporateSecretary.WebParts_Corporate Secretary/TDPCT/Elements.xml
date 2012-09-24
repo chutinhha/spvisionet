@@ -12,9 +12,9 @@
     <XmlDocuments>
       <XmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
         <FormUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
-          <Display>/Lists/TDP/TDP.aspx?mode=display</Display>
-          <Edit>/Lists/TDP/TDP.aspx?mode=edit</Edit>
-          <New>/Lists/TDP/TDP.aspx?mode=new</New>
+          <Display>/cs/Lists/TDP/TDP.aspx?mode=display</Display>
+          <Edit>/cs/Lists/TDP/TDP.aspx?mode=edit</Edit>
+          <New>/cs/Lists/TDP/TDP.aspx?mode=new</New>
         </FormUrls>
       </XmlDocument>
     </XmlDocuments>

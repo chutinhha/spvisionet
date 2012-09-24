@@ -95,7 +95,7 @@
                                 Display="Dynamic" ErrorMessage="*" ValidationGroup="dgDokumen" ToolTip="Required Field" />--%>
                             <asp:ImageButton ID="imgbtnNamaDokumenAdd" ValidationGroup="popup" runat="server"
                                 CausesValidation="False" CommandName="popup" ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
-                                ToolTip="Search" OnClientClick="openDialog(event, 'Search Document', 'divDocumentSearch')"
+                                ToolTip="Search" OnClientClick="openDialog(event, 'Cari Dokumen', 'divDocumentSearch')"
                                 OnClick="imgbtnNamaDokumen_Click" />
                         </FooterTemplate>
                         <EditItemTemplate>
@@ -104,7 +104,7 @@
                                 Display="Dynamic" ErrorMessage="*" ValidationGroup="dgDokumen" ToolTip="Required Field" />--%>
                             <asp:ImageButton ID="imgbtnNamaDokumenEdit" ValidationGroup="popup" runat="server"
                                 ImageUrl="/_layouts/images/SPVisionet.CorporateSecretary.WebParts/popup.gif"
-                                ToolTip="Search" CausesValidation="False" CommandName="popup" OnClientClick="openDialog(event, 'Search Document', 'divDocumentSearch')"
+                                ToolTip="Search" CausesValidation="False" CommandName="popup" OnClientClick="openDialog(event, 'Cari Dokumen', 'divDocumentSearch')"
                                 OnClick="imgbtnNamaDokumen_Click" />
                         </EditItemTemplate>
                     </asp:TemplateColumn>

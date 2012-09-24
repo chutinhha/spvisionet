@@ -317,7 +317,11 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
 
         private void UpdatePermissionPICCorsec2_ExecuteCode(object sender, EventArgs e)
         {
+            SPWeb web = workflowProperties.Web;
+            TaxLoginName = Util.GetApproval(web, Roles.TAX);
+            SPUser userTax = workflowProperties.Web.Users[TaxLoginName];
 
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Contribute");
         }
 
         public SPWorkflowTaskProperties updateAllPICCorsec2Tasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
@@ -327,6 +331,17 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             updateAllPICCorsec2Tasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
 
             scInfo.Add(string.Format("{0};{1};{2};{3}", "5", OriginatorName, DateTime.Now, "Upload Document and Update Data SKDP"));
+        }
+
+        private void SendMailToTaxToDownloadAktaSKDP_ExecuteCode(object sender, EventArgs e)
+        {
+            SPUser userTax = workflowProperties.Web.Users[TaxLoginName];
+
+            string URL = string.Format("{0}/Lists/PerusahaanBaru/DispForm.aspx?ID={1}", workflowProperties.WebUrl, workflowProperties.Item.ID);
+            Subject = string.Format("CorsecSP {0} [ {1} ] Download Akta and SKDP", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
+
+            BodyMessage = string.Format(ApprovedRejectedMailTemplate, userTax.Name, "Pendirian Perusahaan Baru (Indonesia)", workflowProperties.Item.Title, "need you to download Akta and SKDP", URL);
+            SPUtility.SendEmail(workflowProperties.Web, false, false, userTax.Email, Subject, BodyMessage);
         }
 
         #endregion
@@ -363,6 +378,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Read");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Contribute");
         }
 
@@ -384,168 +400,6 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             AccountingHeadName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
 
             scInfo.Add(string.Format("{0};{1};{2};{3}", "6", AccountingHeadName, DateTime.Now, "Input Company Code"));
-        }
-
-        #endregion
-
-        #region Accounting
-
-        public WorkflowContext createAccountingTask___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
-        public String createAccountingTask_AssignedTo1 = default(System.String);
-        public String createAccountingTask_Body1 = default(System.String);
-        public String createAccountingTask_ContentTypeId1 = default(System.String);
-        public Int32 createAccountingTask_ListItemId1 = default(System.Int32);
-        public String createAccountingTask_Subject1 = default(System.String);
-        public String createAccountingTask_TaskTitle1 = default(System.String);
-        public String createAccountingTask_WFName1 = default(System.String);
-        private void PopulateDataAccounting_ExecuteCode(object sender, EventArgs e)
-        {
-            SPWeb web = workflowProperties.Web;
-            AccountingLoginName = Util.GetApproval(web, Roles.ACCOUNTING);
-
-            createAccountingTask___Context1.Initialize(workflowProperties);
-            createAccountingTask_AssignedTo1 = AccountingLoginName;
-            createAccountingTask_ContentTypeId1 = ToDoTaskContentTypeID;
-            createAccountingTask_TaskTitle1 = "Need to Upload Document and Update Data APV for " + workflowProperties.Item.Title;
-            createAccountingTask_WFName1 = WFNameID;
-            createAccountingTask_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data APV", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
-            createAccountingTask_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pendirian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data APV" + Util.GenerateApprovalInformation(scInfo), "{1}");
-
-            UpdateItem(Roles.ACCOUNTING + " Upload APV", string.Empty);
-        }
-
-        private void UpdatePermissionAccounting_ExecuteCode(object sender, EventArgs e)
-        {
-            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Contribute");
-        }
-
-        public SPWorkflowTaskProperties updateAllAccountingTasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
-        private void updateAllAccountingTasks_MethodInvoking(object sender, EventArgs e)
-        {
-            updateAllAccountingTasks_TaskProperties1.PercentComplete = 1;
-            updateAllAccountingTasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
-        }
-
-        private void GetAccountingStaffActionData_ExecuteCode(object sender, EventArgs e)
-        {
-            SPWeb web = workflowProperties.Item.Web;
-
-            SPListItem item = web.Lists[workflowProperties.TaskListId].GetItemById(createAccountingHeadTask_ListItemId1);
-
-            SPFieldUser userField = item.Fields["Assigned To"] as SPFieldUser;
-            SPFieldUserValue userValue = (SPFieldUserValue)userField.GetFieldValue(item["AssignedTo"].ToString());
-            AccountingName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
-
-            scInfo.Add(string.Format("{0};{1};{2};{3}", "7", AccountingName, DateTime.Now, "Upload Document and Update Data APV"));
-        }
-
-        #endregion
-
-        #region Finance
-
-        public WorkflowContext createFinanceTask___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
-        public String createFinanceTask_AssignedTo1 = default(System.String);
-        public String createFinanceTask_Body1 = default(System.String);
-        public String createFinanceTask_ContentTypeId1 = default(System.String);
-        public Int32 createFinanceTask_ListItemId1 = default(System.Int32);
-        public String createFinanceTask_Subject1 = default(System.String);
-        public String createFinanceTask_TaskTitle1 = default(System.String);
-        public String createFinanceTask_WFName1 = default(System.String);
-        private void PopulateDataFinance_ExecuteCode(object sender, EventArgs e)
-        {
-            SPWeb web = workflowProperties.Web;
-            FinanceLoginName = Util.GetApproval(web, Roles.FINANCE);
-
-            createFinanceTask___Context1.Initialize(workflowProperties);
-            createFinanceTask_AssignedTo1 = FinanceLoginName;
-            createFinanceTask_ContentTypeId1 = ToDoTaskContentTypeID;
-            createFinanceTask_TaskTitle1 = "Need to Upload Document and Update Data Setoran Modal for " + workflowProperties.Item.Title;
-            createFinanceTask_WFName1 = WFNameID;
-            createFinanceTask_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data Setoran Modal", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
-            createFinanceTask_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pendirian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data Setoran Modal" + Util.GenerateApprovalInformation(scInfo), "{1}");
-
-            UpdateItem(Roles.FINANCE + " Upload Setoran Modal", string.Empty);
-        }
-
-        private void UpdatePermissionFinance_ExecuteCode(object sender, EventArgs e)
-        {
-            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, FinanceLoginName, "Contribute");
-        }
-
-        public SPWorkflowTaskProperties updateAllFinancTasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
-        private void updateAllFinancTasks_MethodInvoking(object sender, EventArgs e)
-        {
-            updateAllFinancTasks_TaskProperties1.PercentComplete = 1;
-            updateAllFinancTasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
-        }
-
-        private void GetFinanceActionData_ExecuteCode(object sender, EventArgs e)
-        {
-            SPWeb web = workflowProperties.Item.Web;
-
-            SPListItem item = web.Lists[workflowProperties.TaskListId].GetItemById(createFinanceTask_ListItemId1);
-
-            SPFieldUser userField = item.Fields["Assigned To"] as SPFieldUser;
-            SPFieldUserValue userValue = (SPFieldUserValue)userField.GetFieldValue(item["AssignedTo"].ToString());
-            FinanceName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
-
-            scInfo.Add(string.Format("{0};{1};{2};{3}", "8", FinanceName, DateTime.Now, "Upload Document and Update Data Setoran Modal"));
-        }
-
-        #endregion
-
-        #region PIC Corsec Upload SK Pengesahan
-
-        public WorkflowContext createPICCorsec3Task___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
-        public String createPICCorsec3Task_AssignedTo1 = default(System.String);
-        public String createPICCorsec3Task_Body1 = default(System.String);
-        public String createPICCorsec3Task_ContentTypeId1 = default(System.String);
-        public Int32 createPICCorsec3Task_ListItemId1 = default(System.Int32);
-        public String createPICCorsec3Task_Subject1 = default(System.String);
-        public String createPICCorsec3Task_TaskTitle1 = default(System.String);
-        public String createPICCorsec3Task_WFName1 = default(System.String);
-        private void PopulateDataPICCorsec3_ExecuteCode(object sender, EventArgs e)
-        {
-            createPICCorsec3Task___Context1.Initialize(workflowProperties);
-            createPICCorsec3Task_AssignedTo1 = workflowProperties.Originator;
-            createPICCorsec3Task_ContentTypeId1 = ToDoTaskContentTypeID;
-            createPICCorsec3Task_TaskTitle1 = "Need to Upload Document and Update Data SK Pengesahan for " + workflowProperties.Item.Title;
-            createPICCorsec3Task_WFName1 = WFNameID;
-            createPICCorsec3Task_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data SK Pengesahan", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
-            createPICCorsec3Task_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pendirian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data SK Pengesahan" + Util.GenerateApprovalInformation(scInfo), "{1}");
-
-            UpdateItem(Roles.PIC_CORSEC + " Upload SK Pengesahan", string.Empty);
-        }
-
-        private void UpdatePermissionPICCorsec3_ExecuteCode(object sender, EventArgs e)
-        {
-            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Contribute");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, FinanceLoginName, "Read");
-        }
-
-        public SPWorkflowTaskProperties updateAllPICCorsec3Tasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
-        private void updateAllPICCorsec3Tasks_MethodInvoking(object sender, EventArgs e)
-        {
-            updateAllPICCorsec3Tasks_TaskProperties1.PercentComplete = 1;
-            updateAllPICCorsec3Tasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
-
-            scInfo.Add(string.Format("{0};{1};{2};{3}", "9", OriginatorName, DateTime.Now, "Upload Document and Update Data SK Pengesahan"));
         }
 
         #endregion
@@ -583,8 +437,6 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Read");
-            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, FinanceLoginName, "Read");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Contribute");
         }
 
@@ -605,7 +457,172 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             SPFieldUserValue userValue = (SPFieldUserValue)userField.GetFieldValue(item["AssignedTo"].ToString());
             TaxName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
 
-            scInfo.Add(string.Format("{0};{1};{2};{3}", "10", TaxName, DateTime.Now, "Upload Document and Update Data NPWP"));
+            scInfo.Add(string.Format("{0};{1};{2};{3}", "7", TaxName, DateTime.Now, "Upload Document and Update Data NPWP"));
+        }
+
+        #endregion
+
+        #region Accounting
+
+        public WorkflowContext createAccountingTask___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
+        public String createAccountingTask_AssignedTo1 = default(System.String);
+        public String createAccountingTask_Body1 = default(System.String);
+        public String createAccountingTask_ContentTypeId1 = default(System.String);
+        public Int32 createAccountingTask_ListItemId1 = default(System.Int32);
+        public String createAccountingTask_Subject1 = default(System.String);
+        public String createAccountingTask_TaskTitle1 = default(System.String);
+        public String createAccountingTask_WFName1 = default(System.String);
+        private void PopulateDataAccounting_ExecuteCode(object sender, EventArgs e)
+        {
+            SPWeb web = workflowProperties.Web;
+            AccountingLoginName = Util.GetApproval(web, Roles.ACCOUNTING);
+
+            createAccountingTask___Context1.Initialize(workflowProperties);
+            createAccountingTask_AssignedTo1 = AccountingLoginName;
+            createAccountingTask_ContentTypeId1 = ToDoTaskContentTypeID;
+            createAccountingTask_TaskTitle1 = "Need to Upload Document and Update Data JV for " + workflowProperties.Item.Title;
+            createAccountingTask_WFName1 = WFNameID;
+            createAccountingTask_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data JV", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
+            createAccountingTask_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pendirian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data JV" + Util.GenerateApprovalInformation(scInfo), "{1}");
+
+            UpdateItem(Roles.ACCOUNTING + " Upload JV", string.Empty);
+        }
+
+        private void UpdatePermissionAccounting_ExecuteCode(object sender, EventArgs e)
+        {
+            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Contribute");
+        }
+
+        public SPWorkflowTaskProperties updateAllAccountingTasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
+        private void updateAllAccountingTasks_MethodInvoking(object sender, EventArgs e)
+        {
+            updateAllAccountingTasks_TaskProperties1.PercentComplete = 1;
+            updateAllAccountingTasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
+        }
+
+        private void GetAccountingStaffActionData_ExecuteCode(object sender, EventArgs e)
+        {
+            SPWeb web = workflowProperties.Item.Web;
+
+            SPListItem item = web.Lists[workflowProperties.TaskListId].GetItemById(createAccountingHeadTask_ListItemId1);
+
+            SPFieldUser userField = item.Fields["Assigned To"] as SPFieldUser;
+            SPFieldUserValue userValue = (SPFieldUserValue)userField.GetFieldValue(item["AssignedTo"].ToString());
+            AccountingName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
+
+            scInfo.Add(string.Format("{0};{1};{2};{3}", "8", AccountingName, DateTime.Now, "Upload Document and Update Data JV"));
+        }
+
+        #endregion
+
+        #region Finance
+
+        public WorkflowContext createFinanceTask___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
+        public String createFinanceTask_AssignedTo1 = default(System.String);
+        public String createFinanceTask_Body1 = default(System.String);
+        public String createFinanceTask_ContentTypeId1 = default(System.String);
+        public Int32 createFinanceTask_ListItemId1 = default(System.Int32);
+        public String createFinanceTask_Subject1 = default(System.String);
+        public String createFinanceTask_TaskTitle1 = default(System.String);
+        public String createFinanceTask_WFName1 = default(System.String);
+        private void PopulateDataFinance_ExecuteCode(object sender, EventArgs e)
+        {
+            SPWeb web = workflowProperties.Web;
+            FinanceLoginName = Util.GetApproval(web, Roles.FINANCE);
+
+            createFinanceTask___Context1.Initialize(workflowProperties);
+            createFinanceTask_AssignedTo1 = FinanceLoginName;
+            createFinanceTask_ContentTypeId1 = ToDoTaskContentTypeID;
+            createFinanceTask_TaskTitle1 = "Need to Upload Document and Update Data Setoran Modal for " + workflowProperties.Item.Title;
+            createFinanceTask_WFName1 = WFNameID;
+            createFinanceTask_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data Setoran Modal", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
+            createFinanceTask_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pendirian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data Setoran Modal" + Util.GenerateApprovalInformation(scInfo), "{1}");
+
+            UpdateItem(Roles.FINANCE + " Upload Setoran Modal", string.Empty);
+        }
+
+        private void UpdatePermissionFinance_ExecuteCode(object sender, EventArgs e)
+        {
+            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, FinanceLoginName, "Contribute");
+        }
+
+        public SPWorkflowTaskProperties updateAllFinancTasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
+        private void updateAllFinancTasks_MethodInvoking(object sender, EventArgs e)
+        {
+            updateAllFinancTasks_TaskProperties1.PercentComplete = 1;
+            updateAllFinancTasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
+        }
+
+        private void GetFinanceActionData_ExecuteCode(object sender, EventArgs e)
+        {
+            SPWeb web = workflowProperties.Item.Web;
+
+            SPListItem item = web.Lists[workflowProperties.TaskListId].GetItemById(createFinanceTask_ListItemId1);
+
+            SPFieldUser userField = item.Fields["Assigned To"] as SPFieldUser;
+            SPFieldUserValue userValue = (SPFieldUserValue)userField.GetFieldValue(item["AssignedTo"].ToString());
+            FinanceName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
+
+            scInfo.Add(string.Format("{0};{1};{2};{3}", "9", FinanceName, DateTime.Now, "Upload Document and Update Data Setoran Modal"));
+        }
+
+        #endregion
+
+        #region PIC Corsec Upload SK Pengesahan
+
+        public WorkflowContext createPICCorsec3Task___Context1 = new Microsoft.SharePoint.WorkflowActions.WorkflowContext();
+        public String createPICCorsec3Task_AssignedTo1 = default(System.String);
+        public String createPICCorsec3Task_Body1 = default(System.String);
+        public String createPICCorsec3Task_ContentTypeId1 = default(System.String);
+        public Int32 createPICCorsec3Task_ListItemId1 = default(System.Int32);
+        public String createPICCorsec3Task_Subject1 = default(System.String);
+        public String createPICCorsec3Task_TaskTitle1 = default(System.String);
+        public String createPICCorsec3Task_WFName1 = default(System.String);
+        private void PopulateDataPICCorsec3_ExecuteCode(object sender, EventArgs e)
+        {
+            createPICCorsec3Task___Context1.Initialize(workflowProperties);
+            createPICCorsec3Task_AssignedTo1 = workflowProperties.Originator;
+            createPICCorsec3Task_ContentTypeId1 = ToDoTaskContentTypeID;
+            createPICCorsec3Task_TaskTitle1 = "Need to Upload Document and Update Data SK Pengesahan for " + workflowProperties.Item.Title;
+            createPICCorsec3Task_WFName1 = WFNameID;
+            createPICCorsec3Task_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data SK Pengesahan", RequestCode.PERMOHONAN_PENDIRIAN_PERUSAHAAN_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
+            createPICCorsec3Task_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pendirian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data SK Pengesahan" + Util.GenerateApprovalInformation(scInfo), "{1}");
+
+            UpdateItem(Roles.PIC_CORSEC + " Upload SK Pengesahan", string.Empty);
+        }
+
+        private void UpdatePermissionPICCorsec3_ExecuteCode(object sender, EventArgs e)
+        {
+            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, FinanceLoginName, "Read");
+        }
+
+        public SPWorkflowTaskProperties updateAllPICCorsec3Tasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
+        private void updateAllPICCorsec3Tasks_MethodInvoking(object sender, EventArgs e)
+        {
+            updateAllPICCorsec3Tasks_TaskProperties1.PercentComplete = 1;
+            updateAllPICCorsec3Tasks_TaskProperties1.ExtendedProperties["Status"] = "Completed";
+
+            scInfo.Add(string.Format("{0};{1};{2};{3}", "10", OriginatorName, DateTime.Now, "Upload Document and Update Data SK Pengesahan"));
         }
 
         #endregion
@@ -638,7 +655,14 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
 
         private void UpdatePermissionTax2_ExecuteCode(object sender, EventArgs e)
         {
-
+            Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, DivHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, ChiefCorsecLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingHeadLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, TaxLoginName, "Contribute");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, AccountingLoginName, "Read");
+            Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, FinanceLoginName, "Read");
         }
 
         public SPWorkflowTaskProperties UpdateAllTax2Tasks_TaskProperties1 = new Microsoft.SharePoint.Workflow.SPWorkflowTaskProperties();
@@ -781,12 +805,12 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             createAccTask___Context1.Initialize(workflowProperties);
             createAccTask_AssignedTo1 = AccountingLoginName;
             createAccTask_ContentTypeId1 = ToDoTaskContentTypeID;
-            createAccTask_TaskTitle1 = "Need to Upload Document and Update Data APV for " + workflowProperties.Item.Title;
+            createAccTask_TaskTitle1 = "Need to Upload Document and Update Data JV for " + workflowProperties.Item.Title;
             createAccTask_WFName1 = WFNameID;
-            createAccTask_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data APV", RequestCode.PEMBELIAN_PERUSAHAAN_BARU_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
-            createAccTask_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pembelian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data APV" + Util.GenerateApprovalInformation(scInfo), "{1}");
+            createAccTask_Subject1 = string.Format("CorsecSP {0} [ {1} ] Need to Upload Document and Update Data JV", RequestCode.PEMBELIAN_PERUSAHAAN_BARU_INDONESIA, workflowProperties.Item["NamaPerusahaan"].ToString());
+            createAccTask_Body1 = string.Format(EmailNotificationOriginatorTemplate, "{0}", "Pembelian Perusahaan Baru (Indonesia) Task", workflowProperties.Item.Title, "need you to upload document and update data JV" + Util.GenerateApprovalInformation(scInfo), "{1}");
 
-            UpdateItem(Roles.ACCOUNTING + " Upload APV", string.Empty);
+            UpdateItem(Roles.ACCOUNTING + " Upload JV", string.Empty);
         }
 
         private void UpdatePermissionAcc_ExecuteCode(object sender, EventArgs e)
@@ -816,7 +840,7 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             SPFieldUserValue userValue = (SPFieldUserValue)userField.GetFieldValue(item["AssignedTo"].ToString());
             AccountingName = item["AssignedTo"].ToString().Split(new string[] { ";#" }, StringSplitOptions.RemoveEmptyEntries)[1];
 
-            scInfo.Add(string.Format("{0};{1};{2};{3}", "6", AccountingName, DateTime.Now, "Upload Document and Update Data APV"));
+            scInfo.Add(string.Format("{0};{1};{2};{3}", "6", AccountingName, DateTime.Now, "Upload Document and Update Data JV"));
         }
 
         #endregion
@@ -828,6 +852,11 @@ namespace SPVisionet.CorporateSecretary.Workflow.PendirianPerusahaanBaruIndonesi
             Util.UpdateGroupPermission(workflowProperties.Web, true, workflowProperties.Item, AdministratorGroup, "Contribute");
             Util.UpdateUserPermission(workflowProperties.Web, false, workflowProperties.Item, workflowProperties.OriginatorUser.LoginName, "Contribute");
             Util.UpdateGroupPermission(workflowProperties.Web, false, workflowProperties.Item, VisitorGroup, "Read");
+        }
+
+        private void InsertPemegangSahamKomisarisMasterData_ExecuteCode(object sender, EventArgs e)
+        {
+            Util.AddPemegangSahamKomisarisMasterData(workflowProperties.Web, workflowProperties.Item);
         }
 
         private void SendMailApprove_ExecuteCode(object sender, EventArgs e)
